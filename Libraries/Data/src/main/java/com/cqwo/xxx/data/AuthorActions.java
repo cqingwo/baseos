@@ -115,11 +115,11 @@ public class AuthorActions extends DataService {
      */
     public List<AuthorActionInfo> getRoleAuthorActionList(Integer roleId) throws IOException {
 
-        List<AuthorActionInfo> authorActionInfoList = getCwmCache().getIcachestrategy().getListValue(CacheKeys.GET_ROLE_AUTHOR_ACTION_LIST + roleId, AuthorActionInfo.class);
+        List<AuthorActionInfo> authorActionInfoList = getCwmCache().getListValue(CacheKeys.GET_ROLE_AUTHOR_ACTION_LIST + roleId, AuthorActionInfo.class);
 
         if (authorActionInfoList == null) {
             authorActionInfoList = getCwmData().getIAuthorStrategy().getRoleAuthorActionList(roleId);
-            getCwmCache().getIcachestrategy().setListValue(CacheKeys.GET_ROLE_AUTHOR_ACTION_LIST + roleId, authorActionInfoList);
+            getCwmCache().setListValue(CacheKeys.GET_ROLE_AUTHOR_ACTION_LIST + roleId, authorActionInfoList);
         }
         return authorActionInfoList;
     }

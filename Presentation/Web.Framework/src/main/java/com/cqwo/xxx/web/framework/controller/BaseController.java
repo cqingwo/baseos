@@ -13,6 +13,7 @@ import com.cqwo.xxx.core.config.CWMConfig;
 import com.cqwo.xxx.core.helper.DateHelper;
 import com.cqwo.xxx.core.helper.StringHelper;
 import com.cqwo.xxx.core.helper.TypeHelper;
+import com.cqwo.xxx.core.log.Logs;
 import com.cqwo.xxx.services.*;
 import com.cqwo.xxx.web.framework.PromptModel;
 import com.cqwo.xxx.web.framework.view.JsonView;
@@ -41,10 +42,9 @@ public abstract class BaseController {
     protected HttpSession session;
 
 
-
     @Autowired
     protected Regions regions;
-//
+    //
     @Autowired
     protected CWMUtils cwmUtils;
 
@@ -334,7 +334,7 @@ public abstract class BaseController {
      * @return int
      */
     protected Integer getParameterInt(String key, Integer defaultValue) {
-        return TypeHelper.StringToInt(request.getParameter(key), defaultValue);
+        return TypeHelper.stringToInt(request.getParameter(key), defaultValue);
     }
 
 
@@ -384,9 +384,7 @@ public abstract class BaseController {
      */
     protected Integer getHeaderInt(String key, Integer defaultValue) {
 
-        Integer i = TypeHelper.StringToInt(request.getHeader(key), defaultValue);
-
-        return i;
+        return TypeHelper.stringToInt(request.getHeader(key), defaultValue);
     }
 
     /**
@@ -438,8 +436,8 @@ public abstract class BaseController {
         } catch (IOException e) {
             try {
                 response.sendRedirect(errorUrl);
-            } catch (IOException e1) {
-
+            } catch (IOException ex) {
+                logs.write(ex,"跳转页面");
             }
         }
     }

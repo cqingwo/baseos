@@ -2,7 +2,7 @@
  *
  *  * Copyright (C) 2017.
  *  * 用于JAVA项目开发
- *  * 重庆青沃科技有限公司 版权所有
+ *  * 重庆英卡电子有限公司 版权所有
  *  * Copyright (C)  2017.  CqingWo Systems Incorporated. All rights reserved.
  *
  */
@@ -20,16 +20,10 @@ import java.net.URL;
 import java.util.List;
 
 
-
 /**
  * Created by cqnews on 2017/3/20.
  */
 public class CommonHelper {
-
-    public static void print() {
-
-        System.out.print("hello");
-    }
 
     /**
      * 去前导后导空格
@@ -198,7 +192,7 @@ public class CommonHelper {
 //     * @param ip
 //     * @return
 //     */
-//    public static Long ConvertIPToLong(String ip) {
+//    public static Long convertIPToLong(String ip) {
 //        String[] ips=ip.split(".");
 //
 //        Long number=16777216L * Long.parseLong(ips[0]) + 65536L * Long.parseLong(ips[1]) + 256 * Long.parseLong(ips[2]) + Long.parseLong(ips[3]);
@@ -207,10 +201,11 @@ public class CommonHelper {
 
     /**
      * IP 转数字
+     *
      * @param ip
      * @return
      */
-    public static Long ConvertIPToLong(String ip) {
+    public static Long convertIPToLong(String ip) {
         Long ips = 0L;
         String[] numbers = ip.split("\\.");
         //等价上面
@@ -222,15 +217,16 @@ public class CommonHelper {
 
     /**
      * 数字转ip
+     *
      * @param number
      * @return
      */
-    public static String ConvertNumberToIp(Long number) {
+    public static String convertNumberToIP(Long number) {
         //等价上面
         String ip = "";
         for (Integer i = 3; i >= 0; i--) {
-            ip  += String.valueOf((number & 0xff));
-            if(i != 0){
+            ip += String.valueOf((number & 0xff));
+            if (i != 0) {
                 ip += ".";
             }
             number = number >> 8;
@@ -241,9 +237,12 @@ public class CommonHelper {
 
 
     @Test
-    public void Test(){
+    public void test() { //System.out.println(convertIPToLong("127.0.0.1"));
+    }
 
-        System.out.println(ConvertIPToLong("127.0.0.1"));
+    public static void main(String[] args) {
+        String s = getWeather();
+        // System.out.println(s);
     }
 
 }

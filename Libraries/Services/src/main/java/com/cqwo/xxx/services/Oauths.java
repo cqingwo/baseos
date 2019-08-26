@@ -4,6 +4,7 @@ import com.cqwo.xxx.core.domain.users.OauthInfo;
 import com.cqwo.xxx.core.helper.StringHelper;
 import com.cqwo.xxx.core.domain.users.OauthInfo;
 import com.cqwo.xxx.core.helper.StringHelper;
+import com.cqwo.xxx.core.log.Logs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
@@ -42,7 +43,7 @@ public class Oauths {
         try {
             return oauths.getOauthCount(condition);
         } catch (Exception e) {
-            logs.Write(e, "获得第三方登录数量失败");
+            logs.write(e, "获得第三方登录数量失败");
         }
         return 0;
     }
@@ -57,7 +58,7 @@ public class Oauths {
         try {
             return oauths.createOauth(oauthInfo);
         } catch (Exception e) {
-            logs.Write(e, "创建一条第三方登录数据失败");
+            logs.write(e, "创建一条第三方登录数据失败");
         }
         return null;
     }
@@ -71,7 +72,7 @@ public class Oauths {
         try {
             return oauths.updateOauth(oauthInfo);
         } catch (Exception e) {
-            logs.Write(e, "更新一条第三方登录数据异常");
+            logs.write(e, "更新一条第三方登录数据异常");
         }
 
         return null;
@@ -86,7 +87,7 @@ public class Oauths {
         try {
             oauths.deleteOauthById(id);
         } catch (Exception e) {
-            logs.Write(e, "删除一条第三方登录数据异常");
+            logs.write(e, "删除一条第三方登录数据异常");
         }
     }
 
@@ -97,7 +98,7 @@ public class Oauths {
         try {
             oauths.deleteOauthByIdList(idList);
         } catch (Exception e) {
-            logs.Write(e, "批量删除一批第三方登录数据异常");
+            logs.write(e, "批量删除一批第三方登录数据异常");
         }
     }
 
@@ -110,7 +111,7 @@ public class Oauths {
         try {
             return oauths.getOauthById(id);
         } catch (Exception e) {
-            logs.Write(e, "获取一条第三方登录数据");
+            logs.write(e, "获取一条第三方登录数据");
         }
 
         return null;
@@ -131,7 +132,7 @@ public class Oauths {
         try {
             oauthList = oauths.getOauthList(condition, sort);
         } catch (Exception e) {
-            logs.Write(e, "获得第三方登录数据列表异常");
+            logs.write(e, "获得第三方登录数据列表异常");
         }
 
         return oauthList;
@@ -154,7 +155,7 @@ public class Oauths {
         try {
             oauthList = oauths.getOauthList(pageSize, pageNumber, condition, sort);
         } catch (Exception e) {
-            logs.Write(e, "获得第三方登录数据列表异常");
+            logs.write(e, "获得第三方登录数据列表异常");
         }
 
         return oauthList;
@@ -171,7 +172,7 @@ public class Oauths {
         try {
             return oauths.getOauthByOpenId(server, openId);
         } catch (Exception ex) {
-            logs.Write(ex, "通过openid获取开发登录信息");
+            logs.write(ex, "通过openid获取开发登录信息");
         }
         return null;
     }
@@ -195,7 +196,7 @@ public class Oauths {
 
         } catch (Exception ex) {
 
-            logs.Write(ex, "通过unionId获取授权列表");
+            logs.write(ex, "通过unionId获取授权列表");
         }
 
         return oauthInfoList;
@@ -224,7 +225,7 @@ public class Oauths {
             }
         } catch (Exception ex) {
 
-            logs.Write(ex, "通过unionId和openId获取授权");
+            logs.write(ex, "通过unionId和openId获取授权");
         }
 
         return oauthInfo;

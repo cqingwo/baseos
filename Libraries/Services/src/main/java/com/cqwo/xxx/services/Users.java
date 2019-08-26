@@ -6,11 +6,13 @@ import com.cqwo.xxx.core.domain.users.PartUserInfo;
 import com.cqwo.xxx.core.domain.users.UserDetailInfo;
 import com.cqwo.xxx.core.domain.users.UserTokenInfo;
 import com.cqwo.xxx.core.helper.*;
+import com.cqwo.xxx.core.log.Logs;
 import com.cqwo.xxx.data.UserDetails;
 import com.cqwo.xxx.core.helper.DateHelper;
 import com.cqwo.xxx.core.helper.RandomHelper;
 import com.cqwo.xxx.core.helper.SecureHelper;
 import com.cqwo.xxx.core.helper.StringHelper;
+import com.google.common.base.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
@@ -60,7 +62,7 @@ public class Users {
         try {
             return users.getUserCount(condition);
         } catch (IOException e) {
-            logs.Write(e, "获得用户信息数量失败");
+            logs.write(e, "获得用户信息数量失败");
         }
         return 0;
     }
@@ -75,7 +77,7 @@ public class Users {
         try {
             return users.createUser(userInfo);
         } catch (IOException e) {
-            logs.Write(e, "创建一条用户信息数据失败");
+            logs.write(e, "创建一条用户信息数据失败");
         }
         return null;
     }
@@ -89,7 +91,7 @@ public class Users {
         try {
             return users.updateUser(userInfo);
         } catch (IOException e) {
-            logs.Write(e, "更新一条用户信息数据异常");
+            logs.write(e, "更新一条用户信息数据异常");
         }
 
         return null;
@@ -104,7 +106,7 @@ public class Users {
         try {
             users.deleteUserByUid(uid);
         } catch (IOException e) {
-            logs.Write(e, "删除一条用户信息数据异常");
+            logs.write(e, "删除一条用户信息数据异常");
         }
     }
 
@@ -115,7 +117,7 @@ public class Users {
         try {
             users.deleteUserByUidList(uidList);
         } catch (IOException e) {
-            logs.Write(e, "批量删除一批用户信息数据异常");
+            logs.write(e, "批量删除一批用户信息数据异常");
         }
     }
 
@@ -128,7 +130,7 @@ public class Users {
         try {
             return users.getPartUserByUid(uid);
         } catch (IOException e) {
-            logs.Write(e, "获取一条用户信息数据");
+            logs.write(e, "获取一条用户信息数据");
         }
 
         return null;
@@ -149,7 +151,7 @@ public class Users {
         try {
             userList = users.getPartUserList(condition, sort);
         } catch (IOException e) {
-            logs.Write(e, "获得用户信息数据列表异常");
+            logs.write(e, "获得用户信息数据列表异常");
         }
 
         return userList;
@@ -172,7 +174,7 @@ public class Users {
         try {
             userList = users.getPartUserList(pageSize, pageNumber, condition, sort);
         } catch (IOException e) {
-            logs.Write(e, "获得用户信息数据列表异常");
+            logs.write(e, "获得用户信息数据列表异常");
         }
 
         return userList;
@@ -196,7 +198,7 @@ public class Users {
 
             return users.getPartUserByUid(uid);
         } catch (Exception ex) {
-            logs.Write(ex, "获取一条用户数据");
+            logs.write(ex, "获取一条用户数据");
         }
         return null;
     }
@@ -224,14 +226,13 @@ public class Users {
     public Page<PartUserInfo> getPartUserList(Integer pageSize, Integer pageNumber, Specification<PartUserInfo> condition, Sort sort) {
 
 
-
         try {
 
             return users.getPartUserList(pageSize, pageNumber, condition, sort);
 
         } catch (Exception ex) {
 
-            logs.Write(ex, "获取用户数据列表");
+            logs.write(ex, "获取用户数据列表");
         }
 
         return null;
@@ -251,7 +252,7 @@ public class Users {
             return users.getPartUserByUserName(userName);
 
         } catch (Exception ex) {
-            logs.Write(ex, "通过用户名获取用户信息");
+            logs.write(ex, "通过用户名获取用户信息");
         }
         return null;
     }
@@ -268,7 +269,7 @@ public class Users {
             return users.getPartUserByEmail(email);
 
         } catch (Exception ex) {
-            logs.Write(ex, "通过用户名获取用户信息");
+            logs.write(ex, "通过用户名获取用户信息");
         }
         return null;
     }
@@ -285,7 +286,7 @@ public class Users {
             return users.getPartUserByMobile(mobile);
 
         } catch (Exception ex) {
-            logs.Write(ex, "通过用户名获取用户信息");
+            logs.write(ex, "通过用户名获取用户信息");
         }
         return null;
     }
@@ -339,7 +340,7 @@ public class Users {
         try {
             users.updateUserRankByUid(uid, userRid);
         } catch (Exception ex) {
-            logs.Write(ex, "更新用户组失败");
+            logs.write(ex, "更新用户组失败");
         }
     }
 
@@ -359,7 +360,7 @@ public class Users {
 
 
         } catch (Exception ex) {
-            logs.Write(ex, "更新用户手机失败");
+            logs.write(ex, "更新用户手机失败");
         }
 
     }
@@ -385,7 +386,7 @@ public class Users {
 
 
         } catch (IOException ex) {
-            logs.Write(ex, "通过用户openid和联合id查询用户信息");
+            logs.write(ex, "通过用户openid和联合id查询用户信息");
         }
 
 
@@ -431,7 +432,7 @@ public class Users {
 
         UserTokenInfo tokenInfo = null;
 
-        if (StringHelper.IsNullOrWhiteSpace(token)) {
+        if (Strings.isNullOrEmpty(token)) {
             return null;
         }
 
@@ -509,7 +510,7 @@ public class Users {
     public PartUserInfo createOauthUserInfo(String server, String openId, String unionId, String nickName, String avatar, Integer gender) {
         PartUserInfo userInfo = new PartUserInfo();
 
-        Integer nowts = DateHelper.getUnixTimeStamp();
+        Integer nowts = UnixTimeHelper.getUnixTimeStamp();
 
         userInfo.setSalt(createSalt());
         userInfo.setPassword(createUserPassword(userInfo.getSalt(), userInfo.getSalt()));
@@ -528,11 +529,11 @@ public class Users {
         userInfo.setVerifyMobile(0);
         userInfo.setLiftBanTime(0);
 
-        logs.Write("用户注册");
+        logs.write("用户注册");
 
         try {
             userInfo = createPartUser(userInfo);
-            logs.Write("uid:" + userInfo.getUid());
+            logs.write("uid:" + userInfo.getUid());
 
             if (userInfo.getUid() >= 1) {
 
@@ -554,17 +555,17 @@ public class Users {
                 userDetailInfo.setBio("");
 
 
-                logs.Write("用户第三方登录注册:" + userDetailInfo.toString());
+                logs.write("用户第三方登录注册:" + userDetailInfo.toString());
                 createUserDetail(userDetailInfo);
 
 
-                logs.Write("用户第三方登录注册成功");
+                logs.write("用户第三方登录注册成功");
 
                 return userInfo;
             }
 
         } catch (Exception e) {
-            logs.Write(e, "用户第三方登录注册失败");
+            logs.write(e, "用户第三方登录注册失败");
         }
 
         return null;
@@ -585,14 +586,14 @@ public class Users {
 
             String s = users.getUserAvatar(uid);
 
-            logs.Write("s:" + s);
+            logs.write("s:" + s);
             if (StringHelper.isNotNullOrWhiteSpace(s)) {
                 avatar = s;
             }
 
         } catch (Exception ex) {
 
-            logs.Write("获取头像失败");
+            logs.write("获取头像失败");
         }
 
         return avatar;
@@ -613,7 +614,7 @@ public class Users {
         try {
             return userDetails.getUserDetailCount(condition);
         } catch (Exception e) {
-            logs.Write(e, "获得用户详情数量失败");
+            logs.write(e, "获得用户详情数量失败");
         }
         return 0;
     }
@@ -628,7 +629,7 @@ public class Users {
         try {
             return userDetails.createUserDetail(userdetailInfo);
         } catch (Exception e) {
-            logs.Write(e, "创建一条用户详情数据失败");
+            logs.write(e, "创建一条用户详情数据失败");
         }
         return null;
     }
@@ -642,7 +643,7 @@ public class Users {
         try {
             return userDetails.updateUserDetail(userdetailInfo);
         } catch (Exception e) {
-            logs.Write(e, "更新一条用户详情数据异常");
+            logs.write(e, "更新一条用户详情数据异常");
         }
 
         return null;
@@ -657,7 +658,7 @@ public class Users {
         try {
             userDetails.deleteUserDetailById(id);
         } catch (Exception e) {
-            logs.Write(e, "删除一条用户详情数据异常");
+            logs.write(e, "删除一条用户详情数据异常");
         }
     }
 
@@ -668,7 +669,7 @@ public class Users {
         try {
             userDetails.deleteUserDetailByIdList(idList);
         } catch (Exception e) {
-            logs.Write(e, "批量删除一批用户详情数据异常");
+            logs.write(e, "批量删除一批用户详情数据异常");
         }
     }
 
@@ -681,7 +682,7 @@ public class Users {
         try {
             return userDetails.getUserDetailById(id);
         } catch (Exception e) {
-            logs.Write(e, "获取一条用户详情数据");
+            logs.write(e, "获取一条用户详情数据");
         }
 
         return null;
@@ -702,7 +703,7 @@ public class Users {
         try {
             userDetailList = userDetails.getUserDetailList(condition, sort);
         } catch (Exception e) {
-            logs.Write(e, "获得用户详情数据列表异常");
+            logs.write(e, "获得用户详情数据列表异常");
         }
 
         return userDetailList;
@@ -725,7 +726,7 @@ public class Users {
         try {
             userDetailList = userDetails.getUserDetailList(pageSize, pageNumber, condition, sort);
         } catch (Exception e) {
-            logs.Write(e, "获得用户详情数据列表异常");
+            logs.write(e, "获得用户详情数据列表异常");
         }
 
         return userDetailList;

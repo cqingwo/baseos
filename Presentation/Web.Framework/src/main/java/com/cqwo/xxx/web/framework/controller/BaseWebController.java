@@ -63,7 +63,7 @@ public class BaseWebController extends BaseController {
         /**
          * 判断是否为ajax
          */
-        if (WebHelper.IsAjax(request)) {
+        if (WebHelper.isAjax(request)) {
             this.workContext.setHttpAjax(true);
         }
 

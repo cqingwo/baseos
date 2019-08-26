@@ -9,6 +9,7 @@
 
 package com.cqwo.xxx.core.sms;
 
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,18 +17,11 @@ import org.springframework.stereotype.Service;
  * Created by cqnews on 2017/3/20.
  */
 @Service(value = "CWMSMS")
+@Getter
 public class CWMSMS {
 
     @Autowired(required = false)
     private ISMSStrategy ismsStrategy;
 
-
-    public ISMSStrategy getIsmsStrategy() {
-        return ismsStrategy;
-    }
-
-    public void setIsmsStrategy(ISMSStrategy ismsStrategy) {
-        this.ismsStrategy = ismsStrategy;
-    }
 }
 

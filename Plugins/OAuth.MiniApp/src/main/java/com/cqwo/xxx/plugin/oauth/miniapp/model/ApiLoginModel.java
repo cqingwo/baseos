@@ -9,8 +9,10 @@
 
 package com.cqwo.xxx.plugin.oauth.miniapp.model;
 
-import org.hibernate.validator.constraints.NotBlank;
+
 import org.hibernate.validator.constraints.Range;
+
+import javax.validation.constraints.NotBlank;
 
 /**
  * Created by Administrator on 2017/12/25.

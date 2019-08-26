@@ -23,6 +23,7 @@ import java.util.List;
 
 public enum PluginType {
 
+
     OAuthPlugin("OAuthPlugin", 0), PayPlugin("PayPlugin", 1);
 
     // 成员变量
@@ -89,7 +90,7 @@ public enum PluginType {
             SelectListItem item = new SelectListItem();
 
             item.setText(c.getName());
-            item.setValue(TypeHelper.IntToString(c.getIndex()));
+            item.setValue(TypeHelper.intToString(c.getIndex()));
 
             if (c.getIndex().equals(index)) {
                 item.setSelected(true);

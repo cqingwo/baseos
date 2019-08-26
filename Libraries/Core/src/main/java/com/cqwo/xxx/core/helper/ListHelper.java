@@ -1,22 +1,27 @@
 package com.cqwo.xxx.core.helper;
 
-import java.util.*;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
+
+import java.util.List;
+import java.util.Set;
 
 public class ListHelper {
 
 
     // 删除ArrayList中重复元素，保持顺序
-    public static void removeDuplicateWithOrder(List list) {
-        Set set = new HashSet();
-        List newList = new ArrayList();
-        for (Iterator iter = list.iterator(); iter.hasNext(); ) {
-            Object element = iter.next();
-            if (set.add(element)) {
-                newList.add(element);
+    public static <T> void removeDuplicateWithOrder(List<T> list) {
+
+        Set<T> set = Sets.newHashSet();
+
+        List<T> newList = Lists.newArrayList();
+
+        for (T t : list) {
+            if (set.add(t)) {
+                newList.add(t);
             }
         }
         list.clear();
-        list.addAll(newList);
-        System.out.println(" remove duplicate " + list);
+        list.addAll(newList); //System.out.println(" remove duplicate " + list);
     }
 }

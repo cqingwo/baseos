@@ -2,7 +2,7 @@
  *
  *  * Copyright (C) 2017.
  *  * 用于JAVA项目开发
- *  * 重庆青沃科技有限公司 版权所有
+ *  * 重庆英卡电子有限公司 版权所有
  *  * Copyright (C)  2017.  CqingWo Systems Incorporated. All rights reserved.
  *
  */
@@ -26,9 +26,9 @@ public class MailHelper {
     private static String KEY_PROPS = "mail.smtp.auth";
     private static boolean VALUE_PROPS = true;
     // 发件人用户名、密码
-    private String SEND_USER = "1311535288@qq.com";
-    private String SEND_UNAME = "1311535288";
-    private String SEND_PWD = "19891228?luo";
+    private String sendUser = "1311535288@qq.com";
+    private String sendUname = "1311535288";
+    private String sendPwd = "19891228?luo";
     // 建立会话
     private MimeMessage message;
     private Session s;
@@ -44,7 +44,7 @@ public class MailHelper {
         s = Session.getDefaultInstance(props, new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(SEND_UNAME, SEND_PWD);
+                return new PasswordAuthentication(sendUname, sendPwd);
             }
         });
         s.setDebug(true);
@@ -62,7 +62,7 @@ public class MailHelper {
                                 String receiveUser) {
         try {
             // 发件人
-            InternetAddress from = new InternetAddress(SEND_USER);
+            InternetAddress from = new InternetAddress(sendUser);
             message.setFrom(from);
             // 收件人
             InternetAddress to = new InternetAddress(receiveUser);
@@ -75,11 +75,10 @@ public class MailHelper {
             message.saveChanges();
             Transport transport = s.getTransport("smtp");
             // smtp验证，就是你用来发邮件的邮箱用户名密码
-            transport.connect(VALUE_SMTP, SEND_UNAME, SEND_PWD);
+            transport.connect(VALUE_SMTP, sendUname, sendPwd);
             // 发送
             transport.sendMessage(message, message.getAllRecipients());
-            transport.close();
-            System.out.println("send success!");
+            transport.close(); //System.out.println("send success!");
         } catch (AddressException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

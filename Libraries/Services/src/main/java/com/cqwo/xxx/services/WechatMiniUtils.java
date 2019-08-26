@@ -18,8 +18,10 @@ import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
 import cn.binarywang.wx.miniapp.bean.WxMaTemplateMessage;
 import com.cqwo.xxx.core.cache.CacheKeys;
 import com.cqwo.xxx.core.helper.StringHelper;
+import com.cqwo.xxx.core.log.Logs;
 import com.cqwo.xxx.core.wechat.CWMWechat;
 import com.cqwo.xxx.core.wechat.WeChatSession;
+import com.google.common.base.Strings;
 import me.chanjar.weixin.common.error.WxErrorException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -69,15 +71,15 @@ public class WechatMiniUtils {
 
             accessToken = cacheUtils.getValue(CacheKeys.WECHAT_ACCESS_TOKEN, String.class);
 
-            if (StringHelper.IsNullOrWhiteSpace(accessToken)) {
+            if (Strings.isNullOrEmpty(accessToken)) {
 
-                accessToken = cwmWechat.getiMiniAppStrategy().getAccessToken();
+                accessToken = cwmWechat.getIMiniAppStrategy().getAccessToken();
                 cacheUtils.setValue(CacheKeys.WECHAT_ACCESS_TOKEN, accessToken);
             }
 
         } catch (Exception e) {
 
-            logs.Write(e, "");
+            logs.write(e, "");
 
         }
 
@@ -95,11 +97,11 @@ public class WechatMiniUtils {
 
         try {
 
-            wxMaUserService = cwmWechat.getiMiniAppStrategy().getUserService();
+            wxMaUserService = cwmWechat.getIMiniAppStrategy().getUserService();
 
         } catch (Exception e) {
 
-            logs.Write(e, "获取用户服务");
+            logs.write(e, "获取用户服务");
 
         }
 
@@ -118,11 +120,11 @@ public class WechatMiniUtils {
 
         try {
 
-            wxMaUserService = cwmWechat.getiMiniAppStrategy().getQrcodeService();
+            wxMaUserService = cwmWechat.getIMiniAppStrategy().getQrcodeService();
 
         } catch (Exception e) {
 
-            logs.Write(e, "获取二维码服务");
+            logs.write(e, "获取二维码服务");
 
         }
 
@@ -139,7 +141,7 @@ public class WechatMiniUtils {
         try {
             return getUserService().getSessionInfo(code);
         } catch (WxErrorException e) {
-            logs.Write(e, "获取微信session");
+            logs.write(e, "获取微信session");
         }
         return null;
     }
@@ -259,7 +261,7 @@ public class WechatMiniUtils {
             getMsgService().sendTemplateMsg(templateMessage);
 
         } catch (WxErrorException ex) {
-            logs.Write(ex, "发送模型消息");
+            logs.write(ex, "发送模型消息");
             return false;
         }
 
@@ -276,7 +278,7 @@ public class WechatMiniUtils {
 
         try {
 
-            return cwmWechat.getiMiniAppStrategy().getMsgService();
+            return cwmWechat.getIMiniAppStrategy().getMsgService();
         } catch (Exception ex) {
 
         }

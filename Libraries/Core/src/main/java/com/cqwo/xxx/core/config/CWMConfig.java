@@ -10,6 +10,7 @@
 package com.cqwo.xxx.core.config;
 
 
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,8 +20,8 @@ import org.springframework.stereotype.Service;
 
 
 @Service(value = "CWMConfig")
+@Getter
 public class CWMConfig {
-
 
 
     /**
@@ -31,15 +32,4 @@ public class CWMConfig {
     private IConfigStrategy iconfigstrategy;//配置策略
 
 
-    public CWMConfig() {
-
-    }
-
-    public IConfigStrategy getIconfigstrategy() {
-        return iconfigstrategy;
-    }
-
-    public void setIconfigstrategy(IConfigStrategy iconfigstrategy) {
-        this.iconfigstrategy = iconfigstrategy;
-    }
 }

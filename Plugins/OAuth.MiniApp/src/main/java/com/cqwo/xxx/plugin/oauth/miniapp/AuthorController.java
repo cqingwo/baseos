@@ -13,6 +13,7 @@ import com.cqwo.xxx.plugin.oauth.miniapp.model.*;
 import com.cqwo.xxx.services.*;
 import com.cqwo.xxx.web.framework.validate.ValidateModel;
 import com.cqwo.xxx.web.framework.validate.ValidationResult;
+import com.google.common.base.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -51,7 +52,7 @@ public class AuthorController extends OauthMiniAppApiController {
 
         if (result.isNotErrors()) {
 
-            logs.Write(request.toString());
+            logs.write(request.toString());
 
             String code = model.getCode();
 
@@ -83,11 +84,11 @@ public class AuthorController extends OauthMiniAppApiController {
             String unionId = authorModel.getUnionId();
 
 
-            if (StringHelper.IsNullOrWhiteSpace(openId)) {
+            if (Strings.isNullOrEmpty(openId)) {
                 return JsonView(SateCollect.AUTHOR_ERRLOGIN, "用户登录失败");
             }
 
-            if (StringHelper.IsNullOrWhiteSpace(unionId)) {
+            if (Strings.isNullOrEmpty(unionId)) {
                 unionId = "";
             }
 
@@ -148,7 +149,7 @@ public class AuthorController extends OauthMiniAppApiController {
 //            String openId = model.getOpenId();
 //            String unionId = "";
 //
-//            if (StringHelper.IsNullOrWhiteSpace(openId))
+//            if (Strings.isNullOrEmpty(openId))
 //                return JsonView("用户注册失败");
 //
 //            OauthInfo oauthInfo = oauths.getOauthByOpenId(server, model.getOpenId());

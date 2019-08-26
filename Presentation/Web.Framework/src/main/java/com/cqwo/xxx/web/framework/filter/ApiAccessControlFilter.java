@@ -12,6 +12,7 @@ import com.cqwo.xxx.core.domain.users.UserTokenInfo;
 import com.cqwo.xxx.core.helper.StringHelper;
 import com.cqwo.xxx.services.Users;
 import com.cqwo.xxx.web.framework.model.UserTokenPasswordToken;
+import com.google.common.base.Strings;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.AccessControlFilter;
@@ -86,7 +87,7 @@ public class ApiAccessControlFilter extends AccessControlFilter {
         String accessToken = request.getParameter("token");
         System.out.println("accessToken:" + accessToken);
 
-        if (StringHelper.IsNullOrWhiteSpace(accessToken)) {
+        if (Strings.isNullOrEmpty(accessToken)) {
             onLoginFail(response);
             return false;
         }

@@ -2,6 +2,7 @@ package com.cqwo.xxx.services;
 
 import com.cqwo.xxx.core.domain.users.OnlineUserInfo;
 import com.cqwo.xxx.core.domain.users.OnlineUserInfo;
+import com.cqwo.xxx.core.log.Logs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
@@ -40,7 +41,7 @@ public class OnlineUsers {
         try {
             return onlineUsers.getOnlineUserCount(condition);
         } catch (Exception e) {
-            logs.Write(e, "获得在线用户数量失败");
+            logs.write(e, "获得在线用户数量失败");
         }
         return 0;
     }
@@ -55,7 +56,7 @@ public class OnlineUsers {
         try {
             return onlineUsers.createOnlineUser(onlineuserInfo);
         } catch (Exception e) {
-            logs.Write(e, "创建一条在线用户数据失败");
+            logs.write(e, "创建一条在线用户数据失败");
         }
         return null;
     }
@@ -69,7 +70,7 @@ public class OnlineUsers {
         try {
             return onlineUsers.updateOnlineUser(onlineuserInfo);
         } catch (Exception e) {
-            logs.Write(e, "更新一条在线用户数据异常");
+            logs.write(e, "更新一条在线用户数据异常");
         }
 
         return null;
@@ -84,7 +85,7 @@ public class OnlineUsers {
         try {
             onlineUsers.deleteOnlineUserByOlid(olid);
         } catch (Exception e) {
-            logs.Write(e, "删除一条在线用户数据异常");
+            logs.write(e, "删除一条在线用户数据异常");
         }
     }
 
@@ -95,7 +96,7 @@ public class OnlineUsers {
         try {
             onlineUsers.deleteOnlineUserByOlidList(olidList);
         } catch (Exception e) {
-            logs.Write(e, "批量删除一批在线用户数据异常");
+            logs.write(e, "批量删除一批在线用户数据异常");
         }
     }
 
@@ -108,7 +109,7 @@ public class OnlineUsers {
         try {
             return onlineUsers.getOnlineUserByOlid(olid);
         } catch (Exception e) {
-            logs.Write(e, "获取一条在线用户数据");
+            logs.write(e, "获取一条在线用户数据");
         }
 
         return null;
@@ -129,7 +130,7 @@ public class OnlineUsers {
         try {
             onlineUserList = onlineUsers.getOnlineUserList(condition, sort);
         } catch (Exception e) {
-            logs.Write(e, "获得在线用户数据列表异常");
+            logs.write(e, "获得在线用户数据列表异常");
         }
 
         return onlineUserList;
@@ -152,7 +153,7 @@ public class OnlineUsers {
         try {
             onlineUserList = onlineUsers.getOnlineUserList(pageSize, pageNumber, condition, sort);
         } catch (Exception e) {
-            logs.Write(e, "获得在线用户数据列表异常");
+            logs.write(e, "获得在线用户数据列表异常");
         }
 
         return onlineUserList;

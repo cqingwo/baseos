@@ -2,16 +2,18 @@
  *
  *  * Copyright (C) 2017.
  *  * 用于JAVA项目开发
- *  * 重庆青沃科技有限公司 版权所有
+ *  * 重庆英卡电子有限公司 版权所有
  *  * Copyright (C)  2017.  CqingWo Systems Incorporated. All rights reserved.
  *
  */
 
 package com.cqwo.xxx.core.helper;
 
-import com.cqwo.xxx.core.log.ILog;
-import com.cqwo.xxx.core.log.ILogService;
+import com.google.common.base.Strings;
+import com.google.common.collect.Lists;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
 
 import java.sql.Timestamp;
@@ -19,9 +21,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
+import java.util.*;
 
 
 /**
@@ -35,15 +35,16 @@ import java.util.GregorianCalendar;
  * @since JDK1.6
  */
 
-@SuppressWarnings("AlibabaAvoidCallStaticSimpleDateFormat")
 public class DateHelper {
     // ~ Static fields/initializers  
     // =============================================  
 
-    private static ILog logger = ILogService.getLog(DateHelper.class);
+    private static Logger logger = LoggerFactory.getLogger(DateHelper.class);
+
     private static String defaultDatePattern = null;
+
     private static String timePattern = "HH:mm";
-    private static Calendar cale = Calendar.getInstance();
+
     public static final String TS_FORMAT = DateHelper.getDatePattern() + " HH:mm:ss.S";
     /**
      * 日期格式yyyy-MM字符串常量
@@ -69,9 +70,9 @@ public class DateHelper {
      * 某天结束时分秒字符串常量  23:59:59
      */
     public static final String DAY_END_STRING_HHMMSS = " 23:59:59";
-    private static SimpleDateFormat sdf_date_format = new SimpleDateFormat(DATE_FORMAT);
-    private static SimpleDateFormat sdf_hour_format = new SimpleDateFormat(HOUR_FORMAT);
-    private static SimpleDateFormat sdf_datetime_format = new SimpleDateFormat(DATETIME_FORMAT);
+    //private static final SimpleDateFormat SDF_DATE_FORMAT = new SimpleDateFormat(DATE_FORMAT);
+    //private static final SimpleDateFormat SDF_HOUR_FORMAT = new SimpleDateFormat(HOUR_FORMAT);
+    //private static final SimpleDateFormat SDF_DATETIME_FORMAT = new SimpleDateFormat(DATETIME_FORMAT);
 
 
     // ~ Methods  
@@ -89,7 +90,9 @@ public class DateHelper {
      */
     public static String getDateTime() {
         try {
-            return sdf_datetime_format.format(cale.getTime());
+            SimpleDateFormat dateFormat = new SimpleDateFormat(DATETIME_FORMAT);
+            Calendar cale = Calendar.getInstance();
+            return dateFormat.format(cale.getTime());
         } catch (Exception e) {
             logger.debug("DateUtil.getDateTime():" + e.getMessage());
             return "";
@@ -105,8 +108,10 @@ public class DateHelper {
      */
     public static String getDate(String pattern) {
         try {
-            sdf_date_format.applyPattern(pattern);
-            return sdf_date_format.format(cale.getTime());
+            SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
+            dateFormat.applyPattern(pattern);
+            Calendar cale = Calendar.getInstance();
+            return dateFormat.format(cale.getTime());
         } catch (Exception e) {
             logger.debug("DateUtil.getDate():" + e.getMessage());
             return "";
@@ -122,7 +127,9 @@ public class DateHelper {
      */
     public static String getDate() {
         try {
-            return sdf_date_format.format(cale.getTime());
+            SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
+            Calendar cale = Calendar.getInstance();
+            return dateFormat.format(cale.getTime());
         } catch (Exception e) {
             logger.debug("DateUtil.getDate():" + e.getMessage());
             return "";
@@ -139,7 +146,9 @@ public class DateHelper {
     public static String getTime() {
         String temp = " ";
         try {
-            temp += sdf_hour_format.format(cale.getTime());
+            SimpleDateFormat dateFormat = new SimpleDateFormat(HOUR_FORMAT);
+            Calendar cale = Calendar.getInstance();
+            temp += dateFormat.format(cale.getTime());
             return temp;
         } catch (Exception e) {
             logger.debug("DateUtil.getTime():" + e.getMessage());
@@ -188,6 +197,7 @@ public class DateHelper {
      */
     public static String getYear() {
         try {
+            Calendar cale = Calendar.getInstance();
             return String.valueOf(cale.get(Calendar.YEAR));
         } catch (Exception e) {
             logger.debug("DateUtil.getYear():" + e.getMessage());
@@ -206,6 +216,7 @@ public class DateHelper {
         try {
             java.text.DecimalFormat df = new java.text.DecimalFormat();
             df.applyPattern("00;00");
+            Calendar cale = Calendar.getInstance();
             return df.format((cale.get(Calendar.MONTH) + 1));
         } catch (Exception e) {
             logger.debug("DateUtil.getMonth():" + e.getMessage());
@@ -222,6 +233,7 @@ public class DateHelper {
      */
     public static String getDay() {
         try {
+            Calendar cale = Calendar.getInstance();
             return String.valueOf(cale.get(Calendar.DAY_OF_MONTH));
         } catch (Exception e) {
             logger.debug("DateUtil.getDay():" + e.getMessage());
@@ -241,10 +253,11 @@ public class DateHelper {
     public static Integer getMargin(String date1, String date2) {
         Integer margin;
         try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
             ParsePosition pos = new ParsePosition(0);
             ParsePosition pos1 = new ParsePosition(0);
-            Date dt1 = sdf_date_format.parse(date1, pos);
-            Date dt2 = sdf_date_format.parse(date2, pos1);
+            Date dt1 = dateFormat.parse(date1, pos);
+            Date dt2 = dateFormat.parse(date2, pos1);
             long l = dt1.getTime() - dt2.getTime();
             margin = (int) (l / (24 * 60 * 60 * 1000));
             return margin;
@@ -266,10 +279,12 @@ public class DateHelper {
     public static double getDoubleMargin(String date1, String date2) {
         double margin;
         try {
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat(DATETIME_FORMAT);
             ParsePosition pos = new ParsePosition(0);
             ParsePosition pos1 = new ParsePosition(0);
-            Date dt1 = sdf_datetime_format.parse(date1, pos);
-            Date dt2 = sdf_datetime_format.parse(date2, pos1);
+            Date dt1 = dateFormat.parse(date1, pos);
+            Date dt2 = dateFormat.parse(date2, pos1);
             long l = dt1.getTime() - dt2.getTime();
             margin = (l / (24 * 60 * 60 * 1000.00));
             return margin;
@@ -317,7 +332,8 @@ public class DateHelper {
                     Integer.parseInt(date.substring(5, 7)) - 1,
                     Integer.parseInt(date.substring(8, 10)));
             gCal.add(GregorianCalendar.DATE, i);
-            return sdf_date_format.format(gCal.getTime());
+            SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
+            return dateFormat.format(gCal.getTime());
         } catch (Exception e) {
             logger.debug("DateUtil.addDay():" + e.toString());
             return getDate();
@@ -374,7 +390,8 @@ public class DateHelper {
                     Integer.parseInt(date.substring(5, 7)) - 1,
                     Integer.parseInt(date.substring(8, 10)));
             gCal.add(GregorianCalendar.MONTH, i);
-            return sdf_date_format.format(gCal.getTime());
+            SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
+            return dateFormat.format(gCal.getTime());
         } catch (Exception e) {
             logger.debug("DateUtil.addMonth():" + e.toString());
             return getDate();
@@ -397,7 +414,10 @@ public class DateHelper {
                     Integer.parseInt(date.substring(5, 7)) - 1,
                     Integer.parseInt(date.substring(8, 10)));
             gCal.add(GregorianCalendar.YEAR, i);
-            return sdf_date_format.format(gCal.getTime());
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
+
+            return dateFormat.format(gCal.getTime());
         } catch (Exception e) {
             logger.debug("DateUtil.addYear():" + e.toString());
             return "";
@@ -433,18 +453,33 @@ public class DateHelper {
         }
     }
 
+    public static Date convertDateTime(String datetime, String format) {
+
+        try {
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat(format, Locale.CHINA);
+
+            return dateFormat.parse(datetime);
+
+        } catch (Exception ex) {
+
+            logger.debug("DateUtil.convertDateTime():" + ex.toString());
+        }
+        return Calendar.getInstance().getTime();
+    }
+
     /**
      * 格式化日期
      *
      * @param orgDate
-     * @param Type
-     * @param Span
+     * @param type
+     * @param span
      * @return
      * @author dylan_xu
      * @date Mar 11, 2012
      */
     @SuppressWarnings("static-access")
-    public String rollDate(String orgDate, Integer Type, Integer Span) {
+    public String rollDate(String orgDate, Integer type, Integer span) {
         try {
             String temp = "";
             Integer iyear, imonth, iday;
@@ -484,20 +519,22 @@ public class DateHelper {
 
             Calendar orgcale = Calendar.getInstance();
             orgcale.set(iyear, imonth, iday);
-            temp = rollDate(orgcale, Type, Span);
+            temp = rollDate(orgcale, type, span);
             return temp;
         } catch (Exception e) {
             return "";
         }
     }
 
-    public static String rollDate(Calendar cal, Integer Type, Integer Span) {
+    public static String rollDate(Calendar cal, Integer type, Integer span) {
         try {
             String temp = "";
             Calendar rolcale;
             rolcale = cal;
-            rolcale.add(Type, Span);
-            temp = sdf_date_format.format(rolcale.getTime());
+            rolcale.add(type, span);
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
+            temp = dateFormat.format(rolcale.getTime());
             return temp;
         } catch (Exception e) {
             return "";
@@ -693,8 +730,8 @@ public class DateHelper {
      */
     public static String getSimpleDateFormat() {
         SimpleDateFormat formatter = new SimpleDateFormat();
-        String NDateTime = formatter.format(new Date());
-        return NDateTime;
+        String ndatetime = formatter.format(new Date());
+        return ndatetime;
     }
 
     /**
@@ -716,10 +753,12 @@ public class DateHelper {
         if (StringUtils.isEmpty(strDate)) {
             return -1;
         }
+        Calendar cale = Calendar.getInstance();
         Date curTime = cale.getTime();
         String strCurTime = null;
         try {
-            strCurTime = sdf_datetime_format.format(curTime);
+            SimpleDateFormat dateFormat = new SimpleDateFormat(DATETIME_FORMAT);
+            strCurTime = dateFormat.format(curTime);
         } catch (Exception e) {
             logger.debug("[Could not format '" + strDate + "' to a date, throwing exception:" + e.getLocalizedMessage() + "]");
 
@@ -734,16 +773,19 @@ public class DateHelper {
     /**
      * 为查询日期添加最小时间
      *
-     * @param param 目标类型Date
+     * @param date 目标类型Date
      * @return
      */
-    public static Date addStartTime(Date param) {
-        Date date = param;
+    public static Date addStartTime(Date date) {
+
+        Calendar calendar = Calendar.getInstance();
         try {
-            date.setHours(0);
-            date.setMinutes(0);
-            date.setSeconds(0);
-            return date;
+            calendar.setTime(date);
+            calendar.set(Calendar.HOUR, 0);
+            calendar.set(Calendar.MINUTE, 0);
+            calendar.set(Calendar.SECOND, 0);
+            return calendar.getTime();
+
         } catch (Exception ex) {
             return date;
         }
@@ -758,6 +800,7 @@ public class DateHelper {
      */
     public static Date addMinute(Date date, Integer minute) {
         try {
+            Calendar cale = Calendar.getInstance();
             cale.setTime(date);
             cale.add(Calendar.MINUTE, minute);
             return cale.getTime();
@@ -789,6 +832,7 @@ public class DateHelper {
 
         try {
 
+            Calendar cale = Calendar.getInstance();
             cale.setTime(date);
             cale.add(Calendar.SECOND, second);
             return cale.getTime();
@@ -811,16 +855,24 @@ public class DateHelper {
     /**
      * 为查询日期添加最大时间
      *
-     * @param param 转换参数Date
+     * @param date 转换参数Date
      * @return
      */
-    public static Date addEndTime(Date param) {
-        Date date = param;
+    public static Date addEndTime(Date date) {
+
+        Calendar calendar = Calendar.getInstance();
+//        Date date = param;
         try {
-            date.setHours(23);
-            date.setMinutes(59);
-            date.setSeconds(0);
-            return date;
+            calendar.setTime(date);
+
+            calendar.set(Calendar.HOUR, 23);
+
+            calendar.set(Calendar.MINUTE, 59);
+
+            calendar.set(Calendar.SECOND, 0);
+
+            return calendar.getTime();
+
         } catch (Exception ex) {
             return date;
         }
@@ -834,10 +886,14 @@ public class DateHelper {
      */
     @SuppressWarnings("deprecation")
     public static String getMonthLastDay(Integer month) {
-        Date date = new Date();
+
+
+        Calendar calendar = Calendar.getInstance();
+
+
         int[][] day = {{0, 30, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31},
                 {0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}};
-        Integer year = date.getYear() + 1900;
+        Integer year = calendar.get(Calendar.YEAR) + 1900;
         if (year % 4 == 0 && year % 100 != 0 || year % 400 == 0) {
             return day[1][month] + "";
         } else {
@@ -926,7 +982,8 @@ public class DateHelper {
 
         Date date = new Date();
         try {
-            date = sdf_datetime_format.parse(s);
+            SimpleDateFormat dateFormat = new SimpleDateFormat(DATETIME_FORMAT);
+            date = dateFormat.parse(s);
         } catch (Exception e) {
         }
 
@@ -948,8 +1005,7 @@ public class DateHelper {
         cal.setTime(fmt.parse(date));
         // 转成毫秒  增加一天  再转回来
         cal.setTimeInMillis(cal.getTimeInMillis() + n * 24 * 60 * 60 * 1000);
-        String tm_next = fmt.format(cal.getTime());
-        return tm_next;
+        return fmt.format(cal.getTime());
     }
 
     /**
@@ -957,23 +1013,20 @@ public class DateHelper {
      */
     public static String yesterDay8() {
         Calendar cal = Calendar.getInstance();
-        cal.setTimeInMillis(cal.getTimeInMillis() - 1 * 24 * 60 * 60 * 1000);
+        cal.setTimeInMillis(cal.getTimeInMillis() - 24 * 60 * 60 * 1000);
 
         DateFormat fmt = new SimpleDateFormat(DATE_FORMAT);
-        String tm_next = fmt.format(cal.getTime());
-        return tm_next + " 08:00";
+        String tmNext = fmt.format(cal.getTime());
+        return tmNext + " 08:00";
     }
 
 
     @Test
-    public void Test() {
+    public void test() {
 
         Date date = new Date();
 
-        Date s = addSecond(date, 5);
-
-        System.out.println(sdf_datetime_format.format(date));
-        System.out.println(sdf_datetime_format.format(s));
+        Date s = addSecond(date, 5); //System.out.println(SDF_DATETIME_FORMAT.format(date)); //System.out.println(SDF_DATETIME_FORMAT.format(s));
 
     }
 
@@ -982,6 +1035,7 @@ public class DateHelper {
      *
      * @return
      */
+    @Deprecated
     public static Integer getUnixTimeStamp() {
 
         return Math.toIntExact(System.currentTimeMillis() / 1000);
@@ -996,12 +1050,14 @@ public class DateHelper {
      * @return 返回结果 如："2016-09-05 16:06:42";
      */
     public static String timeStamp2Date(String timestampString, String formats) {
-        if (StringHelper.isNullOrWhiteSpace(formats)) {
+
+        if (Strings.isNullOrEmpty(formats)) {
             formats = DATETIME_FORMAT;
         }
         Long timestamp = Long.parseLong(timestampString) * 1000;
 
-        String date = sdf_datetime_format.format(new Date(timestamp));
+        SimpleDateFormat dateFormat = new SimpleDateFormat(formats);
+        String date = dateFormat.format(new Date(timestamp));
         ;
         return date;
     }
@@ -1017,14 +1073,12 @@ public class DateHelper {
     }
 
     @Test
-    public void Test2() {
-
-        System.out.println(Timestamp.valueOf("152911714000"));
-        System.out.println(new Date(Long.parseLong("152911714000")));
+    public void test2() { //System.out.println(Timestamp.valueOf("152911714000")); //System.out.println(new Date(Long.parseLong("152911714000")));
     }
 
     /**
      * 添加时间转
+     *
      * @param i
      * @return
      */
@@ -1033,7 +1087,32 @@ public class DateHelper {
 
     }
 
+
     public static String timeformat(Integer time) {
         return timeStamp2Date(time.toString());
+    }
+
+    /**
+     * 将时间分为固定段数
+     *
+     * @param startTime
+     * @param stopTime
+     * @param segment
+     * @return 每段开始、结束时间列表
+     */
+    public static List<Integer[]> splitTimeToFixedSeg(Integer startTime, Integer stopTime, Integer segment) {
+        List<Integer[]> timeRangeGroup = Lists.newArrayList();
+        Integer k = startTime;
+        while (k <= stopTime) {
+            Integer[] times = new Integer[2];
+            times[0] = k;
+            k += (stopTime - startTime) / segment;
+            times[1] = k;
+            timeRangeGroup.add(times);
+        }
+        if (timeRangeGroup.get(timeRangeGroup.size() - 1)[1] > stopTime) {
+            timeRangeGroup.remove(timeRangeGroup.size() - 1);
+        }
+        return timeRangeGroup;
     }
 }

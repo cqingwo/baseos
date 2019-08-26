@@ -2,7 +2,7 @@
  *
  *  * Copyright (C) 2017.
  *  * 用于JAVA项目开发
- *  * 重庆青沃科技有限公司 版权所有
+ *  * 重庆英卡电子有限公司 版权所有
  *  * Copyright (C)  2017.  CqingWo Systems Incorporated. All rights reserved.
  *
  */
@@ -10,6 +10,7 @@
 package com.cqwo.xxx.core.helper;
 
 import java.io.*;
+import java.util.Objects;
 
 /**
  * IO帮助类
@@ -24,11 +25,11 @@ public class IOHelper {
      * @param path
      * @return
      */
-    public static String GetRootPath(String path) {
+    public static String getRootPath(String path) {
 
-        String classPath=GetMapPath(path);
+        String classPath = getMapPath(path);
 
-        classPath=classPath.replace("WEB-INF\\", ""); //去掉WEB-INF\
+        classPath = classPath.replace("/WEB-INF", ""); //去掉WEB-INF\
 
         return classPath;
 
@@ -40,18 +41,17 @@ public class IOHelper {
      * @param path 文件名
      * @return
      */
-    public static String GetMapPath(String path) {
+    public static String getMapPath(String path) {
         //file:/D:/JavaWeb/.metadata/.me_tcat/webapps/TestBeanUtils/WEB-INF/classes/
 
 
+        String filepath = Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResource("")).getPath();
 
-        String filepath = Thread.currentThread().getContextClassLoader().getResource("").toString();
-
-        filepath = filepath.replace('/', '\\'); // 将/换成\
+//        filepath = filepath.replace('/', '\\'); // 将/换成\
         filepath = filepath.replace("file:", ""); //去掉file:
-        filepath = filepath.replace("classes\\", ""); //去掉class\
+        filepath = filepath.replace("/classes", ""); //去掉class\
         filepath = filepath.replace("%20", " ");
-        filepath = filepath.substring(1); //去掉第一个\,如 \D:\JavaWeb...
+//        filepath = filepath.substring(1); //去掉第一个\,如 \D:\JavaWeb...
         //System.out.println(path);
         return filepath + path;
     }
@@ -61,9 +61,9 @@ public class IOHelper {
      *
      * @return
      */
-    public static String GetMapPath() {
+    public static String getMapPath() {
 
-        return GetMapPath("");
+        return getMapPath("");
     }
 
 
@@ -73,9 +73,8 @@ public class IOHelper {
      * @param str 字符串
      * @return
      */
-    public static InputStream StringToInputStream(String str) {
-        ByteArrayInputStream stream = new ByteArrayInputStream(str.getBytes());
-        return stream;
+    public static InputStream stringToInputStream(String str) {
+        return new ByteArrayInputStream(str.getBytes());
     }
 
     /**
@@ -85,9 +84,9 @@ public class IOHelper {
      * @return
      * @throws IOException
      */
-    public static String InputStreamToString(InputStream inputStream) throws IOException {
+    public static String inputStreamToString(InputStream inputStream) throws IOException {
         BufferedReader in = new BufferedReader(new InputStreamReader(inputStream));
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         String line = "";
         while ((line = in.readLine()) != null) {
             buffer.append(line);

@@ -2,6 +2,7 @@ package com.cqwo.xxx.services;
 
 import com.cqwo.xxx.core.domain.base.BannedIPInfo;
 import com.cqwo.xxx.core.domain.base.BannedIPInfo;
+import com.cqwo.xxx.core.log.Logs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
@@ -42,7 +43,7 @@ public class BannedIPs {
         try {
             return bannedIPs.getBannedIPCount(condition);
         } catch (Exception e) {
-            logs.Write(e, "获得禁用IP数量失败");
+            logs.write(e, "获得禁用IP数量失败");
         }
         return 0;
     }
@@ -57,7 +58,7 @@ public class BannedIPs {
         try {
             return bannedIPs.createBannedIP(bannedipInfo);
         } catch (Exception e) {
-            logs.Write(e, "创建一条禁用IP数据失败");
+            logs.write(e, "创建一条禁用IP数据失败");
         }
         return null;
     }
@@ -71,7 +72,7 @@ public class BannedIPs {
         try {
             return bannedIPs.updateBannedIP(bannedipInfo);
         } catch (Exception e) {
-            logs.Write(e, "更新一条禁用IP数据异常");
+            logs.write(e, "更新一条禁用IP数据异常");
         }
 
         return null;
@@ -86,7 +87,7 @@ public class BannedIPs {
         try {
             bannedIPs.deleteBannedIPById(id);
         } catch (Exception e) {
-            logs.Write(e, "删除一条禁用IP数据异常");
+            logs.write(e, "删除一条禁用IP数据异常");
         }
     }
 
@@ -97,7 +98,7 @@ public class BannedIPs {
         try {
             bannedIPs.deleteBannedIPByIdList(idList);
         } catch (Exception e) {
-            logs.Write(e, "批量删除一批禁用IP数据异常");
+            logs.write(e, "批量删除一批禁用IP数据异常");
         }
     }
 
@@ -110,7 +111,7 @@ public class BannedIPs {
         try {
             return bannedIPs.getBannedIPById(id);
         } catch (Exception e) {
-            logs.Write(e, "获取一条禁用IP数据");
+            logs.write(e, "获取一条禁用IP数据");
         }
 
         return null;
@@ -131,7 +132,7 @@ public class BannedIPs {
         try {
             bannedIPList = bannedIPs.getBannedIPList(condition, sort);
         } catch (Exception e) {
-            logs.Write(e, "获得禁用IP数据列表异常");
+            logs.write(e, "获得禁用IP数据列表异常");
         }
 
         return bannedIPList;
@@ -154,7 +155,7 @@ public class BannedIPs {
         try {
             bannedIPList = bannedIPs.getBannedIPList(pageSize, pageNumber, condition, sort);
         } catch (Exception e) {
-            logs.Write(e, "获得禁用IP数据列表异常");
+            logs.write(e, "获得禁用IP数据列表异常");
         }
 
         return bannedIPList;

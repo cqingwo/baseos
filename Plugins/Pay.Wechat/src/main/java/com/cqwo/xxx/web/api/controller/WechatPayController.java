@@ -50,7 +50,7 @@ public class WechatPayController extends BaseApiController {
         String openId = workContext.getOpenId();
 
 
-        String attach = TypeHelper.DoubleToString(money);
+        String attach = TypeHelper.doubleToString(money);
 
         String ip = cwmUtils.getIP();
 
@@ -62,7 +62,7 @@ public class WechatPayController extends BaseApiController {
 
         notifyUrl = WebHelper.disposeUrl(notifyUrl);
 
-        logs.Write("notifyUrl:" + notifyUrl);
+        logs.write("notifyUrl:" + notifyUrl);
 
         //endregion  商户订单号
 
@@ -97,7 +97,7 @@ public class WechatPayController extends BaseApiController {
             return JsonView(SateCollect.SUCCESS, result, "支付成功");
 
         } catch (Exception e) {
-            logs.Write(MessageFormat.format("微信支付失败！订单号：{0},原因:{1}", outTradeNo, e.getMessage()));
+            logs.write(MessageFormat.format("微信支付失败！订单号：{0},原因:{1}", outTradeNo, e.getMessage()));
 
             return JsonView("支付失败，请稍后重试！");
         }

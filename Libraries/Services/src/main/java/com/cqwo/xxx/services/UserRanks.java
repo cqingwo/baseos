@@ -1,6 +1,7 @@
 package com.cqwo.xxx.services;
 
 import com.cqwo.xxx.core.domain.users.UserRankInfo;
+import com.cqwo.xxx.core.log.Logs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
@@ -38,7 +39,7 @@ public class UserRanks {
         try {
             return userRanks.getUserRankCount(condition);
         } catch (Exception e) {
-            logs.Write(e, "获得用户等级数量失败");
+            logs.write(e, "获得用户等级数量失败");
         }
         return 0;
     }
@@ -53,7 +54,7 @@ public class UserRanks {
         try {
             return userRanks.createUserRank(userrankInfo);
         } catch (Exception e) {
-            logs.Write(e, "创建一条用户等级数据失败");
+            logs.write(e, "创建一条用户等级数据失败");
         }
         return null;
     }
@@ -67,7 +68,7 @@ public class UserRanks {
         try {
             return userRanks.updateUserRank(userrankInfo);
         } catch (Exception e) {
-            logs.Write(e, "更新一条用户等级数据异常");
+            logs.write(e, "更新一条用户等级数据异常");
         }
 
         return null;
@@ -82,7 +83,7 @@ public class UserRanks {
         try {
             userRanks.deleteUserRankByUserRid(userRid);
         } catch (Exception e) {
-            logs.Write(e, "删除一条用户等级数据异常");
+            logs.write(e, "删除一条用户等级数据异常");
         }
     }
 
@@ -93,7 +94,7 @@ public class UserRanks {
         try {
             userRanks.deleteUserRankByUserRidList(userRidList);
         } catch (Exception e) {
-            logs.Write(e, "批量删除一批用户等级数据异常");
+            logs.write(e, "批量删除一批用户等级数据异常");
         }
     }
 
@@ -106,7 +107,7 @@ public class UserRanks {
         try {
             return userRanks.getUserRankByUserRid(userRid);
         } catch (Exception ex) {
-            logs.Write(ex, "获取一条用户等级数据");
+            logs.write(ex, "获取一条用户等级数据");
         }
 
         return new UserRankInfo();
@@ -127,7 +128,7 @@ public class UserRanks {
         try {
             userRankList = userRanks.getUserRankList(condition, sort);
         } catch (Exception e) {
-            logs.Write(e, "获得用户等级数据列表异常");
+            logs.write(e, "获得用户等级数据列表异常");
         }
 
         return userRankList;
@@ -144,7 +145,7 @@ public class UserRanks {
         try {
             userRankList = userRanks.getUserRankAllList();
         } catch (Exception e) {
-            logs.Write(e, "获得用户等级数据列表异常");
+            logs.write(e, "获得用户等级数据列表异常");
         }
 
         return userRankList;
@@ -167,7 +168,7 @@ public class UserRanks {
         try {
             userRankList = userRanks.getUserRankList(pageSize, pageNumber, condition, sort);
         } catch (Exception e) {
-            logs.Write(e, "获得用户等级数据列表异常");
+            logs.write(e, "获得用户等级数据列表异常");
         }
 
         return userRankList;
@@ -233,7 +234,7 @@ public class UserRanks {
             userRankList = userRanks.getAllUserRankList();
         } catch (Exception ex) {
 
-            logs.Write(ex, "获取全部用户组");
+            logs.write(ex, "获取全部用户组");
         }
 
         return userRankList;

@@ -6,15 +6,11 @@ import com.cqwo.xxx.core.domain.authors.AuthorPermissionInfo;
 import com.cqwo.xxx.core.domain.authors.AuthorRoleInfo;
 import com.cqwo.xxx.core.domain.authors.AuthorSessionInfo;
 import com.cqwo.xxx.core.helper.ListHelper;
+import com.cqwo.xxx.core.log.Logs;
 import com.cqwo.xxx.data.AuthorActions;
 import com.cqwo.xxx.data.AuthorPermissions;
 import com.cqwo.xxx.data.AuthorRoles;
 import com.cqwo.xxx.data.AuthorSessions;
-import com.cqwo.xxx.core.domain.authors.AuthorActionInfo;
-import com.cqwo.xxx.core.domain.authors.AuthorPermissionInfo;
-import com.cqwo.xxx.core.domain.authors.AuthorRoleInfo;
-import com.cqwo.xxx.core.domain.authors.AuthorSessionInfo;
-import com.cqwo.xxx.core.helper.ListHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
@@ -118,7 +114,7 @@ public class Authors {
 
         } catch (Exception ex) {
 
-            logs.Write(ex, "获取角色的分组信息");
+            logs.write(ex, "获取角色的分组信息");
         }
 
 
@@ -143,7 +139,7 @@ public class Authors {
         try {
             return authorRoles.getAuthorRoleCount(condition);
         } catch (Exception e) {
-            logs.Write(e, "获得用户分组表数量失败");
+            logs.write(e, "获得用户分组表数量失败");
         }
         return 0;
     }
@@ -158,7 +154,7 @@ public class Authors {
         try {
             return authorRoles.createAuthorRole(authorroleInfo);
         } catch (Exception e) {
-            logs.Write(e, "创建一条用户分组表数据失败");
+            logs.write(e, "创建一条用户分组表数据失败");
         }
         return null;
     }
@@ -172,7 +168,7 @@ public class Authors {
         try {
             return authorRoles.updateAuthorRole(authorroleInfo);
         } catch (Exception e) {
-            logs.Write(e, "更新一条用户分组表数据异常");
+            logs.write(e, "更新一条用户分组表数据异常");
         }
 
         return null;
@@ -187,7 +183,7 @@ public class Authors {
         try {
             authorRoles.deleteAuthorRoleByRoleId(roleId);
         } catch (Exception e) {
-            logs.Write(e, "删除一条用户分组表数据异常");
+            logs.write(e, "删除一条用户分组表数据异常");
         }
     }
 
@@ -198,7 +194,7 @@ public class Authors {
         try {
             authorRoles.deleteAuthorRoleByRoleIdList(roleIdList);
         } catch (Exception e) {
-            logs.Write(e, "批量删除一批用户分组表数据异常");
+            logs.write(e, "批量删除一批用户分组表数据异常");
         }
     }
 
@@ -211,7 +207,7 @@ public class Authors {
         try {
             return authorRoles.getAuthorRoleByRoleId(roleId);
         } catch (Exception e) {
-            logs.Write(e, "获取一条用户分组表数据");
+            logs.write(e, "获取一条用户分组表数据");
         }
 
         return null;
@@ -232,7 +228,7 @@ public class Authors {
         try {
             authorRoleList = authorRoles.getAuthorRoleList(condition, sort);
         } catch (Exception e) {
-            logs.Write(e, "获得用户分组表数据列表异常");
+            logs.write(e, "获得用户分组表数据列表异常");
         }
 
         return authorRoleList;
@@ -255,7 +251,7 @@ public class Authors {
         try {
             authorRoleList = authorRoles.getAuthorRoleList(pageSize, pageNumber, condition, sort);
         } catch (Exception e) {
-            logs.Write(e, "获得用户分组表数据列表异常");
+            logs.write(e, "获得用户分组表数据列表异常");
         }
 
         return authorRoleList;
@@ -277,7 +273,7 @@ public class Authors {
         try {
             return authorSessions.getAuthorSessionCount(condition);
         } catch (Exception e) {
-            logs.Write(e, "获得用户-组关联表数量失败");
+            logs.write(e, "获得用户-组关联表数量失败");
         }
         return 0;
     }
@@ -292,7 +288,7 @@ public class Authors {
         try {
             return authorSessions.createAuthorSession(authorsessionInfo);
         } catch (Exception e) {
-            logs.Write(e, "创建一条用户-组关联表数据失败");
+            logs.write(e, "创建一条用户-组关联表数据失败");
         }
         return null;
     }
@@ -306,7 +302,7 @@ public class Authors {
         try {
             return authorSessions.updateAuthorSession(authorsessionInfo);
         } catch (Exception e) {
-            logs.Write(e, "更新一条用户-组关联表数据异常");
+            logs.write(e, "更新一条用户-组关联表数据异常");
         }
 
         return null;
@@ -321,7 +317,7 @@ public class Authors {
         try {
             authorSessions.deleteAuthorSessionById(id);
         } catch (Exception e) {
-            logs.Write(e, "删除一条用户-组关联表数据异常");
+            logs.write(e, "删除一条用户-组关联表数据异常");
         }
     }
 
@@ -332,7 +328,7 @@ public class Authors {
         try {
             authorSessions.deleteAuthorSessionByIdList(idList);
         } catch (Exception e) {
-            logs.Write(e, "批量删除一批用户-组关联表数据异常");
+            logs.write(e, "批量删除一批用户-组关联表数据异常");
         }
     }
 
@@ -345,7 +341,7 @@ public class Authors {
         try {
             return authorSessions.getAuthorSessionById(id);
         } catch (Exception e) {
-            logs.Write(e, "获取一条用户-组关联表数据");
+            logs.write(e, "获取一条用户-组关联表数据");
         }
 
         return null;
@@ -366,7 +362,7 @@ public class Authors {
         try {
             authorSessionList = authorSessions.getAuthorSessionList(condition, sort);
         } catch (Exception e) {
-            logs.Write(e, "获得用户-组关联表数据列表异常");
+            logs.write(e, "获得用户-组关联表数据列表异常");
         }
 
         return authorSessionList;
@@ -389,7 +385,7 @@ public class Authors {
         try {
             authorSessionList = authorSessions.getAuthorSessionList(pageSize, pageNumber, condition, sort);
         } catch (Exception e) {
-            logs.Write(e, "获得用户-组关联表数据列表异常");
+            logs.write(e, "获得用户-组关联表数据列表异常");
         }
 
         return authorSessionList;
@@ -411,7 +407,7 @@ public class Authors {
         try {
             return authorPermissions.getAuthorPermissionCount(condition);
         } catch (Exception e) {
-            logs.Write(e, "获得角色许可表数量失败");
+            logs.write(e, "获得角色许可表数量失败");
         }
         return 0;
     }
@@ -426,7 +422,7 @@ public class Authors {
         try {
             return authorPermissions.createAuthorPermission(authorpermissionInfo);
         } catch (Exception e) {
-            logs.Write(e, "创建一条角色许可表数据失败");
+            logs.write(e, "创建一条角色许可表数据失败");
         }
         return null;
     }
@@ -440,7 +436,7 @@ public class Authors {
         try {
             return authorPermissions.updateAuthorPermission(authorpermissionInfo);
         } catch (Exception e) {
-            logs.Write(e, "更新一条角色许可表数据异常");
+            logs.write(e, "更新一条角色许可表数据异常");
         }
 
         return null;
@@ -455,7 +451,7 @@ public class Authors {
         try {
             authorPermissions.deleteAuthorPermissionById(id);
         } catch (Exception e) {
-            logs.Write(e, "删除一条角色许可表数据异常");
+            logs.write(e, "删除一条角色许可表数据异常");
         }
     }
 
@@ -466,7 +462,7 @@ public class Authors {
         try {
             authorPermissions.deleteAuthorPermissionByIdList(idList);
         } catch (Exception e) {
-            logs.Write(e, "批量删除一批角色许可表数据异常");
+            logs.write(e, "批量删除一批角色许可表数据异常");
         }
     }
 
@@ -479,7 +475,7 @@ public class Authors {
         try {
             return authorPermissions.getAuthorPermissionById(id);
         } catch (Exception e) {
-            logs.Write(e, "获取一条角色许可表数据");
+            logs.write(e, "获取一条角色许可表数据");
         }
 
         return null;
@@ -500,7 +496,7 @@ public class Authors {
         try {
             authorPermissionList = authorPermissions.getAuthorPermissionList(condition, sort);
         } catch (Exception e) {
-            logs.Write(e, "获得角色许可表数据列表异常");
+            logs.write(e, "获得角色许可表数据列表异常");
         }
 
         return authorPermissionList;
@@ -523,7 +519,7 @@ public class Authors {
         try {
             authorPermissionList = authorPermissions.getAuthorPermissionList(pageSize, pageNumber, condition, sort);
         } catch (Exception e) {
-            logs.Write(e, "获得角色许可表数据列表异常");
+            logs.write(e, "获得角色许可表数据列表异常");
         }
 
         return authorPermissionList;
@@ -545,7 +541,7 @@ public class Authors {
         try {
             return authorActions.getAuthorActionCount(condition);
         } catch (Exception e) {
-            logs.Write(e, "获得用户动作表数量失败");
+            logs.write(e, "获得用户动作表数量失败");
         }
         return 0;
     }
@@ -560,7 +556,7 @@ public class Authors {
         try {
             return authorActions.createAuthorAction(authoractionInfo);
         } catch (Exception e) {
-            logs.Write(e, "创建一条用户动作表数据失败");
+            logs.write(e, "创建一条用户动作表数据失败");
         }
         return null;
     }
@@ -574,7 +570,7 @@ public class Authors {
         try {
             return authorActions.updateAuthorAction(authoractionInfo);
         } catch (Exception e) {
-            logs.Write(e, "更新一条用户动作表数据异常");
+            logs.write(e, "更新一条用户动作表数据异常");
         }
 
         return null;
@@ -589,7 +585,7 @@ public class Authors {
         try {
             authorActions.deleteAuthorActionByAid(aid);
         } catch (Exception e) {
-            logs.Write(e, "删除一条用户动作表数据异常");
+            logs.write(e, "删除一条用户动作表数据异常");
         }
     }
 
@@ -600,7 +596,7 @@ public class Authors {
         try {
             authorActions.deleteAuthorActionByAidList(aidList);
         } catch (Exception e) {
-            logs.Write(e, "批量删除一批用户动作表数据异常");
+            logs.write(e, "批量删除一批用户动作表数据异常");
         }
     }
 
@@ -613,7 +609,7 @@ public class Authors {
         try {
             return authorActions.getAuthorActionByAid(aid);
         } catch (Exception e) {
-            logs.Write(e, "获取一条用户动作表数据");
+            logs.write(e, "获取一条用户动作表数据");
         }
 
         return null;
@@ -634,7 +630,7 @@ public class Authors {
         try {
             authorActionList = authorActions.getAuthorActionList(condition, sort);
         } catch (Exception e) {
-            logs.Write(e, "获得用户动作表数据列表异常");
+            logs.write(e, "获得用户动作表数据列表异常");
         }
 
         return authorActionList;
@@ -657,7 +653,7 @@ public class Authors {
         try {
             authorActionList = authorActions.getAuthorActionList(pageSize, pageNumber, condition, sort);
         } catch (Exception e) {
-            logs.Write(e, "获得用户动作表数据列表异常");
+            logs.write(e, "获得用户动作表数据列表异常");
         }
 
         return authorActionList;

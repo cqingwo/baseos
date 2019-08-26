@@ -2,7 +2,7 @@
  *
  *  * Copyright (C) 2017.
  *  * 用于JAVA项目开发
- *  * 重庆青沃科技有限公司 版权所有
+ *  * 重庆英卡电子有限公司 版权所有
  *  * Copyright (C)  2017.  CqingWo Systems Incorporated. All rights reserved.
  *
  */
@@ -31,8 +31,7 @@ public class FileHelper {
 	 *            文件夹
 	 */
 	public static void list(File path) {
-		if (!path.exists()) {
-			System.out.println("文件名称不存在!");
+		if (!path.exists()) { //System.out.println("文件名称不存在!");
 		} else {
 			if (path.isFile()) {
 				if (path.getName().toLowerCase().endsWith(".pdf")
@@ -40,8 +39,7 @@ public class FileHelper {
 						|| path.getName().toLowerCase().endsWith(".chm")
 						|| path.getName().toLowerCase().endsWith(".html")
 						|| path.getName().toLowerCase().endsWith(".htm")
-						|| path.getName().toLowerCase().endsWith(".xml")) {// 文件格式
-					System.out.println(path);
+						|| path.getName().toLowerCase().endsWith(".xml")) {// 文件格式 //System.out.println(path);
 					//System.out.println(path.getName());
 				}
 			} else {
@@ -99,8 +97,7 @@ public class FileHelper {
 		File target = new File("G:\\BaiduNetdiskDownload\\2");
 		list(file);
 		Date myDate = new Date(); 
-		DateFormat df = DateFormat.getDateInstance();
-		System.out.println(df.format(myDate));
+		DateFormat df = DateFormat.getDateInstance(); //System.out.println(df.format(myDate));
 
 		copy(file, target);
 

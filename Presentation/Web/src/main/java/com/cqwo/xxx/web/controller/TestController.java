@@ -1,9 +1,9 @@
 package com.cqwo.xxx.web.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.cqwo.xxx.services.*;
-import com.cqwo.xxx.core.domain.forums.ForumInfo;
-import com.cqwo.xxx.services.*;
+import com.cqwo.xxx.services.Persons;
+import com.cqwo.xxx.services.Users;
+import com.cqwo.xxx.services.WechatMiniUtils;
 import com.cqwo.xxx.web.framework.controller.BaseWebController;
 import com.cqwo.xxx.web.model.WxFireWarnViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,11 +25,6 @@ public class TestController extends BaseWebController {
     @Autowired
     WechatMiniUtils wechatMiniUtils;
 
-    @Autowired
-    ForumPraises forumPraises;
-
-    @Autowired
-    Forums forums;
 
     /**
      * hellow
@@ -40,9 +35,9 @@ public class TestController extends BaseWebController {
     public String hello() {
 
 
-        List<ForumInfo> forumInfoList = forums.getAroundForumList(0, 106.459071, 29.511619, 0.5);
 
-        return JSON.toJSONString(forumInfoList);
+
+        return JSON.toJSONString("");
 
 //        Users users = (Users) ApplicationContextHelper.getBean("Users");
 //

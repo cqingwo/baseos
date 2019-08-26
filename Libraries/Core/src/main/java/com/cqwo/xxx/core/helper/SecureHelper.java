@@ -2,7 +2,7 @@
  *
  *  * Copyright (C) 2017.
  *  * 用于JAVA项目开发
- *  * 重庆青沃科技有限公司 版权所有
+ *  * 重庆英卡电子有限公司 版权所有
  *  * Copyright (C)  2017.  CqingWo Systems Incorporated. All rights reserved.
  *
  */
@@ -21,21 +21,22 @@ import java.util.regex.Pattern;
  */
 public class SecureHelper {
 
-    private static final String _base64regex="[A-Za-z0-9\\=\\/\\+]";
+    private static final String BASE_64_REGEX = "[A-Za-z0-9=/+]";
 
 
     /**
      * AES加密
+     *
      * @param encryptStr
      * @param secretkey
      * @return
      */
     public static String aesEncrypt(String encryptStr, String secretkey) {
 
-        String returnStr="";
+        String returnStr = "";
         try {
-            returnStr=AESHelper.encode(encryptStr);
-        } catch (Exception e) {
+            returnStr = AESHelper.encode(encryptStr);
+        } catch (Exception ignored) {
 
         }
 
@@ -51,10 +52,10 @@ public class SecureHelper {
      */
     public static String aesDecrypt(String decryptStr, String secretkey) {
 
-        String returnStr="";
+        String returnStr = "";
         try {
-            returnStr=AESHelper.decode(decryptStr);
-        } catch (Exception e) {
+            returnStr = AESHelper.decode(decryptStr);
+        } catch (Exception ignored) {
         }
 
         return returnStr;
@@ -70,12 +71,12 @@ public class SecureHelper {
     public static String md5(String pwd) {
         try {
             //创建加密对象
-            MessageDigest digest=MessageDigest.getInstance("md5");
+            MessageDigest digest = MessageDigest.getInstance("md5");
             // 调用加密对象的方法，加密的动作已经完成
-            byte[] bytes=digest.digest(pwd.getBytes());
-            StringBuilder hexString= new StringBuilder();
+            byte[] bytes = digest.digest(pwd.getBytes());
+            StringBuilder hexString = new StringBuilder();
             for (byte b : bytes) {
-                Integer temp=b & 255;
+                int temp = b & 255;
                 if (temp < 16 && temp >= 0) {
                     // 手动补上一个“0”
                     hexString.append("0").append(Integer.toHexString(temp));
@@ -92,7 +93,7 @@ public class SecureHelper {
     /**
      * sha1算法
      *
-     * @param s
+     * @param s s
      * @return
      */
     public static String sha1(String s) {
@@ -108,11 +109,10 @@ public class SecureHelper {
     public static boolean isBase64String(String str) {
 
         if (str != null) {
-            return Pattern.matches(_base64regex, str);
+            return Pattern.matches(BASE_64_REGEX, str);
         }
         return true;
     }
-
 
 
 }

@@ -113,7 +113,7 @@ public class Users extends DataService {
      */
     public PartUserInfo getPartUserByUserName(String userName) throws IOException {
 
-        PartUserInfo userInfo = getCwmCache().getIcachestrategy().getValue(CacheKeys.GET_PARTUSER_USERNAME + userName, PartUserInfo.class);
+        PartUserInfo userInfo = getCwmCache().getValue(CacheKeys.GET_PARTUSER_USERNAME + userName, PartUserInfo.class);
 
 
 
@@ -121,7 +121,7 @@ public class Users extends DataService {
 
             userInfo = getCwmData().getIUserStrategy().getPartUserByUserName(userName);
 
-            getCwmCache().getIcachestrategy().setValue(CacheKeys.GET_PARTUSER_USERNAME + userName, userInfo);
+            getCwmCache().setValue(CacheKeys.GET_PARTUSER_USERNAME + userName, userInfo);
 
         }
 

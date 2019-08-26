@@ -1,6 +1,6 @@
 package com.cqwo.xxx.plugin.oauth.miniapp;
 
-import com.cqwo.xxx.services.Logs;
+import com.cqwo.xxx.core.log.Logs;
 import com.cqwo.xxx.core.plugin.interface2.IOAuthPlugin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -28,7 +28,7 @@ public class PluginService implements IOAuthPlugin {
     @PostConstruct
     @Override
     public void initPlugin() {
-        logs.Write("初始化插件");
+        logs.write("初始化插件");
         System.out.println("初始化插件");
     }
 }

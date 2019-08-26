@@ -2,7 +2,7 @@
  *
  *  * Copyright (C) 2017.
  *  * 用于JAVA项目开发
- *  * 重庆青沃科技有限公司 版权所有
+ *  * 重庆英卡电子有限公司 版权所有
  *  * Copyright (C)  2017.  CqingWo Systems Incorporated. All rights reserved.
  *
  */
@@ -51,10 +51,8 @@ public class XMLHelper {
 
         //如果目标文件所在的文件夹不存在
         if (!file.getParentFile().exists()) {// 判断目标文件所在的目录是否存在
-            // 如果目标文件所在的文件夹不存在，则创建父文件夹
-            System.out.println("目标文件所在目录不存在，准备创建它！");
-            if (!file.getParentFile().mkdirs()) {// 判断创建目录是否成功
-                System.out.println("创建目标文件所在的目录失败！");
+            // 如果目标文件所在的文件夹不存在，则创建父文件夹 //System.out.println("目标文件所在目录不存在，准备创建它！");
+            if (!file.getParentFile().mkdirs()) {// 判断创建目录是否成功 //System.out.println("创建目标文件所在的目录失败！");
             }
         }
 
@@ -62,9 +60,7 @@ public class XMLHelper {
         if(!file.exists())
         {
             file.createNewFile();
-        }
-
-        System.out.println(obj);
+        } //System.out.println(obj);
         //创建文件输出流
         FileOutputStream fos = new FileOutputStream(file);
 
@@ -95,8 +91,7 @@ public class XMLHelper {
             // 将对象转换成输出流形式的xml  
             // 创建输出流
             OutputStreamWriter out = null;
-            try {
-                System.out.println(path);
+            try { //System.out.println(path);
                 out = new OutputStreamWriter(new FileOutputStream(path),"UTF-8");
 
             } catch (IOException e) {

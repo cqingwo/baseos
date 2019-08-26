@@ -72,7 +72,7 @@ public class BaseAdminController extends BaseController {
         /**
          * 判断是否为ajax
          */
-        if (WebHelper.IsAjax(request)) {
+        if (WebHelper.isAjax(request)) {
             this.workContext.setHttpAjax(true);
         }
 
@@ -94,7 +94,7 @@ public class BaseAdminController extends BaseController {
 
 
 
-            int uid = TypeHelper.ObjectToInt(SecurityUtils.getSubject().getPrincipal());
+            int uid = TypeHelper.objectToInt(SecurityUtils.getSubject().getPrincipal());
             ;
             this.workContext.setUid(uid);
             if (uid >= 1) {

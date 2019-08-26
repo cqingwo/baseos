@@ -7,9 +7,8 @@
  *
  */
 
-package com.cqwo.xxx.services;
+package com.cqwo.xxx.core.log;
 
-import com.cqwo.xxx.core.log.ILogStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +28,7 @@ public class Logs {
      *
      * @param message 消息
      */
-    public void Write(String message)
+    public void write(String message)
     {
         ilogstrategy.write(message);
     }
@@ -43,7 +42,7 @@ public class Logs {
      * 写入日志
      * @param ex 异常对象
      */
-    public  void Write(Exception ex) {
+    public  void write(Exception ex) {
         ilogstrategy.write(MessageFormat.format("方法:{0},异常信息:{1}", ex.getStackTrace(), ex.getMessage()));
     }
 
@@ -52,7 +51,7 @@ public class Logs {
      * @param ex 异常
      * @param message 消息
      */
-    public void Write(Exception ex, String message) {
+    public void write(Exception ex, String message) {
 
         ilogstrategy.write(MessageFormat.format("异常描述:{0},方法:{1},异常信息:{2}", message, ex.getStackTrace(), ex.getMessage()));
 

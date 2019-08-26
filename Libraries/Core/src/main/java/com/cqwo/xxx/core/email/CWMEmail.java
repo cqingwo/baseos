@@ -9,6 +9,7 @@
 
 package com.cqwo.xxx.core.email;
 
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
  */
 
 @Service(value = "CWMEmail")
+@Getter
 public class CWMEmail {
 
     /**
@@ -25,13 +27,6 @@ public class CWMEmail {
     @Autowired(required = false)
     private IEmailStrategy iEmailStrategy;
 
-    public IEmailStrategy getiEmailStrategy() {
-        return iEmailStrategy;
-    }
-
-    public void setiEmailStrategy(IEmailStrategy iEmailStrategy) {
-        this.iEmailStrategy = iEmailStrategy;
-    }
 
 
 }

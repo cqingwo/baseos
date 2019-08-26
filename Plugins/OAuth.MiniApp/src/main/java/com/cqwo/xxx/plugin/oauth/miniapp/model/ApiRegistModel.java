@@ -13,7 +13,7 @@ package com.cqwo.xxx.plugin.oauth.miniapp.model;
  * Created by Administrator on 2017/12/25.
  */
 
-import org.hibernate.validator.constraints.NotBlank;
+import javax.validation.constraints.NotBlank;
 
 /**
  * 用户注册

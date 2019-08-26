@@ -8,6 +8,7 @@ package com.cqwo.xxx.services;/*
  */
 
 
+import com.cqwo.xxx.core.log.Logs;
 import com.cqwo.xxx.core.upload.CWMUpload;
 import com.cqwo.xxx.core.upload.UploadFileInfo;
 import com.cqwo.xxx.core.upload.CWMUpload;
@@ -44,9 +45,9 @@ public class Uploads {
         List<UploadFileInfo> uploadFileList = new ArrayList<UploadFileInfo>();
 
         try {
-            uploadFileList = cwmUpload.getiUploadStrategy().fileUpload(s);
+            uploadFileList = cwmUpload.getIUploadStrategy().fileUpload(s);
         } catch (Exception e) {
-            logs.Write(e, "文件上传失败");
+            logs.write(e, "文件上传失败");
         }
 
         return uploadFileList;
@@ -62,10 +63,10 @@ public class Uploads {
 
         String token = null;
         try {
-            token = cwmUpload.getiUploadStrategy().getUpToken();
+            token = cwmUpload.getIUploadStrategy().getUpToken();
         } catch (Exception ex) {
 
-            logs.Write(ex, "获取客户端token");
+            logs.write(ex, "获取客户端token");
         }
         return token;
     }

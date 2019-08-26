@@ -2,6 +2,7 @@ package com.cqwo.xxx.services;
 
 import com.cqwo.xxx.core.domain.base.RegionInfo;
 import com.cqwo.xxx.core.domain.base.RegionInfo;
+import com.cqwo.xxx.core.log.Logs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
@@ -40,7 +41,7 @@ public class Regions {
         try {
             return regions.getRegionCount(condition);
         } catch (Exception e) {
-            logs.Write(e, "获得区域信息数量失败");
+            logs.write(e, "获得区域信息数量失败");
         }
         return 0;
     }
@@ -55,7 +56,7 @@ public class Regions {
         try {
             return regions.createRegion(regionInfo);
         } catch (Exception e) {
-            logs.Write(e, "创建一条区域信息数据失败");
+            logs.write(e, "创建一条区域信息数据失败");
         }
         return null;
     }
@@ -69,7 +70,7 @@ public class Regions {
         try {
             return regions.updateRegion(regionInfo);
         } catch (Exception e) {
-            logs.Write(e, "更新一条区域信息数据异常");
+            logs.write(e, "更新一条区域信息数据异常");
         }
 
         return null;
@@ -84,7 +85,7 @@ public class Regions {
         try {
             regions.deleteRegionByRegionid(regionid);
         } catch (Exception e) {
-            logs.Write(e, "删除一条区域信息数据异常");
+            logs.write(e, "删除一条区域信息数据异常");
         }
     }
 
@@ -95,7 +96,7 @@ public class Regions {
         try {
             regions.deleteRegionByRegionidList(regionidList);
         } catch (Exception e) {
-            logs.Write(e, "批量删除一批区域信息数据异常");
+            logs.write(e, "批量删除一批区域信息数据异常");
         }
     }
 
@@ -108,7 +109,7 @@ public class Regions {
         try {
             return regions.getRegionByRegionid(regionid);
         } catch (Exception e) {
-            logs.Write(e, "获取一条区域信息数据");
+            logs.write(e, "获取一条区域信息数据");
         }
 
         return null;
@@ -129,7 +130,7 @@ public class Regions {
         try {
             regionList = regions.getRegionList(condition, sort);
         } catch (Exception e) {
-            logs.Write(e, "获得区域信息数据列表异常");
+            logs.write(e, "获得区域信息数据列表异常");
         }
 
         return regionList;
@@ -152,7 +153,7 @@ public class Regions {
         try {
             regionList = regions.getRegionList(pageSize, pageNumber, condition, sort);
         } catch (Exception e) {
-            logs.Write(e, "获得区域信息数据列表异常");
+            logs.write(e, "获得区域信息数据列表异常");
         }
 
         return regionList;

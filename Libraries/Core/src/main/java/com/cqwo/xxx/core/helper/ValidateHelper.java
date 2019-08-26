@@ -2,13 +2,15 @@
  *
  *  * Copyright (C) 2017.
  *  * 用于JAVA项目开发
- *  * 重庆青沃科技有限公司 版权所有
+ *  * 重庆英卡电子有限公司 版权所有
  *  * Copyright (C)  2017.  CqingWo Systems Incorporated. All rights reserved.
  *
  */
 
 package com.cqwo.xxx.core.helper;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -36,6 +38,7 @@ public class ValidateHelper {
      */
     public final static String ENGLISH_OR_CHINESE_REGEX = "^[A-Za-z]*|[\u4E00-\u9FA5]*$";
 
+
     /***************************************************************************
      * 匹配英文字母 或者汉字 如"Shenzhen" "深圳"
      *
@@ -53,6 +56,7 @@ public class ValidateHelper {
         }
         return flag;
     }
+
 
     /***************************************************************************
      * 匹配英中文姓名 与英文名 英文名格式为：姓与名之间用/隔开 例如Green/Jim King
@@ -408,13 +412,14 @@ public class ValidateHelper {
      */
     public static boolean isValidHour(String hour) {
         boolean flag = false;
-        Pattern pattern = Pattern.compile(HOUR_REGEX);
+        String reg = HOUR_REGEX;
+        Pattern pattern = Pattern.compile(reg);
         if (hour != null) {
             Matcher matcher = pattern.matcher(hour);
             flag = matcher.matches();
-            Integer firstNum = Integer.parseInt(hour.substring(0, 1));
+            int firstNum = Integer.parseInt(hour.substring(0, 1));
             if (flag && firstNum == 2) {
-                Integer secondNum = Integer.parseInt(hour.substring(1, 2));
+                int secondNum = Integer.parseInt(hour.substring(1, 2));
                 flag = secondNum < 4; // 时间小于24时
             }
         }
@@ -542,6 +547,20 @@ public class ValidateHelper {
         return year % 4 == 0 && year % 100 != 0 || year % 400 == 0;
     }
 
+    /**
+     * 产品名称
+     */
+    public final static String PRODUCT_NAME_REGEX = "^[a-z0-9][a-z0-9]{2,19}$";
+
+    /**
+     * 协议名称
+     */
+    public final static String PROTOCOL_CODE_REGEX = "^[A-Za-z0-9][0-9A-Za-z]{1,19}$";
+
+    /**
+     * 参数
+     */
+    public final static String PARAM_CODE_REGEX = "^[a-zA-Z][0-9A-Za-z]{0,19}$";
 
     public final static String USER_NAME_REGEX = "^[a-zA-Z][a-zA-Z0-9]{5,19}$";
 
@@ -598,7 +617,7 @@ public class ValidateHelper {
     /**
      * 验证网址Url
      */
-    public final static String URL_REGEX = "http(s)?://([\\w-]+\\.)+[\\w-]+(/[\\w- ./?%&=]*)?";
+    public final static String URL_REGEX = "^(http)(s)?://([\\w-:]+\\.)+[\\w-:]+(/[\\w- ./?%&=]*)?";
 
     /**
      * 验证网址Url
@@ -614,7 +633,7 @@ public class ValidateHelper {
     /***************************************************************************
      * 验证输入密码条件(字符与数据同时出现)
      */
-    public final static String PASSWORD_REGEX = "[A-Za-z]+[0-9]{6,18}";
+    public final static String PASSWORD_REGEX = "[A-Za-z0-9]+[A-Za-z0-9]{6,18}";
 
 
     /**
@@ -699,11 +718,97 @@ public class ValidateHelper {
      * @param str   验证字符串
      * @return
      */
-    private static boolean match(String regex, String str) {
-
+    public static boolean match(String regex, String str) {
         return Pattern.matches(regex, str);
 
     }
 
+
+//    /**
+//     * 正则验证
+//     *
+//     * @param regex 正则表达式
+//     * @param str   验证字符串
+//     * @return
+//     */
+//    public static boolean match(String regex, String str) {
+//
+//        return Pattern.matches(regex, str);
+//
+//    }
+
+
+    /**
+     * 查找串,返回第一个
+     *
+     * @param regex
+     * @param str
+     * @return
+     */
+    public static List<String> find(String regex, String str) {
+
+        List<String> list = new ArrayList<>();
+
+        // 创建 Pattern 对象
+        Pattern r = Pattern.compile(regex);
+        // 现在创建 matcher 对象
+        Matcher m = r.matcher(str);
+
+        while (m.find()) {
+
+            int n = m.groupCount();
+
+            //System.out.println(n);
+
+            for (int i = 0; i <= n; i++) {
+                list.add(m.group(i));
+            }
+
+        }
+
+        return list;
+    }
+
+    /**
+     * 查找串,返回第一个
+     *
+     * @param regex
+     * @param str
+     * @return
+     */
+    public static String findOne(String regex, String str) {
+
+        List<String> list = new ArrayList<>();
+
+        // 创建 Pattern 对象
+        Pattern r = Pattern.compile(regex);
+        // 现在创建 matcher 对象
+        Matcher m = r.matcher(str);
+
+        if (m.find()) {
+            return m.group(0);
+        }
+
+        return "";
+    }
+
+
+    public static Pattern compile(String s) {
+        return Pattern.compile(s);
+    }
+
+    public static void main(String[] args) {
+
+        String ss = "http://192.168.1.188:8026/receive";
+
+
+        if (isUrl(ss)) {
+
+            // System.out.println("是网址");
+        } else {
+            // System.out.println("不是网址");
+        }
+
+    }
 
 }

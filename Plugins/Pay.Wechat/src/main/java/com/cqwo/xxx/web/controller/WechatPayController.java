@@ -24,7 +24,7 @@ public class WechatPayController extends BaseWebController {
     @ResponseBody
     public void notify2() {
 
-        logs.Write("===============支付回调开始====================");
+        logs.write("===============支付回调开始====================");
 
         try {
             String xmlResult = IOUtils.toString(request.getInputStream(), request.getCharacterEncoding());
@@ -34,19 +34,19 @@ public class WechatPayController extends BaseWebController {
             // 结果正确
             String outTradeNo = result.getOutTradeNo();
 
-            logs.Write("outTradeNo:" + outTradeNo);
+            logs.write("outTradeNo:" + outTradeNo);
 
 
 
             String tradeNo = result.getTransactionId();
 
 
-            logs.Write("tradeNo:" + tradeNo);
+            logs.write("tradeNo:" + tradeNo);
 
-            double totalFee = TypeHelper.StringToDouble(fenToYuan(result.getTotalFee()));
+            double totalFee = TypeHelper.stringToDouble(fenToYuan(result.getTotalFee()));
 
 
-            logs.Write("totalFee:" + totalFee);
+            logs.write("totalFee:" + totalFee);
 
 
 
@@ -54,7 +54,7 @@ public class WechatPayController extends BaseWebController {
             return;
 
         } catch (Exception e) {
-            logs.Write(e, "微信回调结果异常");
+            logs.write(e, "微信回调结果异常");
             logs.info("微信回调结果异常");
             return;
         }

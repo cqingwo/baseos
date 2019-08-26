@@ -5,7 +5,9 @@ import com.cqwo.xxx.core.domain.authors.AuthorRoleInfo;
 import com.cqwo.xxx.core.domain.users.PartUserInfo;
 import com.cqwo.xxx.core.domain.users.UserRankInfo;
 import com.cqwo.xxx.core.helper.DateHelper;
+import com.cqwo.xxx.core.helper.UnixTimeHelper;
 import com.cqwo.xxx.core.helper.ValidateHelper;
+import com.cqwo.xxx.core.log.Logs;
 import com.cqwo.xxx.services.*;
 import com.cqwo.xxx.web.framework.model.UserTokenPasswordToken;
 import org.apache.shiro.SecurityUtils;
@@ -65,13 +67,13 @@ public class TokenRealm extends AuthorizingRealm {
         //检测账号类型
         if (ValidateHelper.isValidEmail(account)) {
             userInfo = users.getPartUserByEmail(account);
-            logs.Write("邮箱登录");
+            logs.write("邮箱登录");
         } else if (ValidateHelper.isValidMobile(account)) {
             userInfo = users.getPartUserByMobile(account);
-            logs.Write("手机登录");
+            logs.write("手机登录");
         } else {
             userInfo = users.getPartUserByUserName(account);
-            logs.Write("账号登录");
+            logs.write("账号登录");
         }
 
         SimpleAuthorizationInfo auth = new SimpleAuthorizationInfo();
@@ -125,13 +127,13 @@ public class TokenRealm extends AuthorizingRealm {
         //检测账号类型
         if (ValidateHelper.isValidEmail(account)) {
             userInfo = users.getPartUserByEmail(account);
-            logs.Write("邮箱登录");
+            logs.write("邮箱登录");
         } else if (ValidateHelper.isValidMobile(account)) {
             userInfo = users.getPartUserByMobile(account);
-            logs.Write("手机登录");
+            logs.write("手机登录");
         } else {
             userInfo = users.getPartUserByUserName(account);
-            logs.Write("账号登录");
+            logs.write("账号登录");
         }
 
 
@@ -160,7 +162,7 @@ public class TokenRealm extends AuthorizingRealm {
 
         }
 
-        if (userInfo.getLiftBanTime() >= DateHelper.getUnixTimeStamp())//达到解禁时间
+        if (userInfo.getLiftBanTime() >= UnixTimeHelper.getUnixTimeStamp())//达到解禁时间
         {
             throw new LockedAccountException("您的账号当前被锁定,不能访问");
         }

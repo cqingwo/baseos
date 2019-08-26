@@ -2,6 +2,7 @@ package com.cqwo.xxx.services;
 
 import com.cqwo.xxx.core.domain.users.OnlineTimeInfo;
 import com.cqwo.xxx.core.domain.users.OnlineTimeInfo;
+import com.cqwo.xxx.core.log.Logs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
@@ -41,7 +42,7 @@ public class OnlineTimes {
         try {
             return onlineTimes.getOnlineTimeCount(condition);
         } catch (Exception e) {
-            logs.Write(e, "获得在线时间统计数量失败");
+            logs.write(e, "获得在线时间统计数量失败");
         }
         return 0;
     }
@@ -56,7 +57,7 @@ public class OnlineTimes {
         try {
             return onlineTimes.createOnlineTime(onlinetimeInfo);
         } catch (Exception e) {
-            logs.Write(e, "创建一条在线时间统计数据失败");
+            logs.write(e, "创建一条在线时间统计数据失败");
         }
         return null;
     }
@@ -70,7 +71,7 @@ public class OnlineTimes {
         try {
             return onlineTimes.updateOnlineTime(onlinetimeInfo);
         } catch (Exception e) {
-            logs.Write(e, "更新一条在线时间统计数据异常");
+            logs.write(e, "更新一条在线时间统计数据异常");
         }
 
         return null;
@@ -85,7 +86,7 @@ public class OnlineTimes {
         try {
             onlineTimes.deleteOnlineTimeById(id);
         } catch (Exception e) {
-            logs.Write(e, "删除一条在线时间统计数据异常");
+            logs.write(e, "删除一条在线时间统计数据异常");
         }
     }
 
@@ -96,7 +97,7 @@ public class OnlineTimes {
         try {
             onlineTimes.deleteOnlineTimeByIdList(idList);
         } catch (Exception e) {
-            logs.Write(e, "批量删除一批在线时间统计数据异常");
+            logs.write(e, "批量删除一批在线时间统计数据异常");
         }
     }
 
@@ -109,7 +110,7 @@ public class OnlineTimes {
         try {
             return onlineTimes.getOnlineTimeById(id);
         } catch (Exception e) {
-            logs.Write(e, "获取一条在线时间统计数据");
+            logs.write(e, "获取一条在线时间统计数据");
         }
 
         return null;
@@ -130,7 +131,7 @@ public class OnlineTimes {
         try {
             onlineTimeList = onlineTimes.getOnlineTimeList(condition, sort);
         } catch (Exception e) {
-            logs.Write(e, "获得在线时间统计数据列表异常");
+            logs.write(e, "获得在线时间统计数据列表异常");
         }
 
         return onlineTimeList;
@@ -153,7 +154,7 @@ public class OnlineTimes {
         try {
             onlineTimeList = onlineTimes.getOnlineTimeList(pageSize, pageNumber, condition, sort);
         } catch (Exception e) {
-            logs.Write(e, "获得在线时间统计数据列表异常");
+            logs.write(e, "获得在线时间统计数据列表异常");
         }
 
         return onlineTimeList;

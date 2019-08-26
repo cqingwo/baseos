@@ -2,7 +2,7 @@
  *
  *  * Copyright (C) 2017.
  *  * 用于JAVA项目开发
- *  * 重庆青沃科技有限公司 版权所有
+ *  * 重庆英卡电子有限公司 版权所有
  *  * Copyright (C)  2017.  CqingWo Systems Incorporated. All rights reserved.
  *
  */
@@ -15,7 +15,7 @@ import net.sourceforge.pinyin4j.format.HanyuPinyinOutputFormat;
 import net.sourceforge.pinyin4j.format.HanyuPinyinToneType;
 import net.sourceforge.pinyin4j.format.HanyuPinyinVCharType;
 import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
-  
+
 /**
  * 汉字转全拼或者首字母拼音
  * @author Administrator
@@ -32,9 +32,9 @@ public class PinyinHepler {
     public static String getPinYin(String src) {  
         char[] t1 = null;  
         t1 = src.toCharArray();  
-        // System.out.println(t1.length);  
+        // //System.out.println(t1.length);  
         String[] t2 = new String[t1.length];  
-        // System.out.println(t2.length);  
+        // //System.out.println(t2.length);  
         // 设置汉字拼音输出的格式  
         HanyuPinyinOutputFormat t3 = new HanyuPinyinOutputFormat();  
         t3.setCaseType(HanyuPinyinCaseType.LOWERCASE);  
@@ -45,7 +45,7 @@ public class PinyinHepler {
         try {  
             for (Integer i = 0; i < t0; i++) {  
                 // 判断是否为汉字字符  
-                // System.out.println(t1[i]);  
+                // //System.out.println(t1[i]);  
                 if (Character.toString(t1[i]).matches("[\\u4E00-\\u9FA5]+")) {  
                     t2 = PinyinHelper.toHanyuPinyinStringArray(t1[i], t3);// 将汉字的几种全拼都存到t2数组中  
                     t4 += t2[0];// 取出该汉字全拼的第一种读音并连接到字符串t4后  
@@ -94,7 +94,7 @@ public class PinyinHepler {
         // 将字符串转换成字节序列  
         byte[] bGBK = cnStr.getBytes();  
         for (Integer i = 0; i < bGBK.length; i++) {  
-            // System.out.println(Integer.toHexString(bGBK[i] & 0xff));  
+            // //System.out.println(Integer.toHexString(bGBK[i] & 0xff));  
             // 将每个字符转换成ASCII码  
             strBuf.append(Integer.toHexString(bGBK[i] & 0xff)+" ");  
         }  
@@ -103,10 +103,7 @@ public class PinyinHepler {
   
     
     public static void main(String[] args) {  
-        String cnStr = "中华人民";  
-        System.out.println(getPinYin(cnStr));  
-        System.out.println(getPinYinHeadChar(cnStr));  
-        System.out.println(getCnASCII(cnStr));  
+        String cnStr = "中华人民"; //System.out.println(getPinYin(cnStr)); //System.out.println(getPinYinHeadChar(cnStr)); //System.out.println(getCnASCII(cnStr));  
     }  
   
 }  

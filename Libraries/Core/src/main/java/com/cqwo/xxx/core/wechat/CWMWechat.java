@@ -12,10 +12,12 @@
 package com.cqwo.xxx.core.wechat;
 
 
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service(value = "CWMWechat")
+@Getter
 public class CWMWechat {
 
     /**
@@ -38,27 +40,4 @@ public class CWMWechat {
     private IWechatPayStrategy iWechatPayStrategy;
 
 
-    public IMiniAppStrategy getiMiniAppStrategy() {
-        return iMiniAppStrategy;
-    }
-
-    public void setiMiniAppStrategy(IMiniAppStrategy iMiniAppStrategy) {
-        this.iMiniAppStrategy = iMiniAppStrategy;
-    }
-
-    public IWechatMPStrategy getiWechatMPStrategy() {
-        return iWechatMPStrategy;
-    }
-
-    public void setiWechatMPStrategy(IWechatMPStrategy iWechatMPStrategy) {
-        this.iWechatMPStrategy = iWechatMPStrategy;
-    }
-
-    public IWechatPayStrategy getiWechatPayStrategy() {
-        return iWechatPayStrategy;
-    }
-
-    public void setiWechatPayStrategy(IWechatPayStrategy iWechatPayStrategy) {
-        this.iWechatPayStrategy = iWechatPayStrategy;
-    }
 }

@@ -1,5 +1,6 @@
 package com.cqwo.xxx.services;
 
+import com.cqwo.xxx.core.log.Logs;
 import com.github.binarywang.wxpay.bean.notify.WxPayOrderNotifyResult;
 import com.github.binarywang.wxpay.bean.request.WxPayUnifiedOrderRequest;
 import com.github.binarywang.wxpay.service.EntPayService;
@@ -25,9 +26,9 @@ public class WechatPayUtils {
     public EntPayService getEntPayService() {
 
         try {
-            return cwmWechat.getiWechatPayStrategy().getEntPayService();
+            return cwmWechat.getIWechatPayStrategy().getEntPayService();
         } catch (Exception ex) {
-            logs.Write(ex, "获取支付服务");
+            logs.write(ex, "获取支付服务");
         }
 
         return null;
@@ -43,9 +44,9 @@ public class WechatPayUtils {
 
         boolean isSuccess = false;
         try {
-            return cwmWechat.getiWechatPayStrategy().setConfig();
+            return cwmWechat.getIWechatPayStrategy().setConfig();
         } catch (Exception ex) {
-            logs.Write(ex, "配置参数,预留");
+            logs.write(ex, "配置参数,预留");
         }
         return isSuccess;
     }
@@ -59,9 +60,9 @@ public class WechatPayUtils {
     public Object createOrder(WxPayUnifiedOrderRequest orderRequest) {
 
         try {
-            return cwmWechat.getiWechatPayStrategy().createOrder(orderRequest);
+            return cwmWechat.getIWechatPayStrategy().createOrder(orderRequest);
         } catch (Exception ex) {
-            logs.Write(ex, "配置参数,预留");
+            logs.write(ex, "配置参数,预留");
         }
         return null;
     }
@@ -75,9 +76,9 @@ public class WechatPayUtils {
      */
     public WxPayOrderNotifyResult parseOrderNotifyResult(String xmlResult) {
         try {
-            return cwmWechat.getiWechatPayStrategy().parseOrderNotifyResult(xmlResult);
+            return cwmWechat.getIWechatPayStrategy().parseOrderNotifyResult(xmlResult);
         } catch (Exception ex) {
-            logs.Write(ex, "配置参数,预留");
+            logs.write(ex, "配置参数,预留");
         }
         return null;
     }

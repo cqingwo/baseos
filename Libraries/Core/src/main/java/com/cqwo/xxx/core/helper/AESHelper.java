@@ -3,7 +3,7 @@
  *  *
  *  *  * Copyright (C) 2018.
  *  *  * 用于JAVA项目开发
- *  *  * 重庆青沃科技有限公司 版权所有
+ *  *  * 重庆英卡电子有限公司 版权所有
  *  *  * Copyright (C)  2018.  CqingWo Systems Incorporated. All rights reserved.
  *  *
  *
@@ -12,11 +12,10 @@
 package com.cqwo.xxx.core.helper;
 
 import com.alibaba.fastjson.JSON;
-import com.cqwo.xxx.core.domain.users.UserTokenInfo;
 
 import javax.crypto.*;
 import javax.crypto.spec.SecretKeySpec;
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
@@ -24,7 +23,7 @@ import java.util.Objects;
 
 public class AESHelper {
 
-    static final String ALGORITHM_STR = "AES/ECB/PKCS5Padding";
+    private static final String ALGORITHM_STR = "AES/ECB/PKCS5Padding";
 
     private static final Object TAG = "AES";
 
@@ -32,11 +31,11 @@ public class AESHelper {
 
     static private Cipher cipher;
 
-    static boolean isInited = false;
+    private static boolean isInited = false;
 
-    private static  void init() {
+    private static void init() {
         try {
-            /**为指定算法生成一个 KeyGenerator 对象。
+            /*为指定算法生成一个 KeyGenerator 对象。
              *此类提供（对称）密钥生成器的功能。
              *密钥生成器是使用此类的某个 getInstance 类方法构造的。
              *KeyGenerator 对象可重复使用，也就是说，在生成密钥后，
@@ -70,9 +69,7 @@ public class AESHelper {
         try {
             // 生成一个实现指定转换的 Cipher 对象。
             cipher = Cipher.getInstance(ALGORITHM_STR);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (NoSuchPaddingException e) {
+        } catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
             e.printStackTrace();
         }
         //标识已经初始化过了的字段
@@ -93,7 +90,7 @@ public class AESHelper {
         if (!isInited) {
             init();
         }
-        /**
+        /*
          *类 SecretKeySpec
          *可以使用此类来根据一个字节数组构造一个 SecretKey，
          *而无须通过一个（基于 provider 的）SecretKeyFactory。
@@ -111,56 +108,46 @@ public class AESHelper {
         try {
             //按单部分操作加密或解密数据，或者结束一个多部分操作。(不知道神马意思)
             encryptedText = cipher.doFinal(content);
-        } catch (IllegalBlockSizeException e) {
-            e.printStackTrace();
-        } catch (BadPaddingException e) {
+        } catch (IllegalBlockSizeException | BadPaddingException e) {
             e.printStackTrace();
         }
         return encryptedText;
     }
 
-    private static byte[] encrypt(String content, String password) {
+    /**
+     * 加密
+     *
+     * @param content  内容
+     * @param password 密码
+     */
+    public static byte[] encrypt(String content, String password) {
         try {
             byte[] keyStr = getKey(password);
             SecretKeySpec key = new SecretKeySpec(keyStr, "AES");
             Cipher cipher = Cipher.getInstance(ALGORITHM_STR);//ALGORITHM_STR
-            byte[] byteContent = content.getBytes("utf-8");
+            byte[] byteContent = content.getBytes(StandardCharsets.UTF_8);
             cipher.init(Cipher.ENCRYPT_MODE, key);//   ʼ  
-            byte[] result = cipher.doFinal(byteContent);
-            return result; //     
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (NoSuchPaddingException e) {
-            e.printStackTrace();
-        } catch (InvalidKeyException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        } catch (IllegalBlockSizeException e) {
-            e.printStackTrace();
-        } catch (BadPaddingException e) {
+            return cipher.doFinal(byteContent); //
+        } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    private static byte[] decrypt(byte[] content, String password) {
+    /**
+     * 解密
+     *
+     * @param content  内容
+     * @param password 密码
+     */
+    public static byte[] decrypt(byte[] content, String password) {
         try {
             byte[] keyStr = getKey(password);
             SecretKeySpec key = new SecretKeySpec(keyStr, "AES");
             Cipher cipher = Cipher.getInstance(ALGORITHM_STR);//ALGORITHM_STR
             cipher.init(Cipher.DECRYPT_MODE, key);//   ʼ  
-            byte[] result = cipher.doFinal(content);
-            return result; //     
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (NoSuchPaddingException e) {
-            e.printStackTrace();
-        } catch (InvalidKeyException e) {
-            e.printStackTrace();
-        } catch (IllegalBlockSizeException e) {
-            e.printStackTrace();
-        } catch (BadPaddingException e) {
+            return cipher.doFinal(content); //
+        } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException e) {
             e.printStackTrace();
         }
         return null;
@@ -168,9 +155,9 @@ public class AESHelper {
 
     private static byte[] getKey(String password) {
         byte[] rByte = null;
-        if (password!=null) {
+        if (password != null) {
             rByte = password.getBytes();
-        }else{
+        } else {
             rByte = new byte[24];
         }
         return rByte;
@@ -178,12 +165,12 @@ public class AESHelper {
 
     /**
      * 将二进制转换成16进制
-     * @param buf
-     * @return
+     *
+     * @param buf buf
      */
     public static String parseByte2HexStr(byte[] buf) {
-        StringBuffer sb = new StringBuffer();
-        for (Integer i = 0; i < buf.length; i++) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < buf.length; i++) {
             String hex = Integer.toHexString(buf[i] & 0xFF);
             if (hex.length() == 1) {
                 hex = '0' + hex;
@@ -195,17 +182,17 @@ public class AESHelper {
 
     /**
      * 将16进制转换为二进制
-     * @param hexStr
-     * @return
+     *
+     * @param hexStr hexStr
      */
     public static byte[] parseHexStr2Byte(String hexStr) {
         if (hexStr.length() < 1) {
             return null;
         }
         byte[] result = new byte[hexStr.length() / 2];
-        for (Integer i = 0; i < hexStr.length() / 2; i++) {
-            Integer high = Integer.parseInt(hexStr.substring(i * 2, i * 2 + 1), 16);
-            Integer low = Integer.parseInt(hexStr.substring(i * 2 + 1, i * 2 + 2),
+        for (int i = 0; i < hexStr.length() / 2; i++) {
+            int high = Integer.parseInt(hexStr.substring(i * 2, i * 2 + 1), 16);
+            int low = Integer.parseInt(hexStr.substring(i * 2 + 1, i * 2 + 2),
                     16);
             result[i] = (byte) (high * 16 + low);
         }
@@ -216,46 +203,23 @@ public class AESHelper {
     private static final String KEY_BYTES = "cx33MyJmbPhaeqbB";
 
     /**
-     *加密
+     * 加密
      */
-    public static String encode(String content){
+    public static String encode(String content) {
         //加密之后的字节数组,转成16进制的字符串形式输出
         return parseByte2HexStr(Objects.requireNonNull(encrypt(content, KEY_BYTES)));
     }
 
     /**
-     *解密
+     * 解密
      */
-    public static String decode(String content){
+    public static String decode(String content) {
         //解密之前,先将输入的字符串按照16进制转成二进制的字节数组,作为待解密的内容输入
         byte[] b = decrypt(parseHexStr2Byte(content), KEY_BYTES);
-        return new String(b);
+        return new String(b != null ? b : new byte[0]);
     }
 
-    //测试用例
 
-    public static void test1(){
-
-        UserTokenInfo userToken = new UserTokenInfo(1, "sawqwq", "1311535288");
-
-        String content = JSON.toJSONString(userToken);
-
-
-        String pStr = encode(content);
-        System.out.println("加密前："+content);
-        System.out.println("加密后:" + pStr);
-
-        String postStr = decode(pStr);
-        System.out.println("解密后："+ postStr );
-
-        UserTokenInfo userToken1 = JSON.parseObject(postStr, UserTokenInfo.class);
-
-        System.out.println("还原token:" + userToken1.toString());
-    }
-
-    public static void main(String[] args) {
-        test1();
-    }
 
 
 }

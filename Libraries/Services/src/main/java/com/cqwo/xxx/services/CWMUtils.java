@@ -12,6 +12,8 @@ package com.cqwo.xxx.services;
 import com.cqwo.xxx.core.config.CWMConfig;
 import com.cqwo.xxx.core.domain.users.PartUserInfo;
 import com.cqwo.xxx.core.helper.*;
+import com.cqwo.xxx.core.log.Logs;
+import com.google.common.base.Strings;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,7 +48,6 @@ public class CWMUtils {
     }
 
 
-
     //region  加密/解密
 
     /// <summary>
@@ -57,7 +58,7 @@ public class CWMUtils {
         try {
             return AESHelper.encode(encryptStr);
         } catch (Exception e) {
-            logs.Write(e, "AES加密");
+            logs.write(e, "AES加密");
         }
         return "";
     }
@@ -70,7 +71,7 @@ public class CWMUtils {
         try {
             return AESHelper.decode(decryptStr);
         } catch (Exception e) {
-            logs.Write(e, "AES解密");
+            logs.write(e, "AES解密");
         }
         return "";
     }
@@ -103,7 +104,7 @@ public class CWMUtils {
      * @return
      */
     public Integer getUidCookie() {
-        return TypeHelper.StringToInt(GetCWMCookie("uid"), -1);
+        return TypeHelper.stringToInt(GetCWMCookie("uid"), -1);
     }
 
     /**
@@ -114,7 +115,7 @@ public class CWMUtils {
 
     public void setUidCookie(HttpServletResponse response, Integer uid) {
 
-        WebHelper.setCookie(response, "uid", TypeHelper.IntToString(uid));
+        WebHelper.setCookie(response, "uid", TypeHelper.intToString(uid));
 
     }
 
@@ -178,7 +179,7 @@ public class CWMUtils {
     /// <param name="expires">过期时间</param>
     public void SetUserCookie(HttpServletResponse response, PartUserInfo partUserInfo, Integer expires) {
 
-        String json = JsonHelper.object2Json(partUserInfo).toString();
+        String json = JsonHelper.object2json(partUserInfo).toString();
 
         SetCWMCookie(response, "userinfo", WebHelper.urlEncode(json), expires);
         setUidCookie(response, partUserInfo.getUid());
@@ -398,7 +399,7 @@ public class CWMUtils {
      * @return int
      */
     public Integer getParameterInt(String key, Integer defaultValue) {
-        return TypeHelper.StringToInt(request.getParameter(key), defaultValue);
+        return TypeHelper.stringToInt(request.getParameter(key), defaultValue);
     }
 
 
@@ -458,7 +459,7 @@ public class CWMUtils {
         try {
             return getParameterString("sn", "");
         } catch (Exception ex) {
-            logs.Write(ex, "获取机器编码");
+            logs.write(ex, "获取机器编码");
         }
         return "";
 
@@ -489,7 +490,7 @@ public class CWMUtils {
     public String getApiOpenIdHeader() {
         String s = WebHelper.getApiOpenIdHeader(request);
 
-        if (StringHelper.IsNullOrWhiteSpace(s)) {
+        if (Strings.isNullOrEmpty(s)) {
             s = "";
         }
 
@@ -504,7 +505,7 @@ public class CWMUtils {
     public String getApiKeyHeader() {
 
         String s = WebHelper.getApiKeyHeader(request);
-        if (StringHelper.IsNullOrWhiteSpace(s)) {
+        if (Strings.isNullOrEmpty(s)) {
             s = "";
         }
 
@@ -520,7 +521,7 @@ public class CWMUtils {
     public String getApiSecretHeader() {
 
         String s = WebHelper.getOpenIdHeader(request);
-        if (StringHelper.IsNullOrWhiteSpace(s)) {
+        if (Strings.isNullOrEmpty(s)) {
             s = "";
         }
 
@@ -536,7 +537,7 @@ public class CWMUtils {
     public String getOpenIdHeader() {
 
         String s = WebHelper.getOpenIdHeader(request);
-        if (StringHelper.IsNullOrWhiteSpace(s)) {
+        if (Strings.isNullOrEmpty(s)) {
             s = "";
         }
 
@@ -551,7 +552,7 @@ public class CWMUtils {
     public String getSessionIdHeader() {
 
         String s = WebHelper.getSessionIdHeader(request);
-        if (StringHelper.IsNullOrWhiteSpace(s)) {
+        if (Strings.isNullOrEmpty(s)) {
             s = "";
         }
 
@@ -567,7 +568,7 @@ public class CWMUtils {
      */
     public String getUserAgent() {
         String s = WebHelper.getUserAgent(request);
-        if (StringHelper.IsNullOrWhiteSpace(s)) {
+        if (Strings.isNullOrEmpty(s)) {
             s = "";
         }
 
@@ -584,7 +585,7 @@ public class CWMUtils {
         try {
             return WebHelper.getIP(request);
         } catch (Exception ex) {
-            logs.Write(ex, "");
+            logs.write(ex, "");
         }
 
         return "127.0.0.1";

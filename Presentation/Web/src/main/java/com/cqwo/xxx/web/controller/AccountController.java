@@ -18,6 +18,7 @@ import com.cqwo.xxx.web.framework.model.UserTokenPasswordToken;
 import com.cqwo.xxx.web.framework.validate.ValidateModel;
 import com.cqwo.xxx.web.framework.validate.ValidationResult;
 import com.cqwo.xxx.web.model.AccountLoginModel;
+import com.google.common.base.Strings;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.subject.Subject;
@@ -75,7 +76,7 @@ public class AccountController extends BaseWebController {
             String kaptchaValue = (String) session.getAttribute(com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY);
 
             //比较输入的验证码和实际生成的验证码是否相同
-            if (StringHelper.isEmpty(kaptchaValue) || !model.getVerifyCode().equalsIgnoreCase(kaptchaValue)) {
+            if (Strings.isNullOrEmpty(kaptchaValue) || !model.getVerifyCode().equalsIgnoreCase(kaptchaValue)) {
                 //return PromptView("验证码不正确");
             }
 
@@ -96,24 +97,24 @@ public class AccountController extends BaseWebController {
                 return PromptView(loginUrl, "未找到用户信息" + ex.getMessage());
 
             } catch (IncorrectCredentialsException ex) { //账号密码错误
-                logs.Write(ex);
+                logs.write(ex);
                 return PromptView(loginUrl, "账号密码错误" + ex.getMessage());
 
             } catch (LockedAccountException ex) { //账户锁定
 
-                logs.Write(ex);
+                logs.write(ex);
                 return PromptView(loginUrl, "账号被锁定" + ex.getMessage());
 
             } catch (ExcessiveAttemptsException ex) { //登录次数超出限制
-                logs.Write(ex);
+                logs.write(ex);
                 return PromptView(loginUrl, "登录次数超出限制" + ex.getMessage());
 
             } catch (AuthenticationException ex) { //用户异常
-                logs.Write(ex);
+                logs.write(ex);
                 return PromptView(loginUrl, "用户异常" + ex.getMessage());
                 //unexpected error?
             } catch (Exception ex) { //其它异常信息
-                logs.Write(ex);
+                logs.write(ex);
 
                 return PromptView(loginUrl, ex.getMessage());
             }

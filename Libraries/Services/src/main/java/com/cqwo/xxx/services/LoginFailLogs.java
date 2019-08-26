@@ -4,6 +4,7 @@ import com.cqwo.xxx.core.domain.users.LoginFailLogInfo;
 import com.cqwo.xxx.core.helper.WebHelper;
 import com.cqwo.xxx.core.domain.users.LoginFailLogInfo;
 import com.cqwo.xxx.core.helper.WebHelper;
+import com.cqwo.xxx.core.log.Logs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
@@ -45,7 +46,7 @@ public class LoginFailLogs {
         try {
             return loginFailLogs.getLoginFailLogCount(condition);
         } catch (Exception e) {
-            logs.Write(e, "获得登录日志数量失败");
+            logs.write(e, "获得登录日志数量失败");
         }
         return 0;
     }
@@ -60,7 +61,7 @@ public class LoginFailLogs {
         try {
             return loginFailLogs.createLoginFailLog(loginfaillogInfo);
         } catch (Exception e) {
-            logs.Write(e, "创建一条登录日志数据失败");
+            logs.write(e, "创建一条登录日志数据失败");
         }
         return null;
     }
@@ -74,7 +75,7 @@ public class LoginFailLogs {
         try {
             return loginFailLogs.updateLoginFailLog(loginfaillogInfo);
         } catch (Exception e) {
-            logs.Write(e, "更新一条登录日志数据异常");
+            logs.write(e, "更新一条登录日志数据异常");
         }
 
         return null;
@@ -89,7 +90,7 @@ public class LoginFailLogs {
         try {
             loginFailLogs.deleteLoginFailLogById(id);
         } catch (Exception e) {
-            logs.Write(e, "删除一条登录日志数据异常");
+            logs.write(e, "删除一条登录日志数据异常");
         }
     }
 
@@ -100,7 +101,7 @@ public class LoginFailLogs {
         try {
             loginFailLogs.deleteLoginFailLogByIdList(idList);
         } catch (Exception e) {
-            logs.Write(e, "批量删除一批登录日志数据异常");
+            logs.write(e, "批量删除一批登录日志数据异常");
         }
     }
 
@@ -113,7 +114,7 @@ public class LoginFailLogs {
         try {
             return loginFailLogs.getLoginFailLogById(id);
         } catch (Exception e) {
-            logs.Write(e, "获取一条登录日志数据");
+            logs.write(e, "获取一条登录日志数据");
         }
 
         return null;
@@ -134,7 +135,7 @@ public class LoginFailLogs {
         try {
             loginFailLogList = loginFailLogs.getLoginFailLogList(condition, sort);
         } catch (Exception e) {
-            logs.Write(e, "获得登录日志数据列表异常");
+            logs.write(e, "获得登录日志数据列表异常");
         }
 
         return loginFailLogList;
@@ -157,7 +158,7 @@ public class LoginFailLogs {
         try {
             loginFailLogList = loginFailLogs.getLoginFailLogList(pageSize, pageNumber, condition, sort);
         } catch (Exception e) {
-            logs.Write(e, "获得登录日志数据列表异常");
+            logs.write(e, "获得登录日志数据列表异常");
         }
 
         return loginFailLogList;

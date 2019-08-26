@@ -78,13 +78,13 @@ public class Categorys extends DataService {
      **/
     public CategoryInfo getCategoryByCateId(Integer cateId) throws IOException {
 
-        CategoryInfo categoryInfo = getCwmCache().getIcachestrategy().getValue(CacheKeys.CATEGORY_CATEGORYINFO_CATEID + cateId, CategoryInfo.class);
+        CategoryInfo categoryInfo = getCwmCache().getValue(CacheKeys.CATEGORY_CATEGORYINFO_CATEID + cateId, CategoryInfo.class);
 
 
         if (categoryInfo == null) {
 
             categoryInfo = getCwmData().getIBaseStrategy().getCategoryByCateId(cateId);
-            getCwmCache().getIcachestrategy().setValue(CacheKeys.CATEGORY_CATEGORYINFO_CATEID + cateId, categoryInfo);
+            getCwmCache().setValue(CacheKeys.CATEGORY_CATEGORYINFO_CATEID + cateId, categoryInfo);
         }
 
         return categoryInfo;
@@ -124,12 +124,12 @@ public class Categorys extends DataService {
      */
     public List<CategoryInfo> getAllCateInfoList() throws IOException {
 
-        List<CategoryInfo> categoryInfoList = getCwmCache().getIcachestrategy().getListValue(CacheKeys.CATEGORY_ALLCATEINFOLIST, CategoryInfo.class);
+        List<CategoryInfo> categoryInfoList = getCwmCache().getListValue(CacheKeys.CATEGORY_ALLCATEINFOLIST, CategoryInfo.class);
 
         if (categoryInfoList == null) {
 
             categoryInfoList = getCwmData().getIBaseStrategy().getAllCateInfoList();
-            getCwmCache().getIcachestrategy().setListValue(CacheKeys.CATEGORY_ALLCATEINFOLIST, categoryInfoList);
+            getCwmCache().setListValue(CacheKeys.CATEGORY_ALLCATEINFOLIST, categoryInfoList);
         }
 
         return categoryInfoList;
@@ -144,12 +144,12 @@ public class Categorys extends DataService {
      */
     public List<CategoryInfo> getCategoryList(Integer typeId, Integer parentId) throws Exception {
 
-        List<CategoryInfo> categoryInfoList = getCwmCache().getIcachestrategy().getListValue(CacheKeys.CATEGORY_TYPEID_PARENTID_LIST + typeId + parentId, CategoryInfo.class);
+        List<CategoryInfo> categoryInfoList = getCwmCache().getListValue(CacheKeys.CATEGORY_TYPEID_PARENTID_LIST + typeId + parentId, CategoryInfo.class);
 
         if (categoryInfoList == null) {
 
             categoryInfoList = getCwmData().getIBaseStrategy().getCategoryList(typeId, parentId);
-            getCwmCache().getIcachestrategy().setListValue(CacheKeys.CATEGORY_TYPEID_PARENTID_LIST + typeId + parentId, categoryInfoList);
+            getCwmCache().setListValue(CacheKeys.CATEGORY_TYPEID_PARENTID_LIST + typeId + parentId, categoryInfoList);
         }
 
 

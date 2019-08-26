@@ -30,18 +30,18 @@ public class ConfigStrategy implements IConfigStrategy {
 
     @Override
     public boolean saveBaseConfig(BaseConfigInfo configInfo) {
-        cwmCache.getIcachestrategy().delete(baseConfigName);
+        cwmCache.delete(baseConfigName);
         return saveSYSConfig(baseConfigName, configInfo);
     }
 
     @Override
     public BaseConfigInfo getBaseConfig() {
 
-        BaseConfigInfo configInfo = cwmCache.getIcachestrategy().getValue(baseConfigName, BaseConfigInfo.class);
+        BaseConfigInfo configInfo = cwmCache.getValue(baseConfigName, BaseConfigInfo.class);
 
         if (configInfo == null) {
             configInfo = getSysConfig(baseConfigName, BaseConfigInfo.class);
-            cwmCache.getIcachestrategy().setValue(baseConfigName, configInfo);
+            cwmCache.setValue(baseConfigName, configInfo);
         }
 
         return configInfo;
@@ -49,17 +49,17 @@ public class ConfigStrategy implements IConfigStrategy {
 
     @Override
     public boolean saveEmailConfig(EmailConfigInfo configInfo) {
-        cwmCache.getIcachestrategy().delete(emailConfigName);
+        cwmCache.delete(emailConfigName);
         return saveSYSConfig(emailConfigName, configInfo);
     }
 
     @Override
     public EmailConfigInfo getEmailConfig() {
 
-        EmailConfigInfo configInfo = cwmCache.getIcachestrategy().getValue(emailConfigName, EmailConfigInfo.class);
+        EmailConfigInfo configInfo = cwmCache.getValue(emailConfigName, EmailConfigInfo.class);
         if (configInfo == null) {
             configInfo = getSysConfig(emailConfigName, EmailConfigInfo.class);
-            cwmCache.getIcachestrategy().setValue(baseConfigName, configInfo);
+            cwmCache.setValue(baseConfigName, configInfo);
         }
         return configInfo;
     }
@@ -67,17 +67,17 @@ public class ConfigStrategy implements IConfigStrategy {
     @Override
     public boolean saveSMSConfig(SMSConfigInfo configInfo) {
 
-        cwmCache.getIcachestrategy().delete(smsConfigName);
+        cwmCache.delete(smsConfigName);
         return saveSYSConfig(smsConfigName, configInfo);
     }
 
     @Override
     public SMSConfigInfo getSMSConfig() {
 
-        SMSConfigInfo configInfo = cwmCache.getIcachestrategy().getValue(smsConfigName, SMSConfigInfo.class);
+        SMSConfigInfo configInfo = cwmCache.getValue(smsConfigName, SMSConfigInfo.class);
         if (configInfo == null) {
             configInfo = getSysConfig(smsConfigName, SMSConfigInfo.class);
-            cwmCache.getIcachestrategy().setValue(smsConfigName, configInfo);
+            cwmCache.setValue(smsConfigName, configInfo);
         }
         return configInfo;
 
@@ -86,7 +86,7 @@ public class ConfigStrategy implements IConfigStrategy {
     @Override
     public boolean saveWechatConfig(WechatConfigInfo configInfo) {
 
-        cwmCache.getIcachestrategy().delete(wechatconfigName);
+        cwmCache.delete(wechatconfigName);
         return saveSYSConfig(wechatconfigName, configInfo);
     }
 
@@ -94,10 +94,10 @@ public class ConfigStrategy implements IConfigStrategy {
     @Override
     public WechatConfigInfo getWechatConfig() {
 
-        WechatConfigInfo configInfo = cwmCache.getIcachestrategy().getValue(smsConfigName, WechatConfigInfo.class);
+        WechatConfigInfo configInfo = cwmCache.getValue(smsConfigName, WechatConfigInfo.class);
         if (configInfo == null) {
             configInfo = getSysConfig(smsConfigName, WechatConfigInfo.class);
-            cwmCache.getIcachestrategy().setValue(smsConfigName, configInfo);
+            cwmCache.setValue(smsConfigName, configInfo);
         }
         return configInfo;
     }

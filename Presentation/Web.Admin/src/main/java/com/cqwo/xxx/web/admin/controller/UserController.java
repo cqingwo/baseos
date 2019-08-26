@@ -15,6 +15,7 @@ import com.cqwo.xxx.web.framework.controller.BaseAdminController;
 import com.cqwo.xxx.web.framework.model.PageModel;
 import com.cqwo.xxx.web.framework.validate.ValidateModel;
 import com.cqwo.xxx.web.framework.validate.ValidationResult;
+import com.google.common.base.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
@@ -119,7 +120,7 @@ public class UserController extends BaseAdminController {
         model.setUserName(userInfo.getUserName());
         model.setEmail(userInfo.getEmail());
         model.setMobile(userInfo.getMobile());
-        if (!StringHelper.isEmpty(model.getPassword())) {
+        if (!Strings.isNullOrEmpty(model.getPassword())) {
             model.setPassword(model.getPassword());
         }
         model.setUserRid(userInfo.getUserRid());
@@ -139,7 +140,7 @@ public class UserController extends BaseAdminController {
             SelectListItem item = new SelectListItem();
 
             item.setText(info.getTitle());
-            item.setValue(TypeHelper.IntToString(info.getUserRid()));
+            item.setValue(TypeHelper.intToString(info.getUserRid()));
 
 
             if (info.getUserRid().equals(userInfo.getUserRid())) {
@@ -219,7 +220,7 @@ public class UserController extends BaseAdminController {
 
         } catch (Exception ex) {
 
-            logs.Write(ex, "用户信息发生故障");
+            logs.write(ex, "用户信息发生故障");
         } finally {
             lock.unlock();
         }

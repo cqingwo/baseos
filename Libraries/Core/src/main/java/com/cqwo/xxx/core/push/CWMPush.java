@@ -26,12 +26,4 @@ public class CWMPush {
      */
     @Autowired(required = false)
     private IPushStrategy iPushStrategy;
-
-    public IPushStrategy getiPushStrategy() {
-        return iPushStrategy;
-    }
-
-    public void setiPushStrategy(IPushStrategy iPushStrategy) {
-        this.iPushStrategy = iPushStrategy;
-    }
 }

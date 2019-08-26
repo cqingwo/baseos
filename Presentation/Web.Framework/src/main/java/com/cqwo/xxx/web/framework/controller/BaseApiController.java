@@ -84,7 +84,7 @@ public class BaseApiController extends BaseController {
         /**
          * 判断是否为ajax
          */
-        if (WebHelper.IsAjax(request)) {
+        if (WebHelper.isAjax(request)) {
             this.workContext.setHttpAjax(true);
         }
 
@@ -140,7 +140,7 @@ public class BaseApiController extends BaseController {
             }
         } catch (Exception ex) {
 
-            logs.Write(ex, "上午文处理报错");
+            logs.write(ex, "上午文处理报错");
             System.out.println("上下文处理报错:" + ex.toString());
         }
 

@@ -4,9 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.cqwo.xxx.core.cache.ICacheStrategy;
-import com.cqwo.xxx.core.helper.StringHelper;
-import com.cqwo.xxx.core.cache.ICacheStrategy;
-import com.cqwo.xxx.core.helper.StringHelper;
+import com.google.common.base.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +24,9 @@ public class RedisStrategy implements ICacheStrategy {
     /**
      * 日志记录
      */
-    protected Logger logger = LoggerFactory.getLogger(this.getClass());
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    protected RedisTemplate redisTemplate;
+    private RedisTemplate redisTemplate;
 
     protected int timeout = 60;
 
@@ -50,14 +48,14 @@ public class RedisStrategy implements ICacheStrategy {
 //     * 测试打印
 //     */
 //    @Override
-//    public String print() {
+//    public String Print() {
 //
 //        ValueOperations<String, Object> valueops = redisTemplate
 //                .opsForValue();
 //        valueops.set("222", "测试打印");
 //
 //
-//        System.out.print("测试打印");
+//        //System.out.print("测试打印");
 //        return (String) valueops.get("222");
 //    }
 
@@ -73,10 +71,9 @@ public class RedisStrategy implements ICacheStrategy {
 
             ValueOperations<String, String> valueops = redisTemplate.opsForValue();
 
-
             String s = valueops.get(key);
 
-            if (s.isEmpty()) {
+            if (Strings.isNullOrEmpty(s)) {
                 return null;
             }
 
@@ -105,7 +102,7 @@ public class RedisStrategy implements ICacheStrategy {
 
             String s = valueops.get(key);
 
-            if (s.isEmpty()) {
+            if (Strings.isNullOrEmpty(s)) {
                 return null;
             }
 
@@ -126,6 +123,11 @@ public class RedisStrategy implements ICacheStrategy {
      */
     @Override
     public void setValue(String key, Object object) {
+
+        if (object == null) {
+            return;
+        }
+
         setValue(key, object, 60, TimeUnit.MINUTES);
     }
 
@@ -140,8 +142,9 @@ public class RedisStrategy implements ICacheStrategy {
     public void setValue(String key, Object object, Integer timeout, TimeUnit timeUnit) {
 
         try {
-            object = object == null ? new Object() : object;
-
+            if (object == null) {
+                return;
+            }
 
             ValueOperations<String, Object> valueops = redisTemplate.opsForValue();
 
@@ -162,17 +165,22 @@ public class RedisStrategy implements ICacheStrategy {
     @Override
     public <T> List<T> getListValue(String key, Class<T> clz) {
 
+        try {
 
-        ValueOperations<String, String> valueops = redisTemplate.opsForValue();
+            ValueOperations<String, String> valueops = redisTemplate.opsForValue();
 
-        String s = valueops.get(key);
+            String s = valueops.get(key);
 
-        if (StringHelper.isEmpty(s)) {
-            return null;
+            if (Strings.isNullOrEmpty(s)) {
+                return null;
+            }
+
+            return JSONArray.parseArray(s, clz);
+
+        } catch (Exception ignored) {
+
         }
-
-
-        return JSONArray.parseArray(s, clz);
+        return null;
     }
 
     /**
@@ -196,13 +204,19 @@ public class RedisStrategy implements ICacheStrategy {
     @Override
     public void setListValue(String key, List<?> list, Integer timeout, TimeUnit timeUnit) {
 
-        list = list == null ? new ArrayList<>() : list;
+        try {
 
-        String s = JSONObject.toJSONString(list);
+            list = list == null ? new ArrayList<>() : list;
 
-        ValueOperations<String, Object> valueops = redisTemplate.opsForValue();
+            String s = JSONObject.toJSONString(list);
 
-        valueops.set(key, s, timeout, timeUnit);
+            ValueOperations<String, Object> valueops = redisTemplate.opsForValue();
+
+            valueops.set(key, s, timeout, timeUnit);
+
+        } catch (Exception ignored) {
+
+        }
     }
 
     /**
@@ -213,10 +227,16 @@ public class RedisStrategy implements ICacheStrategy {
     @Override
     public boolean delete(String key) {
 
-        return redisTemplate.delete(key);
+        try {
+            return redisTemplate.delete(key);
+
+        } catch (Exception ignored) {
+
+        }
+        return false;
+
 
     }
-
 
 
 }

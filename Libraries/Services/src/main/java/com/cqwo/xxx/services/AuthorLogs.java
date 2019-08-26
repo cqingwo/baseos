@@ -3,6 +3,7 @@ package com.cqwo.xxx.services;
 
 import com.cqwo.xxx.core.domain.authors.AuthorLogInfo;
 import com.cqwo.xxx.core.domain.authors.AuthorLogInfo;
+import com.cqwo.xxx.core.log.Logs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
@@ -42,7 +43,7 @@ public class AuthorLogs {
         try {
             return authorLogs.getAuthorLogCount(condition);
         } catch (Exception e) {
-            logs.Write(e, "获得管理员日志数量失败");
+            logs.write(e, "获得管理员日志数量失败");
         }
         return 0;
     }
@@ -57,7 +58,7 @@ public class AuthorLogs {
         try {
             return authorLogs.createAuthorLog(authorLogInfo);
         } catch (Exception e) {
-            logs.Write(e, "创建一条管理员日志数据失败");
+            logs.write(e, "创建一条管理员日志数据失败");
         }
         return null;
     }
@@ -71,7 +72,7 @@ public class AuthorLogs {
         try {
             return authorLogs.updateAuthorLog(authorLogInfo);
         } catch (Exception e) {
-            logs.Write(e, "更新一条管理员日志数据异常");
+            logs.write(e, "更新一条管理员日志数据异常");
         }
 
         return null;
@@ -86,7 +87,7 @@ public class AuthorLogs {
         try {
             authorLogs.deleteAuthorLogByLogid(logid);
         } catch (Exception e) {
-            logs.Write(e, "删除一条管理员日志数据异常");
+            logs.write(e, "删除一条管理员日志数据异常");
         }
     }
 
@@ -97,7 +98,7 @@ public class AuthorLogs {
         try {
             authorLogs.deleteAuthorLogByLogidList(logidList);
         } catch (Exception e) {
-            logs.Write(e, "批量删除一批管理员日志数据异常");
+            logs.write(e, "批量删除一批管理员日志数据异常");
         }
     }
 
@@ -110,7 +111,7 @@ public class AuthorLogs {
         try {
             return authorLogs.getAuthorLogByLogid(logid);
         } catch (Exception e) {
-            logs.Write(e, "获取一条管理员日志数据");
+            logs.write(e, "获取一条管理员日志数据");
         }
 
         return null;
@@ -131,7 +132,7 @@ public class AuthorLogs {
         try {
             AuthorLogList = authorLogs.getAuthorLogList(condition, sort);
         } catch (Exception e) {
-            logs.Write(e, "获得管理员日志数据列表异常");
+            logs.write(e, "获得管理员日志数据列表异常");
         }
 
         return AuthorLogList;
@@ -154,7 +155,7 @@ public class AuthorLogs {
         try {
             AuthorLogList = authorLogs.getAuthorLogList(pageSize, pageNumber, condition, sort);
         } catch (Exception e) {
-            logs.Write(e, "获得管理员日志数据列表异常");
+            logs.write(e, "获得管理员日志数据列表异常");
         }
 
         return AuthorLogList;

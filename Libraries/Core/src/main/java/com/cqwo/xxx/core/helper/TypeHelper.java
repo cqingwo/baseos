@@ -2,7 +2,7 @@
  *
  *  * Copyright (C) 2017.
  *  * 用于JAVA项目开发
- *  * 重庆青沃科技有限公司 版权所有
+ *  * 重庆英卡电子有限公司 版权所有
  *  * Copyright (C)  2017.  CqingWo Systems Incorporated. All rights reserved.
  *
  */
@@ -10,13 +10,9 @@
 package com.cqwo.xxx.core.helper;
 
 
-import com.cqwo.xxx.core.log.ILog;
-import com.cqwo.xxx.core.log.ILogService;
-import com.cqwo.xxx.core.log.ILog;
-import com.cqwo.xxx.core.log.ILogService;
-import com.cqwo.xxx.core.log.ILog;
-import com.cqwo.xxx.core.log.ILogService;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.sql.Timestamp;
@@ -24,21 +20,22 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+
 /**
  * Created by cqnews on 2017/3/20.
  */
 public class TypeHelper {
 
 
-    private static ILog logger = ILogService.getLog(DateHelper.class);
+    private static Logger logger = LoggerFactory.getLogger(DateHelper.class);
 
     /// <summary>
     /// 将string类型转换成int类型
     /// </summary>
     /// <param name="s">目标字符串</param>
     /// <returns></returns>
-    public static Integer StringToInt(String s) {
-        return StringToInt(s, 0);
+    public static Integer stringToInt(String s) {
+        return stringToInt(s, 0);
     }
 
     /// <summary>
@@ -46,7 +43,7 @@ public class TypeHelper {
     /// </summary>
     /// <param name="s">目标字符串</param>
     /// <returns></returns>
-    public static Integer StringToInt(Object s, Integer defaultValue) {
+    public static Integer stringToInt(Object s, Integer defaultValue) {
         try {
 
             if (s != null && String.valueOf(s).trim().length() > 0) {
@@ -61,14 +58,14 @@ public class TypeHelper {
         }
     }
 
-    public static Integer ObjectToInt(Object o) {
+    public static Integer objectToInt(Object o) {
 
-        return ObjectToInt(o, 0);
+        return objectToInt(o, 0);
     }
 
-    public static Integer ObjectToInt(Object o, Integer defaultValue) {
+    public static Integer objectToInt(Object o, Integer defaultValue) {
         try {
-            return (Integer ) o;
+            return (Integer) o;
         } catch (Exception e) {
             return defaultValue;
         }
@@ -80,8 +77,8 @@ public class TypeHelper {
     /// </summary>
     /// <param name="s">目标字符串</param>
     /// <returns></returns>
-    public static String IntToString(Integer s) {
-        return IntToString(s, "0");
+    public static String intToString(Integer s) {
+        return intToString(s, "0");
     }
 
     /// <summary>
@@ -89,7 +86,7 @@ public class TypeHelper {
     /// </summary>
     /// <param name="s">目标字符串</param>
     /// <returns></returns>
-    public static String IntToString(Object s, String defaultValue) {
+    public static String intToString(Object s, String defaultValue) {
         try {
 
             if (s != null) {
@@ -110,7 +107,7 @@ public class TypeHelper {
      * @param c
      * @return
      */
-    public static String CharToString(char c) {
+    public static String charToString(char c) {
         try {
             return String.valueOf(c);
         } catch (Exception e) {
@@ -124,8 +121,8 @@ public class TypeHelper {
     /// </summary>
     /// <param name="s">目标字符串</param>
     /// <returns></returns>
-    public static String LongToString(long s) {
-        return LongToString(s, "0");
+    public static String longToString(long s) {
+        return longToString(s, "0");
     }
 
     /// <summary>
@@ -133,7 +130,7 @@ public class TypeHelper {
     /// </summary>
     /// <param name="s">目标字符串</param>
     /// <returns></returns>
-    public static String LongToString(Object s, String defaultValue) {
+    public static String longToString(Object s, String defaultValue) {
         try {
 
             if (s != null) {
@@ -148,13 +145,12 @@ public class TypeHelper {
         }
     }
 
-    /// <summary>
-    /// 将string类型转换成double类型
-    /// </summary>
-    /// <param name="s">目标字符串</param>
-    /// <returns></returns>
-    public static double StringToDouble(String s) {
-        return StringToDouble(s, 0);
+    public static double objectToDouble(Object s) {
+        return objectToDouble(s, 0.00);
+    }
+
+    public static double objectToDouble(Object s, double defaultValue) {
+        return stringToDouble(s.toString(), defaultValue);
     }
 
     /// <summary>
@@ -162,7 +158,16 @@ public class TypeHelper {
     /// </summary>
     /// <param name="s">目标字符串</param>
     /// <returns></returns>
-    public static double StringToDouble(Object s, Integer defaultValue) {
+    public static double stringToDouble(String s) {
+        return stringToDouble(s, 0);
+    }
+
+    /// <summary>
+    /// 将string类型转换成double类型
+    /// </summary>
+    /// <param name="s">目标字符串</param>
+    /// <returns></returns>
+    public static double stringToDouble(Object s, double defaultValue) {
         try {
 
             if (s != null) {
@@ -183,11 +188,11 @@ public class TypeHelper {
     /// </summary>
     /// <param name="s">目标字符串</param>
     /// <returns></returns>
-    public static String DoubleToString(double s) {
-        return DoubleToString(s, "");
+    public static String doubleToString(double s) {
+        return doubleToString(s, "");
     }
 
-    public static String DoubleToString(Object s, String defaultValue) {
+    public static String doubleToString(Object s, String defaultValue) {
 
         try {
 
@@ -205,13 +210,13 @@ public class TypeHelper {
     }
 
 
-    public static Integer LongToInt(Long value) {
-        return LongToInt(value, 0);
+    public static Integer longToInt(Long value) {
+        return longToInt(value, 0);
     }
 
-    public static Integer LongToInt(Long value, Integer defaultValue) {
+    public static Integer longToInt(Long value, Integer defaultValue) {
         try {
-            return new Long(value).intValue();
+            return value.intValue();
         } catch (Exception e) {
 
             return defaultValue;
@@ -220,12 +225,12 @@ public class TypeHelper {
 
 
     /**
-     * TimestampToDate 转date
+     * timestampToDate 转date
      *
      * @param timestamp
      * @return
      */
-    public static Date TimestampToDate(Timestamp timestamp) {
+    public static Date timestampToDate(Timestamp timestamp) {
 
         Date date = new Date();
         try {
@@ -238,12 +243,12 @@ public class TypeHelper {
     }
 
     /**
-     * DateToTimestamp 转Timestamp
+     * dateToTimestamp 转Timestamp
      *
      * @param date
      * @return
      */
-    public static Timestamp DateToTimestamp(Date date) {
+    public static Timestamp dateToTimestamp(Date date) {
 
         Timestamp timestamp = DateHelper.getTimestamp(date);
         return timestamp;
@@ -251,12 +256,12 @@ public class TypeHelper {
 
 
     /**
-     * StringToDate 字符转date类型
+     * stringToDate 字符转date类型
      *
      * @param s
      * @return
      */
-    public static Date StringToDate(String s) {
+    public static Date stringToDate(String s) {
 
         if (s.isEmpty()) {
             return null;
@@ -279,12 +284,12 @@ public class TypeHelper {
     }
 
     /**
-     * StringToDate 字符转date类型
+     * stringToDate 字符转date类型
      *
      * @param s
      * @return
      */
-    public static Timestamp StringToTimestamp(String s) {
+    public static Timestamp stringToTimestamp(String s) {
 
         if (s.isEmpty()) {
             return null;
@@ -313,9 +318,8 @@ public class TypeHelper {
      * @param str
      * @return
      */
-    InputStream String2InputStream(String str) {
-        ByteArrayInputStream stream = new ByteArrayInputStream(str.getBytes());
-        return stream;
+    InputStream string2InputStream(String str) {
+        return new ByteArrayInputStream(str.getBytes());
     }
 
     /**
@@ -327,7 +331,7 @@ public class TypeHelper {
      */
     String inputStream2String(InputStream is) throws IOException {
         BufferedReader in = new BufferedReader(new InputStreamReader(is));
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         String line = "";
         while ((line = in.readLine()) != null) {
             buffer.append(line);
@@ -339,12 +343,26 @@ public class TypeHelper {
      *
      */
     @Test
-    public void Test() {
+    public void test() {
 
-        Timestamp ts = StringToTimestamp("2020-12-30 00:00:00");
+        String s = stringToInt("02552").toString();
+        // System.out.println(s);
 
-        System.out.println(ts);
+        Timestamp ts = stringToTimestamp("2020-12-30 00:00:00"); //System.out.println(ts);
 
     }
 
+    /**
+     * 对象转字符,主要判断为空
+     *
+     * @param o
+     * @return
+     */
+    public static String objectToString(Object o) {
+
+        if (o == null) {
+            return "";
+        }
+        return o.toString();
+    }
 }

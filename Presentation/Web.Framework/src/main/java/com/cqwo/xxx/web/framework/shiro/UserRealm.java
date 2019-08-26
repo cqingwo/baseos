@@ -4,10 +4,8 @@ import com.cqwo.xxx.core.domain.authors.AuthorActionInfo;
 import com.cqwo.xxx.core.domain.authors.AuthorRoleInfo;
 import com.cqwo.xxx.core.domain.users.PartUserInfo;
 import com.cqwo.xxx.core.domain.users.UserRankInfo;
-import com.cqwo.xxx.core.helper.DateHelper;
-import com.cqwo.xxx.core.helper.StringHelper;
-import com.cqwo.xxx.core.helper.TypeHelper;
-import com.cqwo.xxx.core.helper.ValidateHelper;
+import com.cqwo.xxx.core.helper.*;
+import com.cqwo.xxx.core.log.Logs;
 import com.cqwo.xxx.services.*;
 import com.cqwo.xxx.web.framework.model.LoginType;
 import com.cqwo.xxx.web.framework.model.UserTokenPasswordToken;
@@ -63,7 +61,7 @@ public class UserRealm extends AuthorizingRealm {
         System.out.println(principals.getPrimaryPrincipal());
 
 
-        Integer uid = TypeHelper.ObjectToInt(principals.getPrimaryPrincipal());
+        Integer uid = TypeHelper.objectToInt(principals.getPrimaryPrincipal());
 
         //String shiroLoginUser = (String) principals.fromRealm(getName()).iterator().next();
 
@@ -132,9 +130,9 @@ public class UserRealm extends AuthorizingRealm {
 
         if (token.getType().equals(LoginType.TokenLogin.getIndex())) {
 
-            Integer uid = TypeHelper.StringToInt(token.getUsername());
+            Integer uid = TypeHelper.stringToInt(token.getUsername());
 
-//            if (StringHelper.IsNullOrWhiteSpace(accessToken))
+//            if (Strings.isNullOrEmpty(accessToken))
 //                throw new UnknownAccountException("未找到用户信息");
 
 
@@ -152,13 +150,13 @@ public class UserRealm extends AuthorizingRealm {
             //检测账号类型
             if (ValidateHelper.isValidEmail(account)) {
                 userInfo = users.getPartUserByEmail(account);
-                logs.Write("邮箱登录");
+                logs.write("邮箱登录");
             } else if (ValidateHelper.isValidMobile(account)) {
                 userInfo = users.getPartUserByMobile(account);
-                logs.Write("手机登录");
+                logs.write("手机登录");
             } else {
                 userInfo = users.getPartUserByUserName(account);
-                logs.Write("账号登录");
+                logs.write("账号登录");
             }
 
 
@@ -170,7 +168,7 @@ public class UserRealm extends AuthorizingRealm {
 
             System.out.println(userInfo.toString());
 
-            String sourcePassword = StringHelper.chaToString(token.getPassword());
+            String sourcePassword = StringHelper.charToString(token.getPassword());
 
 
             String password = Users.createUserPassword(sourcePassword, userInfo.getSalt());
@@ -190,7 +188,7 @@ public class UserRealm extends AuthorizingRealm {
         }
 
 
-        if (userInfo.getLiftBanTime() >= DateHelper.getUnixTimeStamp())//达到解禁时间
+        if (userInfo.getLiftBanTime() >= UnixTimeHelper.getUnixTimeStamp())//达到解禁时间
         {
             throw new LockedAccountException("您的账号当前被锁定,不能访问");
         }

@@ -2,13 +2,14 @@
  *
  *  * Copyright (C) 2017.
  *  * 用于JAVA项目开发
- *  * 重庆青沃科技有限公司 版权所有
+ *  * 重庆英卡电子有限公司 版权所有
  *  * Copyright (C)  2017.  CqingWo Systems Incorporated. All rights reserved.
  *
  */
 
 package com.cqwo.xxx.core.helper;
 
+import com.google.common.base.Strings;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
@@ -25,17 +26,18 @@ import java.security.SecureRandom;
 public class AES2Helper {
 
     public static void main(String[] args) throws Exception {
+
         String content = "我爱你";
-        System.out.println("加密前：" + content);
+        //System.out.println("加密前：" + content);
 
         String key = "123456";
-        System.out.println("加密密钥和解密密钥：" + key);
+        //System.out.println("加密密钥和解密密钥：" + key);
 
         String encrypt = aesEncrypt(content, key);
-        System.out.println("加密后：" + encrypt);
+        //System.out.println("加密后：" + encrypt);
 
         String decrypt = aesDecrypt(encrypt, key);
-        System.out.println("解密后：" + decrypt);
+        //System.out.println("解密后：" + decrypt);
     }
 
     /**
@@ -64,7 +66,7 @@ public class AES2Helper {
      * @throws Exception
      */
     public static byte[] base64Decode(String base64Code) throws Exception{
-        return StringHelper.isEmpty(base64Code) ? null : new BASE64Decoder().decodeBuffer(base64Code);
+        return Strings.isNullOrEmpty(base64Code) ? null : new BASE64Decoder().decodeBuffer(base64Code);
     }
 
     /**
@@ -87,7 +89,7 @@ public class AES2Helper {
      * @throws Exception
      */
     public static byte[] md5(String msg) throws Exception {
-        return StringHelper.isEmpty(msg) ? null : md5(msg.getBytes());
+        return Strings.isNullOrEmpty(msg) ? null : md5(msg.getBytes());
     }
 
     /**
@@ -97,7 +99,7 @@ public class AES2Helper {
      * @throws Exception
      */
     public static String md5Encrypt(String msg) throws Exception{
-        return StringHelper.isEmpty(msg) ? null : base64Encode(md5(msg));
+        return Strings.isNullOrEmpty(msg) ? null : base64Encode(md5(msg));
     }
 
     /**
@@ -155,6 +157,6 @@ public class AES2Helper {
      * @throws Exception
      */
     public static String aesDecrypt(String encryptStr, String decryptKey) throws Exception {
-        return StringHelper.isEmpty(encryptStr) ? null : aesDecryptByBytes(base64Decode(encryptStr), decryptKey);
+        return Strings.isNullOrEmpty(encryptStr) ? null : aesDecryptByBytes(base64Decode(encryptStr), decryptKey);
     }
 }

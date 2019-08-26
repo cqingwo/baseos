@@ -9,6 +9,7 @@
 
 package com.cqwo.xxx.core.upload;
 
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Component;
  * Created by cqnews on 2017/12/25.
  */
 @Component(value = "CWMUpload")
+@Getter
 public class CWMUpload {
 
     /**
@@ -24,26 +26,5 @@ public class CWMUpload {
     @Autowired(required = false)
     private IUploadStrategy iUploadStrategy;
 
-    public CWMUpload() {
-    }
-
-    public CWMUpload(IUploadStrategy iUploadStrategy) {
-        this.iUploadStrategy = iUploadStrategy;
-    }
-
-    public IUploadStrategy getiUploadStrategy() {
-        return iUploadStrategy;
-    }
-
-    public void setiUploadStrategy(IUploadStrategy iUploadStrategy) {
-        this.iUploadStrategy = iUploadStrategy;
-    }
-
-    @Override
-    public String toString() {
-        return "CWMUpload{" +
-                "iUploadStrategy=" + iUploadStrategy +
-                '}';
-    }
 
 }

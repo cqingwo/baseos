@@ -14,5 +14,10 @@ package com.cqwo.xxx.core.envent;
  */
 
 public interface IEvent {
+
+
+    /**
+     * 执行
+     */
     void execute();
 }

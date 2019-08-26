@@ -4,6 +4,8 @@ import com.cqwo.xxx.core.domain.base.AttachmentInfo;
 import com.cqwo.xxx.core.helper.StringHelper;
 import com.cqwo.xxx.core.domain.base.AttachmentInfo;
 import com.cqwo.xxx.core.helper.StringHelper;
+import com.cqwo.xxx.core.log.Logs;
+import com.google.common.base.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
@@ -49,7 +51,7 @@ public class Attachments {
         try {
             return attachments.getAttachmentCount(condition);
         } catch (Exception ex) {
-            logs.Write(ex, "获得附件表数量失败");
+            logs.write(ex, "获得附件表数量失败");
         }
         return 0;
     }
@@ -64,7 +66,7 @@ public class Attachments {
         try {
             return attachments.createAttachment(attachmentInfo);
         } catch (Exception ex) {
-            logs.Write(ex, "创建一条附件表数据失败");
+            logs.write(ex, "创建一条附件表数据失败");
         }
         return null;
     }
@@ -85,11 +87,11 @@ public class Attachments {
 
             for (String uri : uriList) {
 
-                if (StringHelper.isNullOrWhiteSpace(uri)) {
+                if (Strings.isNullOrEmpty(uri)) {
                     continue;
                 }
 
-                if (StringHelper.isNullOrWhiteSpace(title)) {
+                if (Strings.isNullOrEmpty(title)) {
                     title = "";
                 }
 
@@ -107,7 +109,7 @@ public class Attachments {
 
         } catch (Exception ex) {
 
-            logs.Write(ex, "批量创建附件发生故障");
+            logs.write(ex, "批量创建附件发生故障");
 
         } finally {
             lock.unlock();
@@ -128,7 +130,7 @@ public class Attachments {
         try {
             return attachments.updateAttachment(attachmentInfo);
         } catch (Exception ex) {
-            logs.Write(ex, "更新一条附件表数据异常");
+            logs.write(ex, "更新一条附件表数据异常");
         }
 
         return null;
@@ -143,7 +145,7 @@ public class Attachments {
         try {
             attachments.deleteAttachmentByAttachId(attachId);
         } catch (Exception ex) {
-            logs.Write(ex, "删除一条附件表数据异常");
+            logs.write(ex, "删除一条附件表数据异常");
         }
     }
 
@@ -154,7 +156,7 @@ public class Attachments {
         try {
             attachments.deleteAttachmentByAttachIdList(attachIdList);
         } catch (Exception ex) {
-            logs.Write(ex, "批量删除一批附件表数据异常");
+            logs.write(ex, "批量删除一批附件表数据异常");
         }
     }
 
@@ -167,7 +169,7 @@ public class Attachments {
         try {
             return attachments.getAttachmentByAttachId(attachId);
         } catch (Exception ex) {
-            logs.Write(ex, "获取一条附件表数据");
+            logs.write(ex, "获取一条附件表数据");
         }
 
         return null;
@@ -188,7 +190,7 @@ public class Attachments {
         try {
             attachmentList = attachments.getAttachmentList(condition, sort);
         } catch (Exception ex) {
-            logs.Write(ex, "获得附件表数据列表异常");
+            logs.write(ex, "获得附件表数据列表异常");
         }
 
         return attachmentList;
@@ -211,7 +213,7 @@ public class Attachments {
         try {
             attachmentList = attachments.getAttachmentList(pageSize, pageNumber, condition, sort);
         } catch (Exception ex) {
-            logs.Write(ex, "获得附件表数据列表异常");
+            logs.write(ex, "获得附件表数据列表异常");
         }
 
         return attachmentList;

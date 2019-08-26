@@ -3,7 +3,7 @@
  *  *
  *  *  * Copyright (C) 2018.
  *  *  * 用于JAVA项目开发
- *  *  * 重庆青沃科技有限公司 版权所有
+ *  *  * 重庆英卡电子有限公司 版权所有
  *  *  * Copyright (C)  2018.  CqingWo Systems Incorporated. All rights reserved.
  *  *
  *
@@ -135,7 +135,6 @@ public class MacHelper {
     }
 
     //做个测试
-    public static void main(String[] args) {
-        System.out.println(getMacAddress("113.248.159.15"));
+    public static void main(String[] args) { //System.out.println(getMacAddress("113.248.159.15"));
     }
 }

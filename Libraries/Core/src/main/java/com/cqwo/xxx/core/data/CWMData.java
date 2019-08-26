@@ -10,13 +10,10 @@
 package com.cqwo.xxx.core.data;
 
 
-import com.cqwo.xxx.core.data.rdbs.IBankStrategy;
 import com.cqwo.xxx.core.data.rdbs.IBaseStrategy;
-import com.cqwo.xxx.core.data.rdbs.IForumStrategy;
 import com.cqwo.xxx.core.data.rdbs.IUserStrategy;
 import com.cqwo.xxx.core.data.rdbs.*;
 import lombok.Getter;
-import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +21,6 @@ import org.springframework.stereotype.Service;
  * Created by cqnews on 2017/4/10.
  */
 @Service(value = "CWMData")
-@Setter
 @Getter
 public class CWMData {
 
@@ -39,12 +35,6 @@ public class CWMData {
 
     @Autowired(required = false)
     ILog2Strategy iLog2Strategy;
-
-    @Autowired(required = false)
-    IForumStrategy iForumStrategy;
-
-    @Autowired(required = false)
-    IBankStrategy iBankStrategy;
-
+    
 
 }

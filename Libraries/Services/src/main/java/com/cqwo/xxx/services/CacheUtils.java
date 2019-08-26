@@ -1,6 +1,7 @@
 package com.cqwo.xxx.services;
 
 import com.cqwo.xxx.core.cache.CWMCache;
+import com.cqwo.xxx.core.log.Logs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -31,11 +32,11 @@ public class CacheUtils {
 
         try {
 
-            return cwmCache.getIcachestrategy().getValue(key);
+            return cwmCache.getValue(key);
 
         } catch (Exception ex) {
 
-            logs.Write(ex, "获取缓存的值");
+            logs.write(ex, "获取缓存的值");
 
         }
 
@@ -52,11 +53,11 @@ public class CacheUtils {
 
         try {
 
-            return cwmCache.getIcachestrategy().getValue(key, clz);
+            return cwmCache.getValue(key, clz);
 
         } catch (Exception ex) {
 
-            logs.Write(ex, "获取缓存的值");
+            logs.write(ex, "获取缓存的值");
 
         }
 
@@ -73,11 +74,11 @@ public class CacheUtils {
 
         try {
 
-            cwmCache.getIcachestrategy().setValue(key, object);
+            cwmCache.setValue(key, object);
 
         } catch (Exception ex) {
 
-            logs.Write(ex, "获取缓存的值");
+            logs.write(ex, "获取缓存的值");
 
         }
     }
@@ -92,11 +93,11 @@ public class CacheUtils {
 
         try {
 
-            cwmCache.getIcachestrategy().setValue(key, object, timeout, timeUnit);
+            cwmCache.setValue(key, object, timeout, timeUnit);
 
         } catch (Exception ex) {
 
-            logs.Write(ex, "设置缓存键值");
+            logs.write(ex, "设置缓存键值");
 
         }
     }
@@ -113,11 +114,11 @@ public class CacheUtils {
 
         try {
 
-            list = cwmCache.getIcachestrategy().getListValue(key, clz);
+            list = cwmCache.getListValue(key, clz);
 
         } catch (Exception ex) {
 
-            logs.Write(ex, "设置缓存键值");
+            logs.write(ex, "设置缓存键值");
 
         }
 
@@ -134,11 +135,11 @@ public class CacheUtils {
 
         try {
 
-            cwmCache.getIcachestrategy().setListValue(key, list);
+            cwmCache.setListValue(key, list);
 
         } catch (Exception ex) {
 
-            logs.Write(ex, "设置缓存键值");
+            logs.write(ex, "设置缓存键值");
 
         }
 
@@ -153,11 +154,11 @@ public class CacheUtils {
     public void setListValue(String key, List<?> list, Integer timeout, TimeUnit timeUnit) {
 
         try {
-            cwmCache.getIcachestrategy().setListValue(key, list, timeout, timeUnit);
+            cwmCache.setListValue(key, list, timeout, timeUnit);
 
         } catch (Exception ex) {
 
-            logs.Write(ex, "设置缓存键值");
+            logs.write(ex, "设置缓存键值");
         }
     }
 
@@ -172,11 +173,11 @@ public class CacheUtils {
         boolean isSuccess = false;
 
         try {
-            cwmCache.getIcachestrategy().delete(key);
+            cwmCache.delete(key);
 
         } catch (Exception ex) {
 
-            logs.Write(ex, "删除缓存键值key");
+            logs.write(ex, "删除缓存键值key");
         }
 
         return isSuccess;

@@ -2,7 +2,7 @@
  *
  *  * Copyright (C) 2017.
  *  * 用于JAVA项目开发
- *  * 重庆青沃科技有限公司 版权所有
+ *  * 重庆英卡电子有限公司 版权所有
  *  * Copyright (C)  2017.  CqingWo Systems Incorporated. All rights reserved.
  *
  */
@@ -110,14 +110,14 @@ public class CryptHelper {
      */  
     private String encryptToDES(SecretKey key, String info) {  
         // 定义 加密算法,可用 DES,DESede,Blowfish  
-        String Algorithm = "DES";  
+        String algorithm = "DES";
         // 加密随机数生成器 (RNG),(可以不写)  
         SecureRandom sr = new SecureRandom();  
         // 定义要生成的密文  
         byte[] cipherByte = null;  
         try {  
             // 得到加密/解密器  
-            Cipher c1 = Cipher.getInstance(Algorithm);  
+            Cipher c1 = Cipher.getInstance(algorithm);
             // 用指定的密钥和模式初始化Cipher对象  
             // 参数:(ENCRYPT_MODE, DECRYPT_MODE, WRAP_MODE,UNWRAP_MODE)  
             c1.init(Cipher.ENCRYPT_MODE, key, sr);  
@@ -140,13 +140,13 @@ public class CryptHelper {
      */  
     private String decryptByDES(SecretKey key, String sInfo) {  
         // 定义 加密算法,  
-        String Algorithm = "DES";  
+        String algorithm = "DES";
         // 加密随机数生成器 (RNG)  
         SecureRandom sr = new SecureRandom();  
         byte[] cipherByte = null;  
         try {  
             // 得到加密/解密器  
-            Cipher c1 = Cipher.getInstance(Algorithm);  
+            Cipher c1 = Cipher.getInstance(algorithm);
             // 用指定的密钥和模式初始化Cipher对象  
             c1.init(Cipher.DECRYPT_MODE, key, sr);  
             // 对要解密的内容进行编码处理  
@@ -231,8 +231,7 @@ public class CryptHelper {
             // 初始化验证签名的公钥  
             signetcheck.initVerify(mypubkey);  
             // 使用指定的 byte 数组更新要签名或验证的数据  
-            signetcheck.update(info.getBytes());  
-            System.out.println(info);  
+            signetcheck.update(info.getBytes()); //System.out.println(info);  
             // 验证传入的签名  
             return signetcheck.verify(signed);  
         } catch (Exception e) {  
@@ -247,17 +246,17 @@ public class CryptHelper {
      *            二进制字节数组 
      * @return String 
      */  
-    public String byte2hex(byte[] b) {  
+    public String byte2hex(byte[] b) {
         StringBuilder hs = new StringBuilder();
-        String stmp = "";
-        for (byte aB : b) {
-            stmp = (Integer.toHexString(aB & 0XFF));
+        String stmp = "";  
+        for (Integer n = 0; n < b.length; n++) {  
+            stmp = (Integer.toHexString(b[n] & 0XFF));
             if (stmp.length() == 1) {
                 hs.append("0").append(stmp);
             } else {
                 hs.append(stmp);
-            }
-        }  
+            }  
+        }
         return hs.toString().toUpperCase();
     }  
     /** 
@@ -283,14 +282,11 @@ public class CryptHelper {
      *            byte 
      * @return byte 
      */  
-    public static byte uniteBytes(byte src0, byte src1) {  
-        byte _b0 = Byte.decode("0x" + new String(new byte[] { src0 }))  
-                .byteValue();  
-        _b0 = (byte) (_b0 << 4);  
-        byte _b1 = Byte.decode("0x" + new String(new byte[] { src1 }))  
-                .byteValue();  
-        byte ret = (byte) (_b0 ^ _b1);  
-        return ret;  
+    public static byte uniteBytes(byte src0, byte src1) {
+        byte b0 = Byte.decode("0x" + new String(new byte[]{src0}));
+        b0 = (byte) (b0 << 4);
+        byte b1 = Byte.decode("0x" + new String(new byte[]{src1}));
+        return (byte) (b0 ^ b1);
     }  
     /** 
      * 将指定的对象写入指定的文件 
@@ -362,25 +358,20 @@ public class CryptHelper {
      */  
     public static void main(String[] args) {  
         CryptHelper jiami = new CryptHelper();  
-        // 执行MD5加密"Hello world!"  
-        System.out.println("Hello经过MD5:" + jiami.encryptToMD5("Hello"));  
+        // 执行MD5加密"Hello world!" //System.out.println("Hello经过MD5:" + jiami.encryptToMD5("Hello"));  
         // 生成一个DES算法的密匙  
         SecretKey key = jiami.createSecretKey("DES");  
         // 用密匙加密信息"Hello world!"  
-        String str1 = jiami.encryptToDES(key, "Hello");  
-        System.out.println("使用des加密信息Hello为:" + str1);  
+        String str1 = jiami.encryptToDES(key, "Hello"); //System.out.println("使用des加密信息Hello为:" + str1);  
         // 使用这个密匙解密  
-        String str2 = jiami.decryptByDES(key, str1);  
-        System.out.println("解密后为：" + str2);  
+        String str2 = jiami.decryptByDES(key, str1); //System.out.println("解密后为：" + str2);  
         // 创建公匙和私匙  
         jiami.createPairKey();  
         // 对Hello world!使用私匙进行签名  
         jiami.signToInfo("Hello", "mysign.bat");  
         // 利用公匙对签名进行验证。  
-        if (jiami.validateSign("mysign.bat")) {  
-            System.out.println("Success!");  
-        } else {  
-            System.out.println("Fail!");  
+        if (jiami.validateSign("mysign.bat")) { //System.out.println("Success!");  
+        } else { //System.out.println("Fail!");  
         }  
     }  
 } 

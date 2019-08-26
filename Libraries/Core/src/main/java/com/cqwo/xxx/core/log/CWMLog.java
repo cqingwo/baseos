@@ -9,6 +9,7 @@
 
 package com.cqwo.xxx.core.log;
 
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,17 +17,10 @@ import org.springframework.stereotype.Service;
  * Created by cqnews on 2017/4/15.
  */
 @Service(value = "CWMLog")
+@Getter
 public class CWMLog {
 
     @Autowired(required = false)
     private ILogStrategy iLogStrategy;
 
-
-    public ILogStrategy getiLogStrategy() {
-        return iLogStrategy;
-    }
-
-    public void setiLogStrategy(ILogStrategy iLogStrategy) {
-        this.iLogStrategy = iLogStrategy;
-    }
 }
