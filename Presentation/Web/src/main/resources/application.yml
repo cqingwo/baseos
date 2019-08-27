@@ -41,6 +41,11 @@ spring:
       charset: UTF-8
       force: true
       enabled: true
+  application:
+    name: baseos
+    domain: nbiot.natapp1.cc
+    ip: 47.97.126.246
+    admin: cqnews,yjwwtu
 logging:
   path: /logs/logs
   level:

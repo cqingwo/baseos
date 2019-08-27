@@ -1,33 +1,38 @@
 package com.cqwo.xxx.web.framework.shiro;
 
 
+import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import com.cqwo.xxx.web.framework.filter.ApiAccessControlFilter;
+import com.cqwo.xxx.web.framework.shiro.admin.AdminRealm;
+import com.cqwo.xxx.web.framework.shiro.token.TokenRealm;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.pam.AtLeastOneSuccessfulStrategy;
+import org.apache.shiro.authc.pam.ModularRealmAuthenticator;
 import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.cache.MemoryConstrainedCacheManager;
 import org.apache.shiro.mgt.SecurityManager;
+import org.apache.shiro.mgt.SessionsSecurityManager;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.AccessControlFilter;
+import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import javax.servlet.Filter;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
-/**
- * @author cqnews
- */
 @Configuration
 public class ShiroConfig {
 
@@ -35,13 +40,35 @@ public class ShiroConfig {
     private static final Logger logger = LoggerFactory.getLogger(ShiroConfig.class);
 
 
-    @Autowired
-    SecurityManager securityManager;
+    @Bean
+    protected SessionsSecurityManager securityManager() {
+
+        DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
+
+        securityManager.setAuthenticator(modularRealmAuthenticator());
+        List<Realm> realms = new ArrayList<>();
+        realms.add(adminRealm());
+        realms.add(tokenRealm());
+
+        securityManager.setRealms(realms);
+
+        return securityManager;
+    }
 
 
+    /**
+     * 系统自带的Realm管理，主要针对多realm
+     */
+    @Bean
+    public ModularRealmAuthenticator modularRealmAuthenticator() {
+        //自己重写的ModularRealmAuthenticator
+        UserModularRealmAuthenticator modularRealmAuthenticator = new UserModularRealmAuthenticator();
+        modularRealmAuthenticator.setAuthenticationStrategy(new AtLeastOneSuccessfulStrategy());
+        return modularRealmAuthenticator;
+    }
 
 
-//    public ShiroFilterChainDefinition shiroFilterChainDefinition() {
+    //    public ShiroFilterChainDefinition shiroFilterChainDefinition() {
 //
 //        DefaultShiroFilterChainDefinition chainDefinition = new DefaultShiroFilterChainDefinition();
 //
@@ -83,8 +110,8 @@ public class ShiroConfig {
 
 
     @Bean
-    public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager) {
-        System.out.println("ShiroConfiguration.shirFilter()");
+    public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager) { //System.out.println("ShiroConfiguration.shirFilter()");
+
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
 
         // 必须设置 SecurityManager
@@ -92,6 +119,8 @@ public class ShiroConfig {
 
         // 如果不设置默认会自动寻找Web工程根目录下的"/login.jsp"页面
         shiroFilterFactoryBean.setLoginUrl("/login");
+
+
         // 登录成功后要跳转的链接
         shiroFilterFactoryBean.setSuccessUrl("/index");
         //未授权界面;
@@ -107,18 +136,48 @@ public class ShiroConfig {
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<String, String>();
 
         filterChainDefinitionMap.put("/api/author/**", "anon");
+        filterChainDefinitionMap.put("/actuator/info", "anon");
+
+
+        filterChainDefinitionMap.put("/static/**", "anon"); //匿名访问静态资源
+
+        filterChainDefinitionMap.put("/components/**", "anon"); //匿名访问静态资源
+
+        filterChainDefinitionMap.put("/admin/tool/device/list", "anon");
+
+        filterChainDefinitionMap.put("/", "anon");
+
+
+        filterChainDefinitionMap.put("/token/login", "anon");
+
 
         //配置退出过滤器,其中的具体的退出代码Shiro已经替我们实现了
         filterChainDefinitionMap.put("/logout", "logout");
         filterChainDefinitionMap.put("/test", "anon");
+        filterChainDefinitionMap.put("/test/*", "anon");
         filterChainDefinitionMap.put("/test2", "anon");
 
+        filterChainDefinitionMap.put("/*.txt", "anon");
+
+        filterChainDefinitionMap.put("/api/tttechdata/**", "anon");
+//        filterChainDefinitionMap.put("/api/**/list", "anon");
+//        filterChainDefinitionMap.put("/api/tool/**", "anon");
+//        filterChainDefinitionMap.put("/api/**/catelist", "anon");
+
+//        filterChainDefinitionMap.put("/wechat/**", "anon");
+        filterChainDefinitionMap.put("/wechat/account/**", "anon");
+
+        filterChainDefinitionMap.put("/wechat/doProcess", "anon");
+        filterChainDefinitionMap.put("/tapi/**", "anon");
+
+        filterChainDefinitionMap.put("/wechat/message/show", "anon");
+
+        filterChainDefinitionMap.put("/api/account/**", "anon");
+        filterChainDefinitionMap.put("/api/error", "anon");
+        filterChainDefinitionMap.put("/api", "anon");
+        filterChainDefinitionMap.put("/api/", "anon");
         filterChainDefinitionMap.put("/api/index", "anon");
-        filterChainDefinitionMap.put("/api/**/list", "anon");
-        filterChainDefinitionMap.put("/api/tool/**", "anon");
-        filterChainDefinitionMap.put("/api/**/catelist", "anon");
-
-
+        filterChainDefinitionMap.put("/tapi/index", "anon");
         filterChainDefinitionMap.put("/api/**", "apiAccessControlFilter");
 
 
@@ -128,12 +187,9 @@ public class ShiroConfig {
         // logged in users with the 'document:read' permission
         filterChainDefinitionMap.put("/docs/**", "authc, perms[document:read]");
 
-        filterChainDefinitionMap.put("/static/**", "anon"); //匿名访问静态资源
 
         filterChainDefinitionMap.put("/hello", "anon"); //匿名访问静态资源
-
-        filterChainDefinitionMap.put("/components/**", "anon"); //匿名访问静态资源
-
+        filterChainDefinitionMap.put("/hello2", "anon"); //匿名访问静态资源
 
         filterChainDefinitionMap.put("/tool/**", "anon"); //匿名访问静态资源
 
@@ -149,38 +205,31 @@ public class ShiroConfig {
     }
 
 
-
-
     @Bean
-    public Realm realm() {
+    public AdminRealm adminRealm() {
 
-        UserRealm userRealm = new UserRealm();
+        AdminRealm userRealm = new AdminRealm();
         userRealm.setCachingEnabled(true);
-
         return userRealm;
 
     }
 
-//    @Bean
-//    public Realm realm() {
-//
-//        APIRealm apiRealm = new APIRealm();
-//        apiRealm.setCachingEnabled(true);
-//
-//        return apiRealm;
-//    }
 
-//    @Override
-//    protected ShiroFilterFactoryBean shiroFilterFactoryBean() {
-//        ShiroFilterFactoryBean factoryBean = super.shiroFilterFactoryBean();
-////        Map<String, Filter> filterMap = new LinkedHashMap<>();
-////        //添加自定义的Filter,这里我随便new了一个filter
-////        filterMap.put("anyrole", new MyAccessControlFilter());
-////        factoryBean.setFilters(filterMap);
-//        return factoryBean;
-//    }
+    @Bean
+    public TokenRealm tokenRealm() {
+
+        TokenRealm userRealm = new TokenRealm();
+        userRealm.setCachingEnabled(true);
+        return userRealm;
+
+    }
 
 
+
+    @Bean
+    public ShiroDialect shiroDialect() {
+        return new ShiroDialect();
+    }
 
 
 

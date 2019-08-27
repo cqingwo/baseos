@@ -1,9 +1,25 @@
-package com.cqwo.xxx.web.framework.model;
+package com.cqwo.xxx.core.domain.authors;
 
 public enum LoginType {
 
-    UserLogin(0, "用户登录"),
-    TokenLogin(1, "token登录");
+
+    /**
+     * 用户登录
+     */
+    AdminLogin(0, "AdminLogin"),
+    /**
+     * Token登录
+     */
+    ApiLogin(1, "ApiLogin"),
+    /**
+     * Token登录
+     */
+    TokenLogin(2, "TokenLogin"),
+
+    /**
+     * 开发接口登录
+     */
+    OauthsLogin(3, "OauthsLogin");
 
     private Integer index;
 

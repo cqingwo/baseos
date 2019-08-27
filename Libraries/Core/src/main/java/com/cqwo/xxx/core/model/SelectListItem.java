@@ -2,85 +2,68 @@
  *
  *  * Copyright (C) 2017.
  *  * 用于JAVA项目开发
- *  * 重庆青沃科技有限公司 版权所有
+ *  * 重庆英卡电子有限公司 版权所有
  *  * Copyright (C)  2017.  CqingWo Systems Incorporated. All rights reserved.
  *
  */
 
 package com.cqwo.xxx.core.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
+
 /**
- * Created by cqnews on 2017/12/20.
+ * @author cqnews
+ * @date 2017/12/20
  */
-public class SelectListItem {
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+@Builder
+public class SelectListItem implements Serializable {
+
+    private static final long serialVersionUID = -6865864571258634525L;
 
     /**
      * 如果选定此项，则为 true；否则为 false。
      */
-    public boolean selected=false;
+    @Builder.Default
+    public boolean selected = false;
 
     /**
      * 文本
      */
-    public String text="";
+    @Builder.Default
+    public String text = "";
 
     /**
      * 值
      */
-    public String value="";
+    @Builder.Default
+    public String value = "";
 
     /**
      * 颜色
      */
+    @Builder.Default
     public String color = "";
 
-    public SelectListItem() {
+
+    public SelectListItem(String text, String value) {
+        this.text = text;
+        this.value = value;
     }
 
     public SelectListItem(boolean selected, String text, String value) {
-        this.selected=selected;
-        this.text=text;
-        this.value=value;
-    }
-
-    public SelectListItem(boolean selected, String text, String value, String color) {
         this.selected = selected;
         this.text = text;
         this.value = value;
-        this.color = color;
     }
 
-    public boolean isSelected() {
-        return selected;
-    }
-
-    public void setSelected(boolean selected) {
-        this.selected=selected;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text=text;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value=value;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
 }
 
 

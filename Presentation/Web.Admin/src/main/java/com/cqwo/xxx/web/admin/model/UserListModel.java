@@ -1,11 +1,16 @@
 package com.cqwo.xxx.web.admin.model;
 
 import com.cqwo.xxx.core.domain.users.PartUserInfo;
-import com.cqwo.xxx.core.domain.users.PartUserInfo;
-import com.cqwo.xxx.web.framework.model.PageModel;
+import com.cqwo.xxx.core.model.PageModel;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 public class UserListModel {
 
 
@@ -34,8 +39,6 @@ public class UserListModel {
      */
     private PageModel pageModel;
 
-    public UserListModel() {
-    }
 
     public UserListModel(List<PartUserInfo> userInfoList, PageModel pageModel) {
         this.userInfoList = userInfoList;
@@ -48,59 +51,5 @@ public class UserListModel {
         this.mobile = mobile;
     }
 
-    public UserListModel(Integer uid, String nickName, String mobile, List<PartUserInfo> userInfoList, PageModel pageModel) {
-        this.uid = uid;
-        this.nickName = nickName;
-        this.mobile = mobile;
-        this.userInfoList = userInfoList;
-        this.pageModel = pageModel;
-    }
 
-    public Integer getUid() {
-        return uid;
-    }
-
-    public void setUid(Integer uid) {
-        this.uid = uid;
-    }
-
-    public String getNickName() {
-        return nickName;
-    }
-
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
-    }
-
-    public String getMobile() {
-        return mobile;
-    }
-
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
-    }
-
-    public List<PartUserInfo> getUserInfoList() {
-        return userInfoList;
-    }
-
-    public void setUserInfoList(List<PartUserInfo> userInfoList) {
-        this.userInfoList = userInfoList;
-    }
-
-    public PageModel getPageModel() {
-        return pageModel;
-    }
-
-    public void setPageModel(PageModel pageModel) {
-        this.pageModel = pageModel;
-    }
-
-    @Override
-    public String toString() {
-        return "UserListModel{" +
-                "userInfoList=" + userInfoList +
-                ", pageModel=" + pageModel +
-                '}';
-    }
 }

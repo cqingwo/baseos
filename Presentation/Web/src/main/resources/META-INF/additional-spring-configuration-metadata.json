@@ -1,0 +1,18 @@
+{
+  "properties": [
+    {
+      "name": "spring.application.domain",
+      "type": "java.lang.String",
+      "description": "Description for spring.application.domain."
+    },
+    {
+      "name": "spring.application.ip",
+      "type": "java.lang.String",
+      "description": "Description for spring.application.ip."
+    },
+    {
+      "name": "spring.application.admin",
+      "type": "java.lang.String[]",
+      "description": "Description for spring.application.admin."
+    }
+  ] }

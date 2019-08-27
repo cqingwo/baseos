@@ -5,10 +5,7 @@ import com.cqwo.xxx.core.data.rdbs.repository.authors.AuthorActionRepository;
 import com.cqwo.xxx.core.data.rdbs.repository.authors.AuthorPermissionRepository;
 import com.cqwo.xxx.core.data.rdbs.repository.authors.AuthorRoleRepository;
 import com.cqwo.xxx.core.data.rdbs.repository.authors.AuthorSessionRepository;
-import com.cqwo.xxx.core.domain.authors.AuthorActionInfo;
-import com.cqwo.xxx.core.domain.authors.AuthorPermissionInfo;
-import com.cqwo.xxx.core.domain.authors.AuthorRoleInfo;
-import com.cqwo.xxx.core.domain.authors.AuthorSessionInfo;
+import com.cqwo.xxx.core.domain.authors.*;
 import com.cqwo.xxx.core.data.rdbs.IAuthorStrategy;
 import com.cqwo.xxx.core.data.rdbs.repository.authors.AuthorActionRepository;
 import com.cqwo.xxx.core.data.rdbs.repository.authors.AuthorPermissionRepository;
@@ -27,7 +24,9 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.criteria.Predicate;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -584,6 +583,50 @@ public class AuthorStrategy implements IAuthorStrategy {
     public List<AuthorActionInfo> getRoleAuthorActionList(Integer roleId) throws IOException {
         return authorActionRepository.getRoleAuthorActionList(roleId);
     }
+
+
+
+    /**
+     * 获取所有的节点列表
+     *
+     * @param group 分组名称
+     * @return
+     */
+    @Override
+    public List<AuthorActionInfo> getGroupAuthorActionList(String group) throws IOException {
+        Sort sort = new Sort(Sort.Direction.ASC, "displayOrder");
+
+        Specification<AuthorActionInfo> condition = (Specification<AuthorActionInfo>) (root, query, cb) -> {
+
+            List<Predicate> list = new ArrayList<>();
+
+            list.add(cb.equal(root.get("group").as(String.class), group));
+
+            Predicate[] p = new Predicate[list.size()];
+
+            query.where(cb.and(list.toArray(p)));
+
+            return query.getGroupRestriction();
+        };
+
+        return authorActionRepository.findAll(condition, sort);
+    }
+
+    /**
+     * 获取所有的节点列表
+     *
+     * @return
+     */
+    @Override
+    public List<AuthorActionInfo> getAllAuthorActionList() throws IOException {
+
+        Sort sort = new Sort(Sort.Direction.ASC, "displayOrder");
+
+        return authorActionRepository.findAll(sort);
+    }
+
+
+    //endregion
 
     //endregion
 

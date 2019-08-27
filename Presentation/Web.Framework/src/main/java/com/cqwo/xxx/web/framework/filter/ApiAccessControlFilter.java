@@ -33,7 +33,6 @@ public class ApiAccessControlFilter extends AccessControlFilter {
     private static final Logger log = LoggerFactory.getLogger(ApiAccessControlFilter.class);
 
 
-
     /**
      * 表示是否允许访问；mappedValue就是[urls]配置中拦截器参数部分，如果允许访问返回true，否则false；
      * (感觉这里应该是对白名单（不需要登录的接口）放行的)
@@ -43,7 +42,7 @@ public class ApiAccessControlFilter extends AccessControlFilter {
      *
      * @param request
      * @param response
-     * @param object          表示写在拦截器中括号里面的字符串 mappedValue 就是 [urls] 配置中拦截器参数部分
+     * @param object   表示写在拦截器中括号里面的字符串 mappedValue 就是 [urls] 配置中拦截器参数部分
      * @return
      * @throws Exception
      */
@@ -71,14 +70,13 @@ public class ApiAccessControlFilter extends AccessControlFilter {
     @Override
     public boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
 
-        if(request == null || response == null) {
+        if (request == null || response == null) {
             return false;
         }
 
         System.out.println("onAccessDenied");
         String apiKey = request.getParameter("apiKey");
         String apiSecret = request.getParameter("apiSecret");
-
 
 
         //WebHelper.getApiKeyHeader(request,"uid");
@@ -122,11 +120,14 @@ public class ApiAccessControlFilter extends AccessControlFilter {
 //        log.info("登陆成功");
 
 
-
         UserTokenInfo userTokenInfo = Users.decryptUserToken(accessToken);
 
+        if(userTokenInfo == null || userTokenInfo.getUid()<=0){
+            return false;
+        }
 
-        UserTokenPasswordToken token = new UserTokenPasswordToken(userTokenInfo.getUid().toString(), userTokenInfo.getOpenId(), 1);
+
+        UserTokenPasswordToken token = new UserTokenPasswordToken(userTokenInfo.getUid().toString(), userTokenInfo.getOpenId());
 
         //UsernamePasswordToken token = new UsernamePasswordToken("yjwwtu", "123456");
 

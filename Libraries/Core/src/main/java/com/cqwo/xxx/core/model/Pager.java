@@ -2,37 +2,38 @@
  *
  *  * Copyright (C) 2017.
  *  * 用于JAVA项目开发
- *  * 重庆青沃科技有限公司 版权所有
+ *  * 重庆英卡电子有限公司 版权所有
  *  * Copyright (C)  2017.  CqingWo Systems Incorporated. All rights reserved.
  *
  */
 
-package com.cqwo.xxx.web.framework.model;
+package com.cqwo.xxx.core.model;
+
+import java.io.Serializable;
 
 /**
- *
  * @author cqnews
  * @date 2017/12/14
  */
-public class Pager {
+public class Pager implements Serializable {
 
 
-    protected boolean showSummary=true;//是否显示汇总
-    protected boolean showItems=true;//是否显示页项
-    protected int itemCount=7;//项数量
-    protected boolean showFirst=true;//是否显示首页
-    protected boolean showPre=true;//是否显示上一页
-    protected boolean showNext=true;//是否显示下一页
-    protected boolean showLast=true;//是否显示末页
-    protected boolean showPageSize=true;//是否显示每页数
-    protected boolean showGoPage=true;//是否显示页数输入框
+    protected boolean showSummary = true;//是否显示汇总
+    protected boolean showItems = true;//是否显示页项
+    protected int itemCount = 7;//项数量
+    protected boolean showFirst = true;//是否显示首页
+    protected boolean showPre = true;//是否显示上一页
+    protected boolean showNext = true;//是否显示下一页
+    protected boolean showLast = true;//是否显示末页
+    protected boolean showPageSize = true;//是否显示每页数
+    protected boolean showGoPage = true;//是否显示页数输入框
 
     public boolean isShowSummary() {
         return showSummary;
     }
 
     public void setShowSummary(boolean showSummary) {
-        this.showSummary=showSummary;
+        this.showSummary = showSummary;
     }
 
     public boolean isShowItems() {
@@ -40,7 +41,7 @@ public class Pager {
     }
 
     public void setShowItems(boolean showItems) {
-        this.showItems=showItems;
+        this.showItems = showItems;
     }
 
     public int getItemCount() {
@@ -48,7 +49,7 @@ public class Pager {
     }
 
     public void setItemCount(int itemCount) {
-        this.itemCount=itemCount;
+        this.itemCount = itemCount;
     }
 
     public boolean isShowFirst() {
@@ -56,7 +57,7 @@ public class Pager {
     }
 
     public void setShowFirst(boolean showFirst) {
-        this.showFirst=showFirst;
+        this.showFirst = showFirst;
     }
 
     public boolean isShowPre() {
@@ -64,7 +65,7 @@ public class Pager {
     }
 
     public void setShowPre(boolean showPre) {
-        this.showPre=showPre;
+        this.showPre = showPre;
     }
 
     public boolean isShowNext() {
@@ -72,7 +73,7 @@ public class Pager {
     }
 
     public void setShowNext(boolean showNext) {
-        this.showNext=showNext;
+        this.showNext = showNext;
     }
 
     public boolean isShowLast() {
@@ -80,7 +81,7 @@ public class Pager {
     }
 
     public void setShowLast(boolean showLast) {
-        this.showLast=showLast;
+        this.showLast = showLast;
     }
 
     public boolean isShowPageSize() {
@@ -88,7 +89,7 @@ public class Pager {
     }
 
     public void setShowPageSize(boolean showPageSize) {
-        this.showPageSize=showPageSize;
+        this.showPageSize = showPageSize;
     }
 
     public boolean isShowGoPage() {
@@ -96,7 +97,7 @@ public class Pager {
     }
 
     public void setShowGoPage(boolean showGoPage) {
-        this.showGoPage=showGoPage;
+        this.showGoPage = showGoPage;
     }
 
 

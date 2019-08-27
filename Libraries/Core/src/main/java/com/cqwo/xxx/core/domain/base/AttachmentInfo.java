@@ -1,6 +1,7 @@
 package com.cqwo.xxx.core.domain.base;
 
 import com.cqwo.xxx.core.helper.DateHelper;
+import com.cqwo.xxx.core.helper.UnixTimeHelper;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -57,7 +58,7 @@ public class AttachmentInfo implements Serializable {
         this.uid = uid;
         this.url = url;
         this.title = title;
-        this.createTime = DateHelper.getUnixTimeStamp();
+        this.createTime = UnixTimeHelper.getUnixTimeStamp();
     }
 
     public Integer getAttachId() {

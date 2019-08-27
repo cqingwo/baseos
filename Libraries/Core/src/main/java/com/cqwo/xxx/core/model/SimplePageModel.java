@@ -1,4 +1,4 @@
-package com.cqwo.xxx.web.framework.model;
+package com.cqwo.xxx.core.model;
 
 public class SimplePageModel {
 

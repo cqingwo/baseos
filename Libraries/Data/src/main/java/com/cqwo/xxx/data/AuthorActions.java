@@ -2,10 +2,6 @@ package com.cqwo.xxx.data;
 
 import com.cqwo.xxx.core.cache.CacheKeys;
 import com.cqwo.xxx.core.domain.authors.AuthorActionInfo;
-import com.cqwo.xxx.core.cache.CacheKeys;
-import com.cqwo.xxx.core.domain.authors.AuthorActionInfo;
-import com.cqwo.xxx.core.cache.CacheKeys;
-import com.cqwo.xxx.core.domain.authors.AuthorActionInfo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
@@ -13,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by cqnews on 2017/4/11.
@@ -123,6 +120,54 @@ public class AuthorActions extends DataService {
         }
         return authorActionInfoList;
     }
+
+    /**
+     * 获取所有的节点列表
+     *
+     * @param group 分组名称
+     * @return
+     */
+//    @Cacheable(value = "getGroupAuthorActionList", key = "#group")
+    public List<AuthorActionInfo> getGroupAuthorActionList(String group) throws IOException {
+
+        List<AuthorActionInfo> authorActionInfoList = getCwmCache().getListValue(CacheKeys.GET_RGROUP_AUTHOR_ACTION_LIST + group, AuthorActionInfo.class);
+
+        if (authorActionInfoList == null) {
+
+            authorActionInfoList = getCwmData().getIAuthorStrategy().getGroupAuthorActionList(group);
+
+            getCwmCache().setValue(CacheKeys.GET_RGROUP_AUTHOR_ACTION_LIST + group, authorActionInfoList);
+
+        }
+
+        return authorActionInfoList;
+
+    }
+
+    /**
+     * 获取所有的节点列表
+     *
+     * @return
+     */
+//    @Cacheable(value = "getAllAuthorActionList")
+    public List<AuthorActionInfo> getAllAuthorActionList() throws IOException {
+
+        List<AuthorActionInfo> authorActionInfoList = getCwmCache().getListValue(CacheKeys.GET_ALL_AUTHOR_ACTION_LIST, AuthorActionInfo.class);
+
+        if (authorActionInfoList == null) {
+
+            authorActionInfoList = getCwmData().getIAuthorStrategy().getAllAuthorActionList();
+
+            getCwmCache().setValue(CacheKeys.GET_ALL_AUTHOR_ACTION_LIST, authorActionInfoList, 300, TimeUnit.SECONDS);
+
+        }
+
+        return authorActionInfoList;
+
+    }
+
+
+
     //endregion
 
 }

@@ -314,6 +314,24 @@ public interface IAuthorStrategy {
      */
     List<AuthorActionInfo> getRoleAuthorActionList(Integer roleId) throws IOException;
 
+
+    /**
+     * 获取所有的节点列表
+     *
+     * @param group 分组名称
+     * @return
+     */
+    List<AuthorActionInfo> getGroupAuthorActionList(String group) throws IOException;
+
+    /**
+     * 获取所有的节点列表
+     *
+     * @return
+     */
+    List<AuthorActionInfo> getAllAuthorActionList() throws IOException;
+
+
+
     //endregion 动作管理结束
 
 }

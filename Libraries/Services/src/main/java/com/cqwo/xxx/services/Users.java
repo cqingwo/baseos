@@ -35,7 +35,6 @@ public class Users {
     @Autowired
     com.cqwo.xxx.data.Users users;
 
-
     @Resource(name = "UserDetailsData")
     UserDetails userDetails;
 
@@ -742,48 +741,37 @@ public class Users {
      */
     public Specification<PartUserInfo> getPartUserListCondition(Integer uid, String nickName, String mobile) {
 
-        Specification<PartUserInfo> condition = new Specification<PartUserInfo>() {
-            @Override
-            public Predicate toPredicate(Root<PartUserInfo> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+        return (Specification<PartUserInfo>) (root, query, cb) -> {
 
-                List<Predicate> list = new ArrayList<Predicate>();
+            List<Predicate> list = new ArrayList<Predicate>();
 
 
-                if (uid >= 1) {
-                    list.add(cb.equal(root.get("uid").as(Integer.class), uid));
-                }
-
-                if (StringHelper.isNotNullOrWhiteSpace(nickName)) {
-
-                    list.add(cb.like(root.get("nickName").as(String.class), "%" + nickName + "%"));
-                }
-
-                if (StringHelper.isNotNullOrWhiteSpace(mobile)) {
-                    list.add(cb.equal(root.get("mobile").as(String.class), mobile));
-                }
-
-
-                Predicate[] p = new Predicate[list.size()];
-
-                query.where(cb.and(list.toArray(p)));
-
-
-                return query.getGroupRestriction();
+            if (uid >= 1) {
+                list.add(cb.equal(root.get("uid").as(Integer.class), uid));
             }
-        };
 
-        return condition;
+            if (StringHelper.isNotNullOrWhiteSpace(nickName)) {
+
+                list.add(cb.like(root.get("nickName").as(String.class), "%" + nickName + "%"));
+            }
+
+            if (StringHelper.isNotNullOrWhiteSpace(mobile)) {
+                list.add(cb.equal(root.get("mobile").as(String.class), mobile));
+            }
+
+
+            Predicate[] p = new Predicate[list.size()];
+
+            query.where(cb.and(list.toArray(p)));
+
+
+            return query.getGroupRestriction();
+        };
     }
 
 
-    /**
-     * 用户奖励发放
-     *
-     * @param uid
-     * @param money
-     * @param desc
-     */
-    public void sendReward(Integer uid, double money, String desc) {
+
+    public void onLogin(String account, String password) {
 
     }
 

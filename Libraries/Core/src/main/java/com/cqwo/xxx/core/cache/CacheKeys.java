@@ -86,4 +86,27 @@ public class CacheKeys {
      * 获取首页的缓存banner
      */
     public static final String GET_HOME_BANNER_LIST = "gethomebannerlist";
+
+
+    public static final String GET_AUTHOR_ACTION_AID = "getauthoractionaid";
+
+    public static final String GET_RGROUP_AUTHOR_ACTION_LIST = "getgroupauthoractionlist";
+
+
+    /**
+     * 用户分组权限id
+     */
+    public static final String GET_USER_AUTHOR_ROLE_ID_LIST = "userauthorroleidlist";
+
+
+    /**
+     * 角色权限列表
+     */
+
+    public static final String GET_ALL_AUTHOR_ACTION_LIST = "allroleauthoractionlist";
+
+    /**
+     * 角色权限列表
+     */
+    public static final String GET_GROUP_AUTHOR_ACTION_LIST = "grouproleauthoractionlist";
 }

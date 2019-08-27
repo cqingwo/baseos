@@ -1,7 +1,8 @@
 package com.cqwo.xxx.web.api.model;
 
 import com.cqwo.xxx.core.domain.users.PartUserInfo;
-import com.cqwo.xxx.web.framework.model.PageModel;
+import com.cqwo.xxx.core.model.PageModel;
+
 
 import java.util.List;
 

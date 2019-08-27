@@ -9,7 +9,8 @@
 
 package com.cqwo.xxx.web.framework.pager;
 
-import com.cqwo.xxx.web.framework.model.PageModel;
+
+import com.cqwo.xxx.core.model.PageModel;
 
 /**
  *

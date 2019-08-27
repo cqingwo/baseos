@@ -2,10 +2,10 @@ package com.cqwo.xxx.web.api.controller;
 
 
 import com.cqwo.xxx.core.domain.users.PartUserInfo;
+import com.cqwo.xxx.core.model.PageModel;
 import com.cqwo.xxx.web.api.model.UCenterHomeModel;
 import com.cqwo.xxx.web.api.model.UCenterListModel;
 import com.cqwo.xxx.web.framework.controller.BaseApiController;
-import com.cqwo.xxx.web.framework.model.PageModel;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

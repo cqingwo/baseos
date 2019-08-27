@@ -7,6 +7,8 @@ import com.cqwo.xxx.core.domain.authors.AuthorRoleInfo;
 import com.cqwo.xxx.core.domain.authors.AuthorSessionInfo;
 import com.cqwo.xxx.core.helper.ListHelper;
 import com.cqwo.xxx.core.log.Logs;
+import com.cqwo.xxx.core.model.MultiSelectListItem;
+import com.cqwo.xxx.core.model.SelectListItem;
 import com.cqwo.xxx.data.AuthorActions;
 import com.cqwo.xxx.data.AuthorPermissions;
 import com.cqwo.xxx.data.AuthorRoles;
@@ -659,8 +661,111 @@ public class Authors {
         return authorActionList;
     }
 
+    /**
+     * 获取所有的节点列表
+     *
+     * @return
+     */
+    public List<AuthorActionInfo> getAllAuthorActionList() {
+
+        List<AuthorActionInfo> authorActionInfoList = new ArrayList<>();
+
+        try {
+            authorActionInfoList = authorActions.getAllAuthorActionList();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            logs.write(ex, "获取所有的节点列表");
+        }
+
+        return authorActionInfoList;
+    }
+
+    /**
+     * 获取所有的节点列表
+     *
+     * @param group 分组名称
+     * @return
+     */
+    public List<AuthorActionInfo> getGroupAuthorActionList(String group) {
+
+        List<AuthorActionInfo> authorActionInfoList = new ArrayList<>();
+
+        try {
+            authorActionInfoList = authorActions.getGroupAuthorActionList(group);
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            logs.write(ex, "获取所有的节点列表");
+        }
+
+        return authorActionInfoList;
+    }
+
+
+
+    /**
+     * 获取权限结构树
+     *
+     * @param actionInfoList     权限结构树
+     * @param permissionInfoList 已有权限
+     * @return
+     */
+    public List<MultiSelectListItem> getActionItemList(List<AuthorActionInfo> actionInfoList, List<AuthorPermissionInfo> permissionInfoList) {
+
+        List<MultiSelectListItem> multiSelectListItemList = new ArrayList<>();
+
+        List<AuthorActionInfo> tempActionInfoList = new ArrayList<>(actionInfoList);
+
+
+        for (AuthorActionInfo actionInfo : actionInfoList) {
+
+
+            if (actionInfo.getParentId() == 0) {
+
+                MultiSelectListItem multiItem = new MultiSelectListItem();
+
+
+                boolean isComprise = isComprise(actionInfo.getAid(), permissionInfoList);
+                multiItem.item = new SelectListItem(isComprise, actionInfo.getTitle(), actionInfo.getAid().toString());
+
+                List<AuthorActionInfo> runActionList = new ArrayList<>(tempActionInfoList);
+
+                for (AuthorActionInfo subActionInfo : runActionList) {
+                    if (actionInfo.getAid().equals(subActionInfo.getParentId())) {
+
+                        multiItem.itemList.add(new SelectListItem(isComprise ? isComprise : isComprise(subActionInfo.getAid(), permissionInfoList), subActionInfo.getTitle(), subActionInfo.getAid().toString()));
+                        tempActionInfoList.remove(subActionInfo);
+                    }
+                }
+
+                tempActionInfoList.remove(actionInfo);
+
+                multiSelectListItemList.add(multiItem);
+
+            }
+        }
+
+        return multiSelectListItemList;
+
+    }
+
+    private boolean isComprise(Integer aid, List<AuthorPermissionInfo> permissionInfoList) {
+
+        for (AuthorPermissionInfo permissionInfo : permissionInfoList) {
+
+            if (aid.equals(permissionInfo.getAid())) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 
     //endregion
+
+
+
 
     //endregion
 

@@ -5,6 +5,7 @@ import com.cqwo.xxx.core.domain.users.PartUserInfo;
 import com.cqwo.xxx.core.domain.users.UserRankInfo;
 import com.cqwo.xxx.core.helper.StringHelper;
 import com.cqwo.xxx.core.helper.TypeHelper;
+import com.cqwo.xxx.core.model.PageModel;
 import com.cqwo.xxx.core.model.SelectListItem;
 import com.cqwo.xxx.services.Regions;
 import com.cqwo.xxx.services.UserRanks;
@@ -12,7 +13,6 @@ import com.cqwo.xxx.services.Users;
 import com.cqwo.xxx.web.admin.model.UserEditModel;
 import com.cqwo.xxx.web.admin.model.UserListModel;
 import com.cqwo.xxx.web.framework.controller.BaseAdminController;
-import com.cqwo.xxx.web.framework.model.PageModel;
 import com.cqwo.xxx.web.framework.validate.ValidateModel;
 import com.cqwo.xxx.web.framework.validate.ValidationResult;
 import com.google.common.base.Strings;
@@ -73,7 +73,7 @@ public class UserController extends BaseAdminController {
                              @RequestParam(defaultValue = "1") Integer pageNumber, UserListModel model) {
 
         Specification<PartUserInfo> condition = users.getPartUserListCondition(model.getUid(), model.getNickName(), model.getMobile());
-        Sort sort = new Sort(Sort.Direction.DESC,"uid");
+        Sort sort = new Sort(Sort.Direction.DESC, "uid");
 
         Page<PartUserInfo> infoPage = users.getPartUserList(pageSize, pageNumber, condition, sort);
 
